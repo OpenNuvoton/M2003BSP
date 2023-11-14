@@ -121,9 +121,13 @@ void SYS_FunctionTest()
     UART_WAIT_TX_EMPTY(UART0);
 
     /* Configure all GPIO as Quasi-bidirectional Mode*/
+    CLK_EnableModuleClock(GPB_MODULE);
     GPIO_SetMode(PB, GPIO_P0_TO_P15, GPIO_MODE_QUASI);
+    CLK_EnableModuleClock(GPC_MODULE);
     GPIO_SetMode(PC, GPIO_P0_TO_P15, GPIO_MODE_QUASI);
+    CLK_EnableModuleClock(GPE_MODULE);
     GPIO_SetMode(PE, GPIO_P0_TO_P15, GPIO_MODE_QUASI);
+    CLK_EnableModuleClock(GPF_MODULE);
     GPIO_SetMode(PF, GPIO_P0_TO_P15, GPIO_MODE_QUASI);
 
     /* Configure PB.3 as Quasi-bidirectional mode and enable interrupt by falling edge trigger */
