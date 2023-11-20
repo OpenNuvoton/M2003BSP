@@ -14,11 +14,12 @@
 /*---------------------------------------------------------------------------------------------------------*/
 /* Macro, type and constant definitions                                                                    */
 /*---------------------------------------------------------------------------------------------------------*/
-#define PWM_CLK             12000000
+#define PWM_CLK             24000000
 #define PWM_OUTPUT_FREQ     250
 #define PWM_OUTPUT_DUTY     30
-#define PWM_HIGH            (PWM_CLK/PWM_OUTPUT_FREQ)*PWM_OUTPUT_DUTY/100/3
-#define PWM_LOW             (PWM_CLK/PWM_OUTPUT_FREQ)*(100-PWM_OUTPUT_DUTY)/100/3
+#define PWM_CLK_PRESCALE    2
+#define PWM_HIGH            (PWM_CLK/PWM_OUTPUT_FREQ)*PWM_OUTPUT_DUTY/100/PWM_CLK_PRESCALE
+#define PWM_LOW             (PWM_CLK/PWM_OUTPUT_FREQ)*(100-PWM_OUTPUT_DUTY)/100/PWM_CLK_PRESCALE
 #define PWM_PERIOD          PWM_HIGH+PWM_LOW
 #define DEVIATION           2
 
@@ -120,7 +121,7 @@ void SYS_Init(void)
     /* Unlock protected registers */
     SYS_UnlockReg();
 
-    /* Enable Internal RC 12MHz clock */
+    /* Enable Internal RC 24 MHz clock */
     CLK_EnableXtalRC(CLK_PWRCTL_HIRCEN_Msk);
 
     /* Waiting for Internal RC clock ready */
@@ -226,14 +227,14 @@ int32_t main(void)
            High level = CMR+1
            PWM clock source frequency from HIRC/2 is 12,000,000
            (CNR+1) = PWM clock source frequency/prescaler/PWM output frequency
-                   = 12,000,000/3/250 = 16,000
-           (Note: CNR is 16 bits, so if calculated value is larger than 65536, user should increase prescale value.)
-           CNR = 16,000
-           duty ratio = 30% ==> (CMR+1)/(CNR+1) = 30%
-           CMR = 4,800
-           Prescale value is 2 : prescaler= 3
+                   = 24,000,000/2/250 = 48,000
+           (Note: CNR is 16 bits, so if calculated value is larger than 65,536, user should increase prescale value.)
+           CNR = 48,000
+           duty ratio = 30% ==> CMR/CNR = 30%
+           CMR = 14,400
+           Prescale value is 1 : prescaler = 2
         */
-
+        
         /* set PWM0 channel 0 output configuration */
         PWM_ConfigOutputChannel(PWM0, 0, PWM_OUTPUT_FREQ, PWM_OUTPUT_DUTY);
 
@@ -247,15 +248,15 @@ int32_t main(void)
         /* Set the PWM0 channel 2 for capture function                                          */
         /*--------------------------------------------------------------------------------------*/
         /* If input minimum frequency is 250Hz, user can calculate capture settings by follows.
-           Capture clock source frequency = PLL/2 = 36,000,000 in the sample code.
+           Capture clock source frequency = 24,000,000 in the sample code.
            (CNR+1) = Capture clock source frequency/prescaler/minimum input frequency
-                   = 36,000,000/3/250 = 48,000
+                   = 24,000,000/2/250 = 48,000
            (Note: CNR is 16 bits, so if calculated value is larger than 65536, user should increase prescale value.)
            CNR = 0xFFFF
            (Note: In capture mode, user should set CNR to 0xFFFF to increase capture frequency range.)
 
            Capture unit time = 1/Capture clock source frequency/prescaler
-           83.3ns = 1/48,000,000/4
+           83.3ns = 1/24,000,000/2
         */
 
         /* set PWM0 channel 2 capture configuration */
