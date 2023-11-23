@@ -42,7 +42,7 @@ void SYS_Init(void)
     /*---------------------------------------------------------------------------------------------------------*/
     /* Init System Clock                                                                                       */
     /*---------------------------------------------------------------------------------------------------------*/
-    /* Enable Internal RC 12MHz clock */
+    /* Enable Internal RC 24 MHz clock */
     CLK_EnableXtalRC(CLK_PWRCTL_HIRCEN_Msk);
 
     /* Waiting for Internal RC clock ready */
@@ -154,11 +154,11 @@ int32_t main(void)
     printf("\nOutput waveform is 400 Hz and it's duty is 50%%. \n");
 
     /*
-      Configure PWM0 channel 0 init period and duty(up counter type).
+      Configure PWM0 channel 0 init period and duty (up counter type).
       Period is PCLK0/(prescaler * (CNR + 1))
       Duty ratio = (CMR) / (CNR + 1)
-      Period = 12 MHz / (1 * (29,999 + 1)) = 400 Hz
-      Duty ratio = (15,000) / (29,999 + 1) = 50%
+      Period = 24 MHz / (1 * (19,999 + 1)) = 1200 Hz
+      Duty ratio = (10,000) / (19,999 + 1) = 50%
     */
 
     /* PWM0 channel 0 frequency is 1200 Hz, duty 50%, */

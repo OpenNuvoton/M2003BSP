@@ -37,8 +37,8 @@ void PWM0_IRQHandler(void)
     /* Update PWM0 channel 0 period and duty */
     if(toggle == 0)
     {
-        PWM_SET_CNR(PWM0, 0, 99);
-        PWM_SET_CMR(PWM0, 0, 40);
+        PWM_SET_CNR(PWM0, 0, 199);
+        PWM_SET_CMR(PWM0, 0, 100);
     }
     else
     {
@@ -58,7 +58,7 @@ void SYS_Init(void)
     /* Unlock protected registers */
     SYS_UnlockReg();
 
-    /* Enable Internal RC 12MHz clock */
+    /* Enable Internal RC 24 MHz clock */
     CLK_EnableXtalRC(CLK_PWRCTL_HIRCEN_Msk);
 
     /* Waiting for Internal RC clock ready */
@@ -150,13 +150,13 @@ int32_t main(void)
     /*
         PWM0 channel 0 waveform of this sample shown below (down counter type):
 
-        |<-        CNR + 1  clk     ->|  CNR + 1 = 99 + 1 CLKs
-                       |<-  CMR clk ->|  CMR = 500 CLKs
-                                      |<-   CNR + 1  ->|  CNR + 1 = 99 + 1 CLKs
-                                               |<-CMR->|  CMR = 60 CLKs
+        |<-        CNR + 1  clk     ->|  CNR + 1 = 199 + 1 CLKs
+                       |<-  CMR clk ->|  CMR = 100 CLKs
+                                      |<-   CNR + 1  ->|  CNR + 1 = 199 + 1 CLKs
+                                               |<-CMR->|  CMR = 120 CLKs
 
          ______________                _______          ____
-        |       50     |______50______|   20  |____30__|     PWM waveform
+        |       100    |______100_____|   20  |____30__|     PWM waveform
 
     */
 
@@ -164,8 +164,8 @@ int32_t main(void)
       Configure PWM0 channel 0 init period and duty(up counter type).
       Period is PCLK / (prescaler * (CNR + 1))
       Duty ratio = (CMR) / (CNR + 1)
-      Frequency = 12 MHz / (1 * (99 + 1)) = 120,000 Hz
-      Duty ratio = (50) / (99 + 1) = 50%
+      Frequency = 24 MHz / (1 * (199 + 1)) = 120,000 Hz
+      Duty ratio = (100) / (199 + 1) = 50%
     */
     /* PWM0 channel 0 frequency is 120,000 Hz, duty 50%, */
     PWM_ConfigOutputChannel(PWM0, 0, 120000, 50);

@@ -29,7 +29,7 @@ void SYS_Init(void)
     /* Unlock protected registers */
     SYS_UnlockReg();
 
-    /* Enable Internal RC 12MHz clock */
+    /* Enable Internal RC 24 MHz clock */
     CLK_EnableXtalRC(CLK_PWRCTL_HIRCEN_Msk);
 
     /* Waiting for Internal RC clock ready */
