@@ -74,3 +74,14 @@ void UpdateConfig(uint32_t *data, uint32_t *res)
 
     FMC_DISABLE_CFG_UPDATE();
 }
+
+int32_t FMC_SetVectorAddr(uint32_t u32PageAddr)
+{
+    FMC->ISPCMD = FMC_ISPCMD_VECMAP;  /* Set ISP Command Code */
+    FMC->ISPADDR = u32PageAddr;       /* The address of specified page which will be map to address 0x0. It must be page alignment. */
+    FMC->ISPTRG = 0x1u;               /* Trigger to start ISP procedure */
+
+    while (FMC->ISPTRG & 0x1) ;  /* Wait for ISP command done. */
+
+    return -1;
+}

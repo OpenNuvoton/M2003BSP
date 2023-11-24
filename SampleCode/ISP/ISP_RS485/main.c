@@ -23,7 +23,7 @@ void SYS_Init(void)
     /*---------------------------------------------------------------------------------------------------------*/
     /* Unlock protected registers */
     SYS_UnlockReg();
-    /* Enable HIRC clock (Internal RC 48MHz) */
+    /* Enable HIRC clock (Internal RC 24MHz) */
     CLK->PWRCTL |= CLK_PWRCTL_HIRCEN_Msk;
 
     /* Wait for HIRC clock ready */
@@ -35,7 +35,7 @@ void SYS_Init(void)
 
     /* Enable UART module clock */
     CLK->APBCLK0 |= CLK_APBCLK0_UART1CKEN_Msk;
-    /* Select UART module clock source as HXT and UART module clock divider as 1 */
+    /* Select UART module clock source as HIRC and UART module clock divider as 1 */
     CLK->CLKSEL1 = (CLK->CLKSEL2 & (~CLK_CLKSEL2_UART0SEL_Msk)) | CLK_CLKSEL2_UART0SEL_HIRC;
     CLK->CLKDIV0 = (CLK->CLKDIV0 & (~CLK_CLKDIV0_UART1DIV_Msk)) | CLK_CLKDIV0_UART1(1);
     /*---------------------------------------------------------------------------------------------------------*/
@@ -109,9 +109,9 @@ _ISP:
     }
 
 _APROM:
-    SYS->RSTSTS = (SYS_RSTSTS_PORF_Msk | SYS_RSTSTS_PINRF_Msk);
-    FMC->ISPCTL &= ~(FMC_ISPCTL_ISPEN_Msk);
-    SCB->AIRCR = (V6M_AIRCR_VECTKEY_DATA | V6M_AIRCR_SYSRESETREQ);
+    FMC_SetVectorAddr(FMC_APROM_BASE);
+    FMC_SET_APROM_BOOT();
+    NVIC_SystemReset(); 
 
     /* Trap the CPU */
     while (1);
