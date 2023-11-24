@@ -645,7 +645,7 @@ uint32_t PWM_GetFaultBrakeIntFlag(PWM_T *pwm, uint32_t u32BrakeSource)
  */
 void PWM_EnablePeriodInt(PWM_T *pwm, uint32_t u32ChannelNum,  uint32_t u32IntPeriodType)
 {
-    (pwm)->INTEN0 |= (PWM_INTEN0_PIEN0_Msk << u32ChannelNum);
+    (pwm)->INTEN0 |= (PWM_INTEN0_PIEN0_Msk << ((u32ChannelNum>>1)<<1));
 }
 
 /**
@@ -658,7 +658,7 @@ void PWM_EnablePeriodInt(PWM_T *pwm, uint32_t u32ChannelNum,  uint32_t u32IntPer
  */
 void PWM_DisablePeriodInt(PWM_T *pwm, uint32_t u32ChannelNum)
 {
-    (pwm)->INTEN0 &= ~(PWM_INTEN0_PIEN0_Msk << u32ChannelNum);
+    (pwm)->INTEN0 &= ~(PWM_INTEN0_PIEN0_Msk << ((u32ChannelNum>>1)<<1));
 }
 
 /**
@@ -671,7 +671,7 @@ void PWM_DisablePeriodInt(PWM_T *pwm, uint32_t u32ChannelNum)
  */
 void PWM_ClearPeriodIntFlag(PWM_T *pwm, uint32_t u32ChannelNum)
 {
-    (pwm)->INTSTS0 = (PWM_INTSTS0_PIF0_Msk << u32ChannelNum);
+    (pwm)->INTSTS0 = (PWM_INTSTS0_PIF0_Msk << ((u32ChannelNum>>1)<<1));
 }
 
 /**
@@ -686,7 +686,7 @@ void PWM_ClearPeriodIntFlag(PWM_T *pwm, uint32_t u32ChannelNum)
  */
 uint32_t PWM_GetPeriodIntFlag(PWM_T *pwm, uint32_t u32ChannelNum)
 {
-    return ((((pwm)->INTSTS0 & (PWM_INTSTS0_PIF0_Msk << u32ChannelNum))) ? 1 : 0);
+    return ((((pwm)->INTSTS0 & (PWM_INTSTS0_PIF0_Msk << ((u32ChannelNum>>1)<<1)))) ? 1 : 0);
 }
 
 /**
@@ -699,7 +699,7 @@ uint32_t PWM_GetPeriodIntFlag(PWM_T *pwm, uint32_t u32ChannelNum)
  */
 void PWM_EnableZeroInt(PWM_T *pwm, uint32_t u32ChannelNum)
 {
-    (pwm)->INTEN0 |= (PWM_INTEN0_ZIEN0_Msk << u32ChannelNum);
+    (pwm)->INTEN0 |= (PWM_INTEN0_ZIEN0_Msk << ((u32ChannelNum>>1)<<1));
 }
 
 /**
@@ -712,7 +712,7 @@ void PWM_EnableZeroInt(PWM_T *pwm, uint32_t u32ChannelNum)
  */
 void PWM_DisableZeroInt(PWM_T *pwm, uint32_t u32ChannelNum)
 {
-    (pwm)->INTEN0 &= ~(PWM_INTEN0_ZIEN0_Msk << u32ChannelNum);
+    (pwm)->INTEN0 &= ~(PWM_INTEN0_ZIEN0_Msk << ((u32ChannelNum>>1)<<1));
 }
 
 /**
@@ -725,7 +725,7 @@ void PWM_DisableZeroInt(PWM_T *pwm, uint32_t u32ChannelNum)
  */
 void PWM_ClearZeroIntFlag(PWM_T *pwm, uint32_t u32ChannelNum)
 {
-    (pwm)->INTSTS0 = (PWM_INTSTS0_ZIF0_Msk << u32ChannelNum);
+    (pwm)->INTSTS0 = (PWM_INTSTS0_ZIF0_Msk << ((u32ChannelNum>>1)<<1));
 }
 
 /**
@@ -740,7 +740,7 @@ void PWM_ClearZeroIntFlag(PWM_T *pwm, uint32_t u32ChannelNum)
  */
 uint32_t PWM_GetZeroIntFlag(PWM_T *pwm, uint32_t u32ChannelNum)
 {
-    return ((((pwm)->INTSTS0 & (PWM_INTSTS0_ZIF0_Msk << u32ChannelNum))) ? 1 : 0);
+    return ((((pwm)->INTSTS0 & (PWM_INTSTS0_ZIF0_Msk << ((u32ChannelNum>>1)<<1)))) ? 1 : 0);
 }
 
 /**
