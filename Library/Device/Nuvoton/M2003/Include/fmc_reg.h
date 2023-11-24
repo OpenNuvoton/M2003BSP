@@ -38,9 +38,16 @@ typedef struct
      * |        |          |0 = ISP function Disabled.
      * |        |          |1 = ISP function Enabled.
      * |        |          |Note: This bit is write protected. Refer to the SYS_REGLCTL register.
- * |[2]     |SPUEN     |SPROM Update Enable Bit (Write Protect)
- * |        |          |0 = SPROM cannot be updated.
- * |        |          |1 = SPROM can be updated.
+     * |[1]     |BS        |Boot Select (Write Protection)
+     * |        |          |Set/clear this bit to select next booting from LDROM/APROM, respectively.
+     * |        |          |This bit also functions as chip booting status flag, which can be used to check where chip booted from.
+     * |        |          |This bit is initiated with the inversed value of CBS[1] (CONFIG0[7]) after any reset is happened except CPU reset (RSTS_CPU is 1) or system reset (RSTS_SYS) is happened.
+     * |        |          |0 = Booting from APROM.
+     * |        |          |1 = Booting from LDROM.
+     * |        |          |Note: This bit is write-protected. Refer to the SYS_REGLCTL register.    
+     * |[2]     |SPUEN     |SPROM Update Enable Bit (Write Protect)
+     * |        |          |0 = SPROM cannot be updated.
+     * |        |          |1 = SPROM can be updated.
      * |        |          |Note: This bit is write protected. Refer to the SYS_REGLCTL register.
      * |[3]     |APUEN     |APROM Update Enable Bit (Write Protect)
      * |        |          |0 = APROM cannot be updated when the chip runs in APROM.
@@ -65,14 +72,14 @@ typedef struct
      * |        |          |(5) Erase or Program command at brown-out detected
      * |        |          |(6) Destination address is illegal, such as over an available range.
      * |        |          |(7) Invalid ISP commands
- * |        |          |u7E5A Mass erase when MERASE (CFG0[13]) is disabled
- * |        |          |Note: This bit is write protected. Refer to the SYS_REGLCTL register.
+     * |        |          |u7E5A Mass erase when MERASE (CFG0[13]) is disabled
+     * |        |          |Note: This bit is write protected. Refer to the SYS_REGLCTL register.
      * |[24]    |INTEN     |Interrupt Enable (Write Protect)
      * |        |          |0 = ISP INT Disabled.
      * |        |          |1 = ISP INT Enabled.
      * |        |          |Note: This bit is write protected. Refer to the SYS_REGLCTL register. Before use INT, user need to clear the INTFLAG(FMC_ISPSTS[24]) make sure INT happen at correct time.
- * |        |          |Refer to the SYS_REGLCTL register
- * |        |          |Before using INT, user needs to clear the INTFLAG(FMC_ISPSTS[24]) make sure INT happen at correct time.
+     * |        |          |Refer to the SYS_REGLCTL register
+     * |        |          |Before using INT, user needs to clear the INTFLAG(FMC_ISPSTS[24]) make sure INT happen at correct time.
      * @var FMC_T::ISPADDR
      * Offset: 0x04  ISP Address Register
      * ---------------------------------------------------------------------------------------------------
@@ -167,21 +174,21 @@ typedef struct
      * |        |          |(16) Violate XOM setting one time protection
      * |        |          |(17) Page erase ISP CMD in Secure/Non-secure region setting page
      * |        |          |(18) Mass erase when MERASE (CFG0[13]) is disable
- * |        |          |Note: This bit is write protected. Refer to the SYS_REGLCTL register.
- * |[7]     |ALLONE    |Flash All-one Verification Flag
- * |        |          |This bit is set by hardware if all of Flash bits are 1, and cleared if Flash bits are not all 1 after ?uEBB9un Flash All-One Verification??is complete; this bit also can be cleared by writing 1
- * |        |          |0 = Flash bits are not all 1 after ?uEBB9un Flash All-One Verification??is complete.
- * |        |          |1 = All of Flash bits are 1 after ?uEBB9un Flash All-One Verification??is complete.
- * |[23:9]  |VECMAP    |Vector Page Mapping Address (Read Only)
- * |        |          |All access to 0x0000_0000~0x0000_01FF is remapped to the Flash memory address {VECMAP[14:0], 9?uE9F8000} ~ {VECMAP[14:0], 9?uE9F81FF}
- * |[24]    |INTFLAG   |ISP Interrupt Flag
- * |        |          |0 = ISP Not Finished.
- * |        |          |1 = ISP done or ISPFF set.
- * |        |          |Note: This function needs to be enabled by FMC_ISPCTRL[24].
- * |[31]    |SCODE     |Security Code Active Flag
- * |        |          |This bit is set by hardware when detecting SPROM secured code is active at Flash initiation, or software writes 1 to this bit to make secured code active; this bit is clear by SPROM page erase operation.
- * |        |          |0 = Secured code is inactive.
- * |        |          |1 = Secured code is active.
+     * |        |          |Note: This bit is write protected. Refer to the SYS_REGLCTL register.
+     * |[7]     |ALLONE    |Flash All-one Verification Flag
+     * |        |          |This bit is set by hardware if all of Flash bits are 1, and cleared if Flash bits are not all 1 after ?uEBB9un Flash All-One Verification??is complete; this bit also can be cleared by writing 1
+     * |        |          |0 = Flash bits are not all 1 after ?uEBB9un Flash All-One Verification??is complete.
+     * |        |          |1 = All of Flash bits are 1 after ?uEBB9un Flash All-One Verification??is complete.
+     * |[23:9]  |VECMAP    |Vector Page Mapping Address (Read Only)
+     * |        |          |All access to 0x0000_0000~0x0000_01FF is remapped to the Flash memory address {VECMAP[14:0], 9?uE9F8000} ~ {VECMAP[14:0], 9?uE9F81FF}
+     * |[24]    |INTFLAG   |ISP Interrupt Flag
+     * |        |          |0 = ISP Not Finished.
+     * |        |          |1 = ISP done or ISPFF set.
+     * |        |          |Note: This function needs to be enabled by FMC_ISPCTRL[24].
+     * |[31]    |SCODE     |Security Code Active Flag
+     * |        |          |This bit is set by hardware when detecting SPROM secured code is active at Flash initiation, or software writes 1 to this bit to make secured code active; this bit is clear by SPROM page erase operation.
+     * |        |          |0 = Secured code is inactive.
+     * |        |          |1 = Secured code is active.
      * @var FMC_T::CYCCTL
      * Offset: 0x4C  Flash Access Cycle Control Register
      * ---------------------------------------------------------------------------------------------------
@@ -197,7 +204,7 @@ typedef struct
      * |        |          |Others = Reserved.
      * |        |          |Note: This bit is write protected. Refer to the SYS_REGLCTL register.
      * |[8]     |FADIS     |Flash Access Cycle Auto-tuning Disabled Control (Write Protect)
- * |        |          |Note: This bit is write protected. Refer to the SYS_REGLCTL register.
+     * |        |          |Note: This bit is write protected. Refer to the SYS_REGLCTL register.
      */
     __IO uint32_t ISPCTL;                /*!< [0x0000] ISP Control Register                                             */
     __IO uint32_t ISPADDR;               /*!< [0x0004] ISP Address Register                                             */
@@ -219,6 +226,9 @@ typedef struct
 
 #define FMC_ISPCTL_ISPEN_Pos             (0)                                               /*!< FMC_T::ISPCTL: ISPEN Position          */
 #define FMC_ISPCTL_ISPEN_Msk             (0x1ul << FMC_ISPCTL_ISPEN_Pos)                   /*!< FMC_T::ISPCTL: ISPEN Mask              */
+
+#define FMC_ISPCTL_BS_Pos                (1)                                               /*!< FMC_T::ISPCTL: BS Position             */
+#define FMC_ISPCTL_BS_Msk                (0x1ul << FMC_ISPCTL_BS_Pos)                      /*!< FMC_T::ISPCTL: BS Mask                 */
 
 #define FMC_ISPCTL_SPUEN_Pos             (2)                                               /*!< FMC_T::ISPCTL: APUEN Position          */
 #define FMC_ISPCTL_SPUEN_Msk             (0x1ul << FMC_ISPCTL_SPUEN_Pos)                   /*!< FMC_T::ISPCTL: APUEN Mask              */
