@@ -156,12 +156,13 @@ Reset_Handler   PROC
                 LDR     R1, =0x88
                 STR     R1, [R0]
 
-                ; enable SRAM1
-                LDR     R3, =0x40000204
-                LDR     R1, [R3]
-                MOVW    R2, #0x200
-                ORRS    R1,R1,R2
-                STR     R1, [R3]
+                ; Init POR
+                LDR     R2, =0x40000024
+                LDR     R1, =0x5AA5
+                STR     R1, [R2]
+
+                LDR     R2, =0x400001EC
+                STR     R1, [R2]
 
 
                 ; Lock register
@@ -225,13 +226,8 @@ SysTick_Handler\
 Default_Handler PROC
 
                 EXPORT  BOD_IRQHandler            [WEAK]
-                ;EXPORT  IRC_IRQHandler            [WEAK]
                 EXPORT  PWRWU_IRQHandler          [WEAK]
-                ;EXPORT  RAMPE_IRQHandler          [WEAK]
-                ;EXPORT  CKFAIL_IRQHandler         [WEAK]
                 EXPORT  ISP_IRQHandler            [WEAK]
-                ;EXPORT  RTC_IRQHandler            [WEAK]
-                ;EXPORT  TAMPER_IRQHandler         [WEAK]
                 EXPORT  WDT_IRQHandler            [WEAK]
                 EXPORT  WWDT_IRQHandler           [WEAK]
                 EXPORT  EINT0_IRQHandler          [WEAK]
@@ -239,7 +235,6 @@ Default_Handler PROC
                 EXPORT  EINT2_IRQHandler          [WEAK]
                 EXPORT  EINT3_IRQHandler          [WEAK]
                 EXPORT  EINT5_IRQHandler          [WEAK]
-                ;EXPORT  GPA_IRQHandler            [WEAK]
                 EXPORT  GPB_IRQHandler            [WEAK]
                 EXPORT  GPC_IRQHandler            [WEAK]
                 EXPORT  GPE_IRQHandler            [WEAK]
@@ -255,7 +250,6 @@ Default_Handler PROC
                 EXPORT  ADC_IRQHandler           [WEAK]
                 EXPORT  USCI0_IRQHandler          [WEAK]
                 EXPORT  ECAP0_IRQHandler          [WEAK]
-
 
 
 Default__IRQHandler
@@ -285,7 +279,7 @@ I2C0_IRQHandler
 ADC_IRQHandler
 USCI0_IRQHandler
 ECAP0_IRQHandler
-GPJ_IRQHandler
+
 
                 B       .
                 ENDP
