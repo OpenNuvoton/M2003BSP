@@ -147,8 +147,8 @@ void AutoFlow_FunctionTest(void)
     printf("+-----------------------------------------------------------+\n");
     printf("|  ______                                            _____  |\n");
     printf("| |      |                                          |     | |\n");
-    printf("| |Master|--UART1_TXD(PA.3)  <==>  UART1_RXD(PA.2)--|Slave| |\n");
-    printf("| |      |--UART1_nCTS(PA.1) <==> UART1_nRTS(PA.0)--|     | |\n");
+    printf("| |Master|--UART1_TXD(PB.3)  <==>  UART1_RXD(PB.2)--|Slave| |\n");
+    printf("| |      |--UART1_nCTS(PB.9) <==> UART1_nRTS(PB.8)--|     | |\n");
     printf("| |______|                                          |_____| |\n");
     printf("|                                                           |\n");
     printf("+-----------------------------------------------------------+\n");

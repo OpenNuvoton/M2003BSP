@@ -244,7 +244,7 @@ void UART_FunctionTest()
     printf("|  ______                                      ______         |\n");
     printf("| |      |                                    |      |        |\n");
     printf("| |      |                                    |      |        |\n");
-    printf("| |Master|--RXD1(PB.7)   <====>   RXD1(PB.7)--|Slave |        |\n");
+    printf("| |Master|--RXD1(PB.2)   <====>   RXD1(PB.2)--|Slave |        |\n");
     printf("| |      |                                    |      |        |\n");
     printf("| |______|                                    |______|        |\n");
     printf("|                                                             |\n");

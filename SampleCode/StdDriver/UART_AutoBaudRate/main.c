@@ -141,7 +141,7 @@ void AutoBaudRate_Test(void)
     printf("+-----------------------------------------------------------+\n");
     printf("|  ______                                            _____  |\n");
     printf("| |      |                                          |     | |\n");
-    printf("| |Master|--UART1_TXD(PA.3) <====> UART1_RXD(PA.2)--|Slave| |\n");
+    printf("| |Master|--UART1_TXD(PB.3) <====> UART1_RXD(PB.2)--|Slave| |\n");
     printf("| |      |                                          |     | |\n");
     printf("| |______|                                          |_____| |\n");
     printf("|                                                           |\n");
@@ -228,11 +228,11 @@ uint32_t GetUartBaudrate(UART_T *uart)
     switch((uint32_t)uart)
     {
     case UART0_BASE:
-        u8UartClkSrcSel = (CLK->CLKSEL1 & CLK_CLKSEL2_UART0SEL_Msk) >> CLK_CLKSEL2_UART0SEL_Pos;
+        u8UartClkSrcSel = (CLK->CLKSEL2 & CLK_CLKSEL2_UART0SEL_Msk) >> CLK_CLKSEL2_UART0SEL_Pos;
         u8UartClkDivNum = (CLK->CLKDIV0 & CLK_CLKDIV0_UART0DIV_Msk) >> CLK_CLKDIV0_UART0DIV_Pos;
         break;
     case UART1_BASE:
-        u8UartClkSrcSel = (CLK->CLKSEL1 & CLK_CLKSEL2_UART1SEL_Msk) >> CLK_CLKSEL2_UART1SEL_Pos;
+        u8UartClkSrcSel = (CLK->CLKSEL2 & CLK_CLKSEL2_UART1SEL_Msk) >> CLK_CLKSEL2_UART1SEL_Pos;
         u8UartClkDivNum = (CLK->CLKDIV0 & CLK_CLKDIV0_UART1DIV_Msk) >> CLK_CLKDIV0_UART1DIV_Pos;
         break;
     default:
@@ -240,7 +240,7 @@ uint32_t GetUartBaudrate(UART_T *uart)
     }
 
     /* Get PCLK clock frequency if UART clock source selection is PCLK */
-    if (u8UartClkSrcSel == 4ul)
+    if (u8UartClkSrcSel == 2ul)
     {
         /* UART Port as UART0 */
         if (uart == ((UART_T *)UART0))

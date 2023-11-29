@@ -238,15 +238,18 @@ void RS485_9bitModeMaster()
     printf("Send Address %x and data 0~9\n", MATCH_ADDRSS1);
     RS485_SendAddressByte(MATCH_ADDRSS1);
     RS485_SendDataByte(g_u8SendDataGroup1, 10);
-    // getchar();
+    CLK_SysTickDelay(5000);
+    
     printf("Send Address %x and data 10~19\n", UNMATCH_ADDRSS1);
     RS485_SendAddressByte(UNMATCH_ADDRSS1);
     RS485_SendDataByte(g_u8SendDataGroup2, 10);
-    // getchar();
+    CLK_SysTickDelay(5000);
+    
     printf("Send Address %x and data 20~29\n", MATCH_ADDRSS2);
     RS485_SendAddressByte(MATCH_ADDRSS2);
     RS485_SendDataByte(g_u8SendDataGroup3, 10);
-    //  getchar();
+    CLK_SysTickDelay(5000);
+    
     printf("Send Address %x and data 30~39\n", UNMATCH_ADDRSS2);
     RS485_SendAddressByte(UNMATCH_ADDRSS2);
     RS485_SendDataByte(g_u8SendDataGroup4, 10);
@@ -334,8 +337,8 @@ void RS485_FunctionTest()
     printf("+-------------------------------------------------------------+\n");
     printf("|  ______                                 _______             |\n");
     printf("| |      |                               |       |            |\n");
-    printf("| |Master|---TXD(PA.3) <===> RXD(PA.2)---| Slave |            |\n");
-    printf("| |      |---RTS(PA.0) <===> RTS(PA.0)---|       |            |\n");
+    printf("| |Master|---TXD(PB.3) <===> RXD(PB.2)---| Slave |            |\n");
+    printf("| |      |---RTS(PB.8) <===> RTS(PB.8)---|       |            |\n");
     printf("| |______|                               |_______|            |\n");
     printf("|                                                             |\n");
     printf("+-------------------------------------------------------------+\n\n");

@@ -145,7 +145,7 @@ void IrDA_FunctionTest(void)
     printf("|  ______                                      ______         |\n");
     printf("| |      |                                    |      |        |\n");
     printf("| |      |                                    |      |        |\n");
-    printf("| |Master|---TXD1(PA3)  <====>  RXD1(PA2)  ---|Slave |        |\n");
+    printf("| |Master|---TXD1(PB3)  <====>  RXD1(PB2)  ---|Slave |        |\n");
     printf("| |      |                                    |      |        |\n");
     printf("| |______|                                    |______|        |\n");
     printf("|                                                             |\n");
