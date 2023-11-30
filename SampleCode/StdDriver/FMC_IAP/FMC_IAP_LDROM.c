@@ -50,7 +50,7 @@ void UART0_Init(void)
 
     /* Configure UART0 and set UART0 baud rate */
     UART0->LINE = 0x3;
-    UART0->BAUD = 0x30000066;
+    UART0->BAUD = 0x300000CE;
 }
 
 

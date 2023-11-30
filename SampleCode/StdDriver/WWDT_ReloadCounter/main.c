@@ -61,7 +61,7 @@ volatile uint8_t g_u32WWDTINTCounts;
  *
  * @details     The WDT_IRQHandler is default IRQ of WWDT
  */
-void WDT_IRQHandler(void)
+void WWDT_IRQHandler(void)
 {
     if(WWDT_GET_INT_FLAG() == 1)
     {
@@ -186,14 +186,18 @@ int main(void)
     PB0 = 1;
 
     /* Enable WWDT NVIC */
-    NVIC_EnableIRQ(WDT_IRQn);
+    NVIC_EnableIRQ(WWDT_IRQn);
 
     g_u32WWDTINTCounts = 0;
 
     printf("[WWDT_CTL: 0x%08X]\n\n", WWDT->CTL);
     printf("WWDT Counter 63                       32                        0\n");
     printf("              +------------------------+------------------------+\n");
-    printf("Timeline (ms) 0                     %.f                  %.f\n", dCompareMatchPeriodTime, dTimeOutPeriodTime);
+#if defined(__ARMCC_VERSION)    
+    printf("Timeline (ms) 0                     %.2f                  %.2f\n", dCompareMatchPeriodTime, dTimeOutPeriodTime);
+#else
+    printf("Timeline (ms) 0                      %d                     %d\n", (int)dCompareMatchPeriodTime, (int)dTimeOutPeriodTime);
+#endif    
     printf("              |   Reset When Reload    |   WWDT Window Region   |  WWDT Time-Out Reset\n\n");
 
 #if RELOAD_CONDITION == 1
@@ -207,8 +211,8 @@ int main(void)
     printf("\n* Reload WWDT counter in UserAlgorithm()\n");
 
     /*
-        WWDT max time-out period is 1024*(64*WWDT_CLK) = 2796.2 ms
-        WWDT compare value is 32 = 1024*(32*WWDT_CLK) = 1398.1 ms
+        WWDT max time-out period is 1024*(64*WWDT_CLK) = 5592.41 ms
+        WWDT compare value is 32 = 1024*(32*WWDT_CLK) = 2796.20 ms
         Enable WWDT compare match interrupt
     */
     /* Note: WWDT_CTL register can be written only once after chip is powered on or reset */
@@ -237,7 +241,7 @@ int main(void)
         {
             /* Reload inside the WWDT window region */
             /* CNTDAT <= CMPDAT, Write RLDCNT 0x5AA5 will reload CNTDAT to 0x3F */
-            /* 2796.2 ms > Delay_ms > 1398.1 ms */
+            /* 5592.41 ms > Delay_ms > 2796.20 ms */
             Delay_ms((uint32_t) dCompareMatchPeriodTime + 1);
         }
 #endif
