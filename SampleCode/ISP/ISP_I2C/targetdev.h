@@ -13,4 +13,4 @@
 #include "isp_user.h"
 #include "i2c_transfer.h"
 
-#define CONFIG_SIZE 8 // in bytes
+#define CONFIG_SIZE 16 // in bytes

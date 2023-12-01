@@ -54,7 +54,7 @@ int ParseCmd(unsigned char *buffer, uint8_t len)
     outpw(response + 4, 0);
     pSrc += 8;
     srclen -= 8;
-    ReadData(Config0, Config0 + CONFIG_SIZE, (uint32_t *)(response + 8)); //read config
+    ReadData(Config0, Config0 + CONFIG_SIZE, (uint32_t *)(response + 8)); /* read config */
     regcnf0 = *(uint32_t *)(response + 8);
     security = regcnf0 & 0x2;
 
@@ -79,7 +79,7 @@ int ParseCmd(unsigned char *buffer, uint8_t len)
     }
     else if (lcmd == CMD_RUN_APROM || lcmd == CMD_RUN_LDROM || lcmd == CMD_RESET)
     {
-        SYS->RSTSTS = 3; //clear bit
+        SYS->RSTSTS = 3; /* clear bit */
 
         /* Set BS */
         if (lcmd == CMD_RUN_APROM)
@@ -93,7 +93,7 @@ int ParseCmd(unsigned char *buffer, uint8_t len)
         }
         else
         {
-            i = (FMC->ISPCTL & 0xFFFFFFFE);//ISP disable
+            i = (FMC->ISPCTL & 0xFFFFFFFE);/* ISP disable */
         }
 
         FMC->ISPCTL = i;
@@ -109,7 +109,7 @@ int ParseCmd(unsigned char *buffer, uint8_t len)
     }
     else if ((lcmd == CMD_UPDATE_APROM) || (lcmd == CMD_ERASE_ALL))
     {
-        EraseAP(FMC_APROM_BASE, (g_apromSize < g_dataFlashAddr) ? g_apromSize : g_dataFlashAddr); // erase APROM // g_dataFlashAddr, g_apromSize
+        EraseAP(FMC_APROM_BASE, (g_apromSize < g_dataFlashAddr) ? g_apromSize : g_dataFlashAddr); /* erase APROM */
 
         if (lcmd == CMD_ERASE_ALL)
         {
@@ -127,7 +127,7 @@ int ParseCmd(unsigned char *buffer, uint8_t len)
         {
             StartAddress = g_dataFlashAddr;
 
-            if (g_dataFlashSize)   //g_dataFlashAddr
+            if (g_dataFlashSize)   /* g_dataFlashAddr */
             {
                 EraseAP(g_dataFlashAddr, g_dataFlashSize);
             }
@@ -141,14 +141,13 @@ int ParseCmd(unsigned char *buffer, uint8_t len)
             StartAddress = 0;
         }
 
-        //StartAddress = inpw(pSrc);
         TotalLen = inpw(pSrc + 4);
         pSrc += 8;
         srclen -= 8;
     }
     else if (lcmd == CMD_UPDATE_CONFIG)
     {
-        if ((security == 0) && (!bUpdateApromCmd))   //security lock
+        if ((security == 0) && (!bUpdateApromCmd))   /* security lock */
         {
             goto out;
         }
@@ -157,7 +156,7 @@ int ParseCmd(unsigned char *buffer, uint8_t len)
         GetDataFlashInfo(&g_dataFlashAddr, &g_dataFlashSize);
         goto out;
     }
-    else if (lcmd == CMD_RESEND_PACKET)     //for APROM&Data flash only
+    else if (lcmd == CMD_RESEND_PACKET)     /* for APROM&Data flash only */
     {
         uint32_t PageAddress;
         StartAddress -= LastDataLen;
@@ -185,7 +184,7 @@ int ParseCmd(unsigned char *buffer, uint8_t len)
     {
         if (TotalLen < srclen)
         {
-            srclen = TotalLen;//prevent last package from over writing
+            srclen = TotalLen;/* prevent last package from over writing */
         }
 
         TotalLen -= srclen;

@@ -183,7 +183,7 @@ void USCI_UART_DataWakeUp(void)
 {
     uint16_t u16regCLKDIV, u16regPDSCNT;
     uint32_t u32WakeupCount, u32PCLK;
-    double fWakeupTime = 71;  /* unit: us */
+    double fWakeupTime = 9.7;  /* unit: us */
 
     /* Get PCLK */
     u32PCLK = CLK_GetPCLK0Freq();
