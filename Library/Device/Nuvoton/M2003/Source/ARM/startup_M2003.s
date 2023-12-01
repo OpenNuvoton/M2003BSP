@@ -156,12 +156,13 @@ Reset_Handler   PROC
                 LDR     R1, =0x88
                 STR     R1, [R0]
 
-                ; enable SRAM1
-                LDR     R3, =0x40000204
-                LDR     R1, [R3]
-                MOVW    R2, #0x200
-                ORRS    R1,R1,R2
-                STR     R1, [R3]
+                ; Init POR
+                LDR     R2, =0x40000024
+                LDR     R1, =0x5AA5
+                STR     R1, [R2]
+
+                LDR     R2, =0x400001EC
+                STR     R1, [R2]
 
 
                 ; Lock register
@@ -184,9 +185,14 @@ NMI_Handler     PROC
                 ENDP
 HardFault_Handler\
                 PROC
-                ;IMPORT  ProcessHardFault
+                IMPORT  ProcessHardFault
                 EXPORT  HardFault_Handler         [WEAK]
-                B       .
+                MOV     R0, LR
+                MRS     R1, MSP
+                MRS     R2, PSP
+                LDR     R3, =ProcessHardFault
+                BLX     R3
+                BX      R0
                 ENDP
 MemManage_Handler\
                 PROC

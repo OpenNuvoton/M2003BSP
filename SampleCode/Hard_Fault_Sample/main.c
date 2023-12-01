@@ -68,8 +68,11 @@ void SYS_Init(void)
 
     /* Enable UART clock */
     CLK_EnableModuleClock(UART0_MODULE);
+    
+    /* Enable TMR1 clock */
+    CLK_EnableModuleClock(TMR1_MODULE);    
 
-    /* Select UART clock source from HXT */
+    /* Select UART clock source from HIRC */
     CLK_SetModuleClock(UART0_MODULE, CLK_CLKSEL2_UART0SEL_HIRC, CLK_CLKDIV0_UART0(1));
 
     /* Update System Core Clock */
