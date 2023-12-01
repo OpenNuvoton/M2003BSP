@@ -388,9 +388,9 @@
               <FilePath>..\..\..\..\Library\Device\Nuvoton\M2003\Source\system_M2003.c</FilePath>
             </File>
             <File>
-              <FileName>startup_M2003.s</FileName>
+              <FileName>startup_M2003_user.s</FileName>
               <FileType>2</FileType>
-              <FilePath>..\..\..\..\Library\Device\Nuvoton\M2003\Source\ARM\startup_M2003.s</FilePath>
+              <FilePath>.\startup_M2003_user.s</FilePath>
             </File>
           </Files>
         </Group>

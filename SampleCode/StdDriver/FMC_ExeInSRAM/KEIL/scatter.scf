@@ -4,8 +4,8 @@ FLASH 0x00000000 0x00002000
 {
     FLASH +0
     {
-         startup_M2003.o(RESET, +First)
-         startup_M2003.o
+         startup_M2003_user.o(RESET, +First)
+         startup_M2003_user.o
          system_M2003.o
          anon$$obj.o
          init.o
