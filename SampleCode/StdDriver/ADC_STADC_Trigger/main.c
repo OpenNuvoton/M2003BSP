@@ -25,7 +25,6 @@ void ADC_IRQHandler(void)
     ADC_CLR_INT_FLAG(ADC, ADC_ADF_INT); /* Clear the A/D interrupt flag */
 
     g_u32COVNUMFlag++;
-    printf("[#%d] ADC conversion done.\n", g_u32COVNUMFlag);
 }
 
 void SYS_Init(void)
@@ -146,6 +145,7 @@ void ADC_FunctionTest()
 
                 /* Get the conversion result of ADC channel 2 */
                 i32ConversionData[g_u32COVNUMFlag - 1] = ADC_GET_CONVERSION_DATA(ADC, 2);
+                printf("[#%d] ADC conversion done.\n", g_u32COVNUMFlag);
 
                 if(g_u32COVNUMFlag >= 6)
                     break;

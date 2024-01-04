@@ -441,18 +441,26 @@ Example: If user want to set PA.1 as UART0_TXD and PA.0 as UART0_RXD in initial 
   * @param      None
   * @return     None
   * @details    This macro disable Power-on Reset function.
+  *             PORCTL0 disable digital logic POR.
+  *             PORCTL1 disable analog part POR.
   *             The register write-protection function should be disabled before using this macro.
   */
-#define SYS_DISABLE_POR()               (SYS->PORCTL0 = 0x5AA5)
+#define SYS_DISABLE_POR() \
+            (SYS->PORCTL0 = 0x5AA5); \
+            (SYS->PORCTL1 = 0x5AA5)
 
 /**
   * @brief      Enable Power-on Reset function
   * @param      None
   * @return     None
   * @details    This macro enable Power-on Reset function.
+  *             PORCTL0 enable digital logic POR.
+  *             PORCTL1 enable analog part POR.
   *             The register write-protection function should be disabled before using this macro.
   */
-#define SYS_ENABLE_POR()                (SYS->PORCTL0 = 0)
+#define SYS_ENABLE_POR() \
+            (SYS->PORCTL0 = 0); \
+            (SYS->PORCTL1 = 0)
 
 /**
   * @brief      Clear reset source flag

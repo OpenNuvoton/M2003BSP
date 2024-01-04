@@ -102,18 +102,21 @@ void ADC_FunctionTest()
     int32_t  i32ConversionData;
     int32_t  i32BuiltInData;
 
-    printf("+----------------------------------------------------------------------------+\n");
-    printf("|     ADC for calculate battery voltage (AVdd) by using band-gap test        |\n");
-    printf("+----------------------------------------------------------------------------+\n\n");
+    printf("+------------------------------------------------------------------------+\n");
+    printf("|     ADC for calculate battery voltage (AVdd) by using band-gap test    |\n");
+    printf("+------------------------------------------------------------------------+\n\n");
 
-    printf("+----------------------------------------------------------------------+\n");
-    printf("|   ADC clock source -> HIRC   = 24 MHz                                |\n");
-    printf("|   ADC clock divider          = 2                                     |\n");
-    printf("|   ADC clock                  = 24 MHz / 2 = 12 MHz                   |\n");
-    printf("|   ADC extended sampling time = 223                                   |\n");
-    printf("|   ADC conversion time = 17 + ADC extended sampling time = 240        |\n");
-    printf("|   ADC conversion rate = 12 MHz / 240 = 50 ksps                       |\n");
-    printf("+----------------------------------------------------------------------+\n");
+    printf("+------------------------------------------------------------------------+\n");
+    printf("|   ADC clock source -> HIRC   = 24 MHz                                  |\n");
+    printf("|   ADC clock divider          = 2                                       |\n");
+    printf("|   ADC clock                  = 24 MHz / 2 = 12 MHz (83.33 ns per clock)|\n");
+    printf("|   ADC extended sampling time = 221 ADC clocks                          |\n");
+    printf("|   Aysnc ADC conversion time  =                                         |\n");
+    printf("|       1 us + (7 + ADC extended sampling time) clocks =                 |\n");
+    printf("|       1 us + 228 clocks = 1 us + (83.33 ns * 228) = 20 us              |\n");
+    printf("|   ADC conversion rate = 1 second / 20 us = 50 KSPS                     |\n");
+    printf("+------------------------------------------------------------------------+\n");
+
 
     /* Enable ADC converter */
     ADC_POWER_ON(ADC);
@@ -121,11 +124,8 @@ void ADC_FunctionTest()
     /* Set input mode as single-end, Single mode, and select channel 29 (band-gap voltage) */
     ADC_Open(ADC, 0, ADC_ADCR_ADMD_SINGLE, BIT29);
 
-    /* To sample band-gap precisely, the ADC capacitor must be charged at least 3 us for charging the ADC capacitor ( Cin )*/
-    /* Sampling time = extended sampling time + 1 */
-    /* 1/12000000 * (Sampling time) = 3 us */
-    /* Set sample module external sampling time to 223 */
-    ADC_SetExtendSampleTime(ADC, 0, 223);
+    /* Set sample module external sampling time to 221 */
+    ADC_SetExtendSampleTime(ADC, 0, 221);
 
     /* Clear the A/D interrupt flag for safe */
     ADC_CLR_INT_FLAG(ADC, ADC_ADF_INT);
