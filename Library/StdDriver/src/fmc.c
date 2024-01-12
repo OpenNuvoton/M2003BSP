@@ -387,49 +387,66 @@ uint32_t  FMC_GetChkSum(uint32_t u32addr, uint32_t u32count)
 
 uint32_t FMC_CheckAllOne(uint32_t u32addr, uint32_t u32count)
 {
-    uint32_t  tout;
+    uint32_t  ret = READ_ALLONE_CMD_FAIL;
+    int32_t   i32TimeOutCnt0, i32TimeOutCnt1;
 
     g_FMC_i32ErrCode = 0;
-  
-    FMC->ISPSTS = 0x80UL; /* clear check all one bit */
 
-    FMC->ISPCMD = FMC_ISPCMD_RUN_ALL1;
-    FMC->ISPADDR = u32addr;
-    FMC->ISPDAT = u32count;
-    FMC->ISPTRG = FMC_ISPTRG_ISPGO_Msk;
+    FMC->ISPSTS = 0x80UL;   /* clear check all one bit */
 
-    tout = FMC_TIMEOUT_CHKALLONE;
-    while ((--tout > 0) && (FMC->ISPSTS & FMC_ISPSTS_ISPBUSY_Msk)) {}
-    if (tout == 0)
+    FMC->ISPCMD   = FMC_ISPCMD_RUN_ALL1;
+    FMC->ISPADDR  = u32addr;
+    FMC->ISPDAT   = u32count;
+    FMC->ISPTRG   = FMC_ISPTRG_ISPGO_Msk;
+
+    i32TimeOutCnt0 = FMC_TIMEOUT_CHKALLONE;
+    while(FMC->ISPSTS & FMC_ISPSTS_ISPBUSY_Msk)
     {
-        g_FMC_i32ErrCode = -1;
-        return READ_ALLONE_CMD_FAIL;
-    }
-
-    tout = FMC_TIMEOUT_CHKALLONE;
-
-    do
-    {
-        FMC->ISPCMD = FMC_ISPCMD_READ_ALL1;
-        FMC->ISPADDR = u32addr;
-        FMC->ISPTRG = FMC_ISPTRG_ISPGO_Msk;
-
-        while ((--tout > 0) && (FMC->ISPSTS & FMC_ISPSTS_ISPBUSY_Msk)) {}
-        if (tout == 0)
+        if( i32TimeOutCnt0-- <= 0)
         {
             g_FMC_i32ErrCode = -1;
-            return READ_ALLONE_CMD_FAIL;
+            break;
         }
     }
-    while (FMC->ISPDAT == 0UL);
-    
-    if ((FMC->ISPDAT == READ_ALLONE_YES) || (FMC->ISPDAT == READ_ALLONE_NOT))
-        return FMC->ISPDAT;
-    else
+
+    if(g_FMC_i32ErrCode == 0)
     {
-        g_FMC_i32ErrCode = -1;
-        return READ_ALLONE_CMD_FAIL;
+        i32TimeOutCnt1 = FMC_TIMEOUT_CHKALLONE;
+        do
+        {
+            FMC->ISPCMD = FMC_ISPCMD_READ_ALL1;
+            FMC->ISPADDR = u32addr;
+            FMC->ISPTRG = FMC_ISPTRG_ISPGO_Msk;
+
+            i32TimeOutCnt0 = FMC_TIMEOUT_CHKALLONE;
+            while(FMC->ISPSTS & FMC_ISPSTS_ISPBUSY_Msk)
+            {
+                if( i32TimeOutCnt0-- <= 0)
+                {
+                    g_FMC_i32ErrCode = -1;
+                    break;
+                }
+            }
+
+            if( i32TimeOutCnt1-- <= 0)
+            {
+                g_FMC_i32ErrCode = -1;
+            }
+        }
+        while( (FMC->ISPDAT == 0UL) && (g_FMC_i32ErrCode == 0) );
     }
+
+    if( g_FMC_i32ErrCode == 0 )
+    {
+        if(FMC->ISPDAT == READ_ALLONE_YES)
+            ret = READ_ALLONE_YES;
+        else if(FMC->ISPDAT == READ_ALLONE_NOT)
+            ret = READ_ALLONE_NOT;
+        else
+            g_FMC_i32ErrCode = -1;
+    }
+
+    return ret;
 }
 
 
