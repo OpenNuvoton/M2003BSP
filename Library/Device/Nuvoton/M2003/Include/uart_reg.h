@@ -85,8 +85,8 @@ typedef struct
      * |        |          |Note: When nCTS auto-flow is enabled, the UART will send data to external device if nCTS input assert (UART will not send data to device until nCTS is asserted).
      * |[16]    |SWBEIEN   |Single-wire Bit Error Detection Interrupt Enable Bit
      * |        |          |Set this bit, the Single-wire Half Duplex Bit Error Detection Interrupt SWBEINT(UART_INTSTS[24]) is generated when Single-wire Bit Error Detection SWBEIF(UART_INTSTS[16]) is set.
-     * |        |          |0 = Single-wire Bit Error Detect Inerrupt Disabled.
-     * |        |          |1 = Single-wire Bit Error Detect Inerrupt Enabled.
+     * |        |          |0 = Single-wire Bit Error Detect Interrupt Disabled.
+     * |        |          |1 = Single-wire Bit Error Detect Interrupt Enabled.
      * |        |          |Note: This bit is valid when FUNCSEL (UART_FUNCSEL[2:0]) is select UART Single-wire mode.
      * |[18]    |ABRIEN    |Auto-baud Rate Interrupt Enable Bit
      * |        |          |0 = Auto-baud rate interrupt Disabled.
@@ -373,10 +373,10 @@ typedef struct
      * |        |          |1 = Buffer error interrupt flag is generated.
      * |        |          |Note: This bit is cleared if both of RXOVIF(UART_FIFOSTS[0]) and TXOVIF(UART_FIFOSTS[24]) are cleared to 0 by writing 1 to RXOVIF(UART_FIFOSTS[0]) and TXOVIF(UART_FIFOSTS[24]).
      * |[6]     |WKIF      |UART Wake-up Interrupt Flag (Read Only)
-     * |        |          |This bit is set when TOUTWKF (UART_WKSTS[4]), RS485WKF (UART_WKSTS[3]), RFRTWKF (UART_WKSTS[2]), DATWKF (UART_WKSTS[1]) or CTSWKF(UART_WKSTS[0]) is set to 1.
+     * |        |          |This bit is set when DATWKF (UART_WKSTS[1]) or CTSWKF(UART_WKSTS[0]) is set to 1.
      * |        |          |0 = No UART wake-up interrupt flag is generated.
      * |        |          |1 = UART wake-up interrupt flag is generated.
-     * |        |          |Note: This bit is cleared if all of TOUTWKF, RS485WKF, RFRTWKF, DATWKF and CTSWKF are cleared to 0 by writing 1 to the corresponding interrupt flag.
+     * |        |          |Note: This bit is cleared if all of DATWKF and CTSWKF are cleared to 0 by writing 1 to the corresponding interrupt flag.
      * |[8]     |RDAINT    |Receive Data Available Interrupt Indicator (Read Only)
      * |        |          |This bit is set if RDAIEN (UART_INTEN[0]) and RDAIF (UART_INTSTS[0]) are both set to 1.
      * |        |          |0 = No RDA interrupt is generated.
@@ -479,13 +479,13 @@ typedef struct
      * |        |          |1 = Inverse transmitting output signal.
      * |        |          |Note1: Before setting this bit, TXRXDIS (UART_FUNCSEL[3]) should be set then waited for TXRXACT (UART_FIFOSTS[31]) is cleared
      * |        |          |When the configuration is done, cleared TXRXDIS (UART_FUNCSEL[3]) to activate UART controller.
-     * |        |          |Note2: This bit is valid when FUNCSEL (UART_FUNCSEL[1:0]) is select IrDA function.
+     * |        |          |Note2: This bit is valid when FUNCSEL (UART_FUNCSEL[2:0]) is select IrDA function.
      * |[6]     |RXINV     |IrDA Inverse Receive Input Signal
      * |        |          |0 = None inverse receiving input signal.
      * |        |          |1 = Inverse receiving input signal. (Default)
      * |        |          |Note1: Before setting this bit, TXRXDIS (UART_FUNCSEL[3]) should be set then waited for TXRXACT (UART_FIFOSTS[31]) is cleared
      * |        |          |When the configuration is done, cleared TXRXDIS (UART_FUNCSEL[3]) to activate UART controller.
-     * |        |          |Note2: This bit is valid when FUNCSEL (UART_FUNCSEL[1:0]) is select IrDA function.
+     * |        |          |Note2: This bit is valid when FUNCSEL (UART_FUNCSEL[2:0]) is select IrDA function.
      * @var UART_T::ALTCTL
      * Offset: 0x2C  UART Alternate Control/Status Register
      * ---------------------------------------------------------------------------------------------------
@@ -543,7 +543,7 @@ typedef struct
      * |        |          |1 = TX and RX Disabled.
      * |        |          |Note: The TX and RX will not be disabled immediately when this bit is set
      * |        |          |The TX and RX complete current task before TX and RX are disabled
-     * |        |          |When TX and RX disable, the TXRXACT (UART_FIFOSTS[31]) is cleared.
+     * |        |          |When TX and RX are disabled, the TXRXACT (UART_FIFOSTS[31]) is cleared.
      * |[6]     |DGE       |Deglitch Enable Bit
      * |        |          |0 = Deglitch Disabled.
      * |        |          |1 = Deglitch Enabled.
