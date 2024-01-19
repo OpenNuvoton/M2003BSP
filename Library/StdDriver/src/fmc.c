@@ -120,6 +120,27 @@ int32_t FMC_Erase_SPROM(void)
         return -1;
 
     }
+    FMC->ISPCMD = FMC_ISPCMD_PAGE_ERASE;
+    FMC->ISPADDR = FMC_SPROM_BASE + FMC_FLASH_PAGE_SIZE;
+    FMC->ISPDAT = 0x0055AA03UL;
+    FMC->ISPTRG = FMC_ISPTRG_ISPGO_Msk;
+
+    tout = FMC_TIMEOUT_ERASE;
+    
+    while ((--tout > 0) && (FMC->ISPTRG & FMC_ISPTRG_ISPGO_Msk)) {}
+    if (tout == 0)
+    {
+        g_FMC_i32ErrCode = -1;
+        return -1;
+    }
+
+    if (FMC->ISPCTL & FMC_ISPCTL_ISPFF_Msk)
+    {
+        FMC->ISPCTL |= FMC_ISPCTL_ISPFF_Msk;
+        g_FMC_i32ErrCode = -1;
+        return -1;
+
+    }		
     return 0;
 }
 

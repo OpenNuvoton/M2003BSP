@@ -46,7 +46,7 @@ extern "C"
 
 #define FMC_APROM_SIZE          0x8000UL        /*!< APROM Size                      */
 #define FMC_LDROM_SIZE          0x1000UL        /*!< LDROM Size (4 Kbytes)           */
-#define FMC_SPROM_SIZE          (0x200)         /*!< SPROM Size (512 bytes)                \hideinitializer */
+#define FMC_SPROM_SIZE          (0x400)         /*!< SPROM Size (512 bytes)                \hideinitializer */
 
 /*----------------------------------------------------------------------------------------------------------*/
 /*  ISPCMD constant definitions                                                                             */
