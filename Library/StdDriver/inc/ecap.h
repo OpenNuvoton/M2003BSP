@@ -42,7 +42,6 @@ extern "C"
 #define ECAP_NOISE_FILTER_CLKDIV_64         (5UL<<ECAP_CTL0_NFCLKSEL_Pos)   /*!< Noise filter clock divide by 64  \hideinitializer */
 
 #define ECAP_CAP_INPUT_SRC_FROM_IC          (0UL)   /*!< CAP input source from IC             \hideinitializer */
-#define ECAP_CAP_INPUT_SRC_FROM_CH          (2UL)   /*!< CAP input source from CH of QEI      \hideinitializer */
 
 #define ECAP_DISABLE_COMPARE                (0UL<<ECAP_CTL0_CMPEN_Pos)  /*!< Input capture compare and reload function disable \hideinitializer */
 #define ECAP_COMPARE_FUNCTION               (1UL<<ECAP_CTL0_CMPEN_Pos)  /*!< Input capture compare function  \hideinitializer */
@@ -150,7 +149,6 @@ extern "C"
   *                  - \ref ECAP_IC2
   * @param[in] u32Src    The input source
   *                  - \ref ECAP_CAP_INPUT_SRC_FROM_IC
-  *                  - \ref ECAP_CAP_INPUT_SRC_FROM_CH
   * @return None
   * @details This macro will select the input source from ICx, CHx.
   * \hideinitializer
@@ -422,9 +420,9 @@ extern "C"
   * @brief This macro is used to get input capture counter hold value
   * @param[in] ecap      Specify ECAP port
   * @param[in] u32Index  The input channel number
-  *                  - \ref ECAP_IC0
-  *                  - \ref ECAP_IC1
-  *                  - \ref ECAP_IC2
+  *                      - \ref ECAP_IC0
+  *                      - \ref ECAP_IC1
+  *                      - \ref ECAP_IC2
   * @return Capture counter hold value
   * @details This macro will get a hold value of input capture channel_n.
   * \hideinitializer
@@ -440,6 +438,56 @@ extern "C"
   * \hideinitializer
   */
 #define ECAP_SET_CNT_CMP(ecap, u32Val) ((ecap)->CNTCMP = (u32Val))
+
+/**
+  * @brief This macro is used to enable the window mode function
+  * @param[in] ecap      Specify ECAP port
+  * @param[in] u32Index  The input channel number
+  *                      - \ref ECAP_IC0
+  *                      - \ref ECAP_IC1
+  *                      - \ref ECAP_IC2
+  * @return None
+  * @details This macro will enable the window mode function.
+  * \hideinitializer
+  */
+#define ECAP_ENABLE_WINDOW_MODE(ecap, u32Index)     ((ecap)->WMCTL |= (ECAP_WMCTL_WCAP0EN_Msk << u32Index))
+
+/**
+  * @brief This macro is used to disable the window mode function
+  * @param[in] ecap      Specify ECAP port
+  * @param[in] u32Index  The input channel number
+  *                      - \ref ECAP_IC0
+  *                      - \ref ECAP_IC1
+  *                      - \ref ECAP_IC2
+  * @return None
+  * @details This macro will disable the window mode function.
+  * \hideinitializer
+  */
+#define ECAP_DISABLE_WINDOW_MODE(ecap, u32Index)    ((ecap)->WMCTL &= ~(ECAP_WMCTL_WCAP0EN_Msk << u32Index))
+
+/**
+  * @brief This macro is used to set the window mode delay count
+  * @param[in] ecap      Specify ECAP port
+  * @param[in] u32Index  The input channel number
+  *                      - \ref ECAP_IC0
+  *                      - \ref ECAP_IC1
+  *                      - \ref ECAP_IC2
+  * @param[in] u32Val    Input capture window mode delay count. Valid value between 0x00 ~ 0xFF.
+  * @return None
+  * @details This macro will set the window mode delay count. Real delay time is (4 * u32Val) * ECAP_CLK.
+  * \hideinitializer
+  */
+#define ECAP_SET_WINDOW_MODE_DELAY(ecap, u32Index, u32Val)  ((ecap)->WMDLY = ((ecap)->WMDLY & ~((ECAP_WMDLY_WMCAP0DLY_Msk << (u32Index<<3)))) | ((u32Val & 0xFF) << (u32Index<<3)))
+
+/**
+  * @brief This macro is used to get the window mode counter hold value
+  * @param[in] ecap      Specify ECAP port
+  * @return None
+  * @details This macro will get the window mode counter hold value.
+  * \hideinitializer
+  */
+#define ECAP_GET_WINDOW_MODE_HOLD_VALUE(ecap)   ((ecap)->TRGHLD)
+
 
 void ECAP_Open(ECAP_T* ecap, uint32_t u32FuncMask);
 void ECAP_Close(ECAP_T* ecap);

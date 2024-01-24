@@ -319,8 +319,11 @@ extern "C"
 #define CLK_SPDWKPIN_DEBOUNCEEN     (0x1UL << CLK_PBSWKCTL_DBEN_Pos)    /*!< Enable Standby power-down pin De-bounce function */
 #define CLK_SPDWKPIN_DEBOUNCEDIS    (0x0UL << CLK_PBSWKCTL_DBEN_Pos)    /*!< Disable Standby power-down pin De-bounce function */
 
+#define CLK_TIMEOUT_ERR             (-1)    /*!< Clock timeout error value \hideinitializer */
 
 /**@}*/ /* end of group CLK_EXPORTED_CONSTANTS */
+
+extern int32_t g_CLK_i32ErrCode;
 
 /** @addtogroup CLK_EXPORTED_FUNCTIONS CLK Exported Functions
   @{
@@ -329,123 +332,203 @@ extern "C"
 /**
   * @brief      Disable Wake-up Timer
   * @param      None
-  * @return     None
+  * @return     Setting success or not
+  * @retval     0                   Success
+  * @retval     CLK_TIMEOUT_ERR     Failed due to PMUCTL register is busy
   * @details    This macro disables Wake-up timer at Standby or Deep Power-down mode.
   */
-#define CLK_DISABLE_WKTMR() \
-    do { \
-        while(CLK->PMUCTL & CLK_PMUCTL_WRBUSY_Msk); \
-        CLK->PMUCTL &= ~CLK_PMUCTL_WKTMREN_Msk; \
-    } while(0)
+__STATIC_INLINE int32_t CLK_DISABLE_WKTMR(void)
+{
+    uint32_t u32TimeOutCnt = SystemCoreClock * 2;
+
+    while(CLK->PMUCTL & CLK_PMUCTL_WRBUSY_Msk)
+    {
+        if(--u32TimeOutCnt == 0)
+        {
+            break;
+        }
+    }
+    CLK->PMUCTL &= ~CLK_PMUCTL_WKTMREN_Msk;
+
+    if(u32TimeOutCnt == 0)
+        return CLK_TIMEOUT_ERR;
+    else
+        return 0;
+}
 
 /**
   * @brief      Enable Wake-up Timer
   * @param      None
-  * @return     None
+  * @return     Setting success or not
+  * @retval     0                   Success
+  * @retval     CLK_TIMEOUT_ERR     Failed due to PMUCTL register is busy
   * @details    This macro enables Wake-up timer at Standby or Deep Power-down mode.
   */
-#define CLK_ENABLE_WKTMR() \
-    do { \
-        while(CLK->PMUCTL & CLK_PMUCTL_WRBUSY_Msk); \
-        CLK->PMUCTL |= CLK_PMUCTL_WKTMREN_Msk; \
-    } while(0)
+__STATIC_INLINE int32_t CLK_ENABLE_WKTMR(void)
+{
+    uint32_t u32TimeOutCnt = SystemCoreClock * 2;
+
+    while(CLK->PMUCTL & CLK_PMUCTL_WRBUSY_Msk)
+    {
+        if(--u32TimeOutCnt == 0)
+        {
+            break;
+        }
+    }
+    CLK->PMUCTL |= CLK_PMUCTL_WKTMREN_Msk;
+
+    if(u32TimeOutCnt == 0)
+        return CLK_TIMEOUT_ERR;
+    else
+        return 0;
+}
 
 /**
   * @brief      Disable DPD Mode Wake-up Pin 1
   * @param      None
-  * @return     None
+  * @return     Setting success or not
+  * @retval     0                   Success
+  * @retval     CLK_TIMEOUT_ERR     Failed due to PMUCTL register is busy
   * @details    This macro disables Wake-up pin 1 (GPB.0) at Deep Power-down mode.
   */
-#define CLK_DISABLE_DPDWKPIN1() \
-    do { \
-        while(CLK->PMUCTL & CLK_PMUCTL_WRBUSY_Msk); \
-        CLK->PMUCTL &= ~CLK_PMUCTL_WKPIN1EN_Msk; \
-    } while(0)
+__STATIC_INLINE int32_t CLK_DISABLE_DPDWKPIN1(void)
+{
+    uint32_t u32TimeOutCnt = SystemCoreClock * 2;
+
+    while(CLK->PMUCTL & CLK_PMUCTL_WRBUSY_Msk)
+    {
+        if(--u32TimeOutCnt == 0)
+        {
+            break;
+        }
+    }
+    CLK->PMUCTL &= ~CLK_PMUCTL_WKPINEN1_Msk;
+
+    if(u32TimeOutCnt == 0)
+        return CLK_TIMEOUT_ERR;
+    else
+        return 0;
+}
 
 /**
   * @brief      Disable DPD Mode Wake-up Pin 2
   * @param      None
-  * @return     None
+  * @return     Setting success or not
+  * @retval     0                   Success
+  * @retval     CLK_TIMEOUT_ERR     Failed due to PMUCTL register is busy
   * @details    This macro disables Wake-up pin 2 (GPB.2) at Deep Power-down mode.
   */
-#define CLK_DISABLE_DPDWKPIN2() \
-    do { \
-        while(CLK->PMUCTL & CLK_PMUCTL_WRBUSY_Msk); \
-        CLK->PMUCTL &= ~CLK_PMUCTL_WKPIN2EN_Msk; \
-    } while(0)
+__STATIC_INLINE int32_t CLK_DISABLE_DPDWKPIN2(void)
+{
+    uint32_t u32TimeOutCnt = SystemCoreClock * 2;
+
+    while(CLK->PMUCTL & CLK_PMUCTL_WRBUSY_Msk)
+    {
+        if(--u32TimeOutCnt == 0)
+        {
+            break;
+        }
+    }
+    CLK->PMUCTL &= ~CLK_PMUCTL_WKPINEN2_Msk;
+
+    if(u32TimeOutCnt == 0)
+        return CLK_TIMEOUT_ERR;
+    else
+        return 0;
+}
 
 /**
   * @brief      Disable DPD Mode Wake-up Pin 3
   * @param      None
-  * @return     None
+  * @return     Setting success or not
+  * @retval     0                   Success
+  * @retval     CLK_TIMEOUT_ERR     Failed due to PMUCTL register is busy
   * @details    This macro disables Wake-up pin 3 (GPB.12) at Deep Power-down mode.
   */
-#define CLK_DISABLE_DPDWKPIN3() \
-    do { \
-        while(CLK->PMUCTL & CLK_PMUCTL_WRBUSY_Msk); \
-        CLK->PMUCTL &= ~CLK_PMUCTL_WKPIN3EN_Msk; \
-    } while(0)
+__STATIC_INLINE int32_t CLK_DISABLE_DPDWKPIN3(void)
+{
+    uint32_t u32TimeOutCnt = SystemCoreClock * 2;
+
+    while(CLK->PMUCTL & CLK_PMUCTL_WRBUSY_Msk)
+    {
+        if(--u32TimeOutCnt == 0)
+        {
+            break;
+        }
+    }
+    CLK->PMUCTL &= ~CLK_PMUCTL_WKPINEN3_Msk;
+
+    if(u32TimeOutCnt == 0)
+        return CLK_TIMEOUT_ERR;
+    else
+        return 0;
+}
 
 /**
- * @brief       Set Wake-up Timer Time-out Interval
- *
- * @param[in]   u32Interval  The Wake-up Timer Time-out Interval selection. It could be
- *                             - \ref CLK_PMUCTL_WKTMRIS_128
- *                             - \ref CLK_PMUCTL_WKTMRIS_256
- *                             - \ref CLK_PMUCTL_WKTMRIS_512
- *                             - \ref CLK_PMUCTL_WKTMRIS_1024
- *                             - \ref CLK_PMUCTL_WKTMRIS_4096
- *                             - \ref CLK_PMUCTL_WKTMRIS_8192
- *                             - \ref CLK_PMUCTL_WKTMRIS_16384
- *                             - \ref CLK_PMUCTL_WKTMRIS_65536
- *
- * @return      None
- *
- * @details     This function set Wake-up Timer Time-out Interval.
- *
- *
- */
-#define CLK_SET_WKTMR_INTERVAL(u32Interval) \
-   do { \
-        while(CLK->PMUCTL & CLK_PMUCTL_WRBUSY_Msk); \
-        CLK->PMUCTL = (CLK->PMUCTL & (~CLK_PMUCTL_WKTMRIS_Msk)) | (u32Interval); \
-    } while(0)
+  * @brief      Set Wake-up Timer Time-out Interval
+  * @param[in]  u32Interval  The Wake-up Timer Time-out Interval selection. It could be
+  *                            - \ref CLK_PMUCTL_WKTMRIS_128
+  *                            - \ref CLK_PMUCTL_WKTMRIS_256
+  *                            - \ref CLK_PMUCTL_WKTMRIS_512
+  *                            - \ref CLK_PMUCTL_WKTMRIS_1024
+  *                            - \ref CLK_PMUCTL_WKTMRIS_4096
+  *                            - \ref CLK_PMUCTL_WKTMRIS_8192
+  *                            - \ref CLK_PMUCTL_WKTMRIS_16384
+  *                            - \ref CLK_PMUCTL_WKTMRIS_65536
+  * @return     Setting success or not
+  * @retval     0                   Success
+  * @retval     CLK_TIMEOUT_ERR     Failed due to PMUCTL register is busy
+  * @details    This function set Wake-up Timer Time-out Interval.
+  */
+__STATIC_INLINE int32_t CLK_SET_WKTMR_INTERVAL(uint32_t u32Interval)
+{
+    uint32_t u32TimeOutCnt = SystemCoreClock * 2;
+
+    while(CLK->PMUCTL & CLK_PMUCTL_WRBUSY_Msk)
+    {
+        if(--u32TimeOutCnt == 0)
+        {
+            break;
+        }
+    }
+    CLK->PMUCTL = (CLK->PMUCTL & (~CLK_PMUCTL_WKTMRIS_Msk)) | (u32Interval);
+
+    if(u32TimeOutCnt == 0)
+        return CLK_TIMEOUT_ERR;
+    else
+        return 0;
+}
 
 /**
- * @brief       Set De-bounce Sampling Cycle Time
- *
- * @param[in]   u32CycleSel   The de-bounce sampling cycle selection. It could be
- *                             - \ref CLK_SWKDBCTL_SWKDBCLKSEL_1
- *                             - \ref CLK_SWKDBCTL_SWKDBCLKSEL_2
- *                             - \ref CLK_SWKDBCTL_SWKDBCLKSEL_4
- *                             - \ref CLK_SWKDBCTL_SWKDBCLKSEL_8
- *                             - \ref CLK_SWKDBCTL_SWKDBCLKSEL_16
- *                             - \ref CLK_SWKDBCTL_SWKDBCLKSEL_32
- *                             - \ref CLK_SWKDBCTL_SWKDBCLKSEL_64
- *                             - \ref CLK_SWKDBCTL_SWKDBCLKSEL_128
- *                             - \ref CLK_SWKDBCTL_SWKDBCLKSEL_256
- *                             - \ref CLK_SWKDBCTL_SWKDBCLKSEL_2x256
- *                             - \ref CLK_SWKDBCTL_SWKDBCLKSEL_4x256
- *                             - \ref CLK_SWKDBCTL_SWKDBCLKSEL_8x256
- *                             - \ref CLK_SWKDBCTL_SWKDBCLKSEL_16x256
- *                             - \ref CLK_SWKDBCTL_SWKDBCLKSEL_32x256
- *                             - \ref CLK_SWKDBCTL_SWKDBCLKSEL_64x256
- *                             - \ref CLK_SWKDBCTL_SWKDBCLKSEL_128x256
- *
- * @return      None
- *
- * @details     This function set Set De-bounce Sampling Cycle Time for Standby Power-down pin wake-up.
- *
- *
- */
+  * @brief      Set De-bounce Sampling Cycle Time
+  * @param[in]  u32CycleSel  The de-bounce sampling cycle selection. It could be
+  *                            - \ref CLK_SWKDBCTL_SWKDBCLKSEL_1
+  *                            - \ref CLK_SWKDBCTL_SWKDBCLKSEL_2
+  *                            - \ref CLK_SWKDBCTL_SWKDBCLKSEL_4
+  *                            - \ref CLK_SWKDBCTL_SWKDBCLKSEL_8
+  *                            - \ref CLK_SWKDBCTL_SWKDBCLKSEL_16
+  *                            - \ref CLK_SWKDBCTL_SWKDBCLKSEL_32
+  *                            - \ref CLK_SWKDBCTL_SWKDBCLKSEL_64
+  *                            - \ref CLK_SWKDBCTL_SWKDBCLKSEL_128
+  *                            - \ref CLK_SWKDBCTL_SWKDBCLKSEL_256
+  *                            - \ref CLK_SWKDBCTL_SWKDBCLKSEL_2x256
+  *                            - \ref CLK_SWKDBCTL_SWKDBCLKSEL_4x256
+  *                            - \ref CLK_SWKDBCTL_SWKDBCLKSEL_8x256
+  *                            - \ref CLK_SWKDBCTL_SWKDBCLKSEL_16x256
+  *                            - \ref CLK_SWKDBCTL_SWKDBCLKSEL_32x256
+  *                            - \ref CLK_SWKDBCTL_SWKDBCLKSEL_64x256
+  *                            - \ref CLK_SWKDBCTL_SWKDBCLKSEL_128x256
+  * @return     None
+  * @details    This function set Set De-bounce Sampling Cycle Time for Standby Power-down pin wake-up.
+  */
 #define CLK_SET_SPDDEBOUNCETIME(u32CycleSel)    (CLK->SWKDBCTL = (u32CycleSel))
 
 /*---------------------------------------------------------------------------------------------------------*/
 /* static inline functions                                                                                 */
 /*---------------------------------------------------------------------------------------------------------*/
 /* Declare these inline functions here to avoid MISRA C 2004 rule 8.1 error */
-__STATIC_INLINE void CLK_SysTickDelay(uint32_t us);
-__STATIC_INLINE void CLK_SysTickLongDelay(uint32_t us);
+__STATIC_INLINE int32_t CLK_SysTickDelay(uint32_t us);
+__STATIC_INLINE int32_t CLK_SysTickLongDelay(uint32_t us);
 
 
 /**
@@ -453,36 +536,54 @@ __STATIC_INLINE void CLK_SysTickLongDelay(uint32_t us);
   * @param[in]  us  Delay time. The Max value is (2^24-1) / CPU Clock(MHz). Ex:
   *                             96MHz => 174762us, 84MHz => 199728us,
   *                             64MHz => 262143us, 48MHz => 349525us ...
-  * @return     None
+  * @return     Delay success or not
+  * @retval     0                   Success, target delay time reached
+  * @retval     CLK_TIMEOUT_ERR     Delay function execute failed due to SysTick stop working
   * @details    Use the SysTick to generate the delay time and the UNIT is in us.
   *             The SysTick clock source is from HCLK, i.e the same as system core clock.
   *             User can use SystemCoreClockUpdate() to calculate CyclesPerUs automatically before using this function.
   */
-__STATIC_INLINE void CLK_SysTickDelay(uint32_t us)
+__STATIC_INLINE int32_t CLK_SysTickDelay(uint32_t us)
 {
+    /* The u32TimeOutCnt value must be greater than the max delay time of 1398ms if HCLK=12MHz */
+    uint32_t u32TimeOutCnt = SystemCoreClock * 2;
+
     SysTick->LOAD = us * CyclesPerUs;
     SysTick->VAL  = (0x0UL);
     SysTick->CTRL = SysTick_CTRL_CLKSOURCE_Msk | SysTick_CTRL_ENABLE_Msk;
 
     /* Waiting for down-count to zero */
-    while((SysTick->CTRL & SysTick_CTRL_COUNTFLAG_Msk) == 0UL)
+    while ((SysTick->CTRL & SysTick_CTRL_COUNTFLAG_Msk) == 0)
     {
+        if(--u32TimeOutCnt == 0)
+        {
+            break;
+        }
     }
 
     /* Disable SysTick counter */
     SysTick->CTRL = 0UL;
+
+    if(u32TimeOutCnt == 0)
+        return CLK_TIMEOUT_ERR;
+    else
+        return 0;
 }
 
 /**
   * @brief      This function execute long delay function.
   * @param[in]  us  Delay time.
-  * @return     None
+  * @return     Delay success or not
+  * @retval     0                   Success, target delay time reached
+  * @retval     CLK_TIMEOUT_ERR     Delay function execute failed due to SysTick stop working
   * @details    Use the SysTick to generate the long delay time and the UNIT is in us.
   *             The SysTick clock source is from HCLK, i.e the same as system core clock.
   *             User can use SystemCoreClockUpdate() to calculate CyclesPerUs automatically before using this function.
   */
-__STATIC_INLINE void CLK_SysTickLongDelay(uint32_t us)
+__STATIC_INLINE int32_t CLK_SysTickLongDelay(uint32_t us)
 {
+    /* The u32TimeOutCnt value must be greater than the max delay time of 1398ms if HCLK=12MHz */
+    uint32_t u32TimeOutCnt = SystemCoreClock * 2;
     uint32_t u32Delay;
 
     /* It should <= 65536us for each delay loop */
@@ -505,40 +606,50 @@ __STATIC_INLINE void CLK_SysTickLongDelay(uint32_t us)
         SysTick->CTRL = SysTick_CTRL_CLKSOURCE_Msk | SysTick_CTRL_ENABLE_Msk;
 
         /* Waiting for down-count to zero */
-        while((SysTick->CTRL & SysTick_CTRL_COUNTFLAG_Msk) == 0UL);
+        while ((SysTick->CTRL & SysTick_CTRL_COUNTFLAG_Msk) == 0UL)
+        {
+            if(--u32TimeOutCnt == 0)
+            {
+                break;
+            }
+        }
 
         /* Disable SysTick counter */
         SysTick->CTRL = 0UL;
 
+        if(u32TimeOutCnt == 0)
+            return CLK_TIMEOUT_ERR;
+        else
+            return 0;
+
     }
     while(us > 0UL);
-
 }
 
 
-void CLK_DisableCKO(void);
-void CLK_EnableCKO(uint32_t u32ClkSrc, uint32_t u32ClkDiv, uint32_t u32ClkDivBy1En);
-void CLK_PowerDown(void);
-void CLK_Idle(void);
+void     CLK_DisableCKO(void);
+void     CLK_EnableCKO(uint32_t u32ClkSrc, uint32_t u32ClkDiv, uint32_t u32ClkDivBy1En);
+void     CLK_PowerDown(void);
+void     CLK_Idle(void);
 uint32_t CLK_GetHCLKFreq(void);
 uint32_t CLK_GetPCLK0Freq(void);
 uint32_t CLK_GetPCLK1Freq(void);
 uint32_t CLK_GetCPUFreq(void);
 uint32_t CLK_SetCoreClock(uint32_t u32Hclk);
-void CLK_SetHCLK(uint32_t u32ClkSrc, uint32_t u32ClkDiv);
-void CLK_SetModuleClock(uint32_t u32ModuleIdx, uint32_t u32ClkSrc, uint32_t u32ClkDiv);
-void CLK_SetSysTickClockSrc(uint32_t u32ClkSrc);
-void CLK_EnableXtalRC(uint32_t u32ClkMask);
-void CLK_DisableXtalRC(uint32_t u32ClkMask);
-void CLK_EnableModuleClock(uint32_t u32ModuleIdx);
-void CLK_DisableModuleClock(uint32_t u32ModuleIdx);
+void     CLK_SetHCLK(uint32_t u32ClkSrc, uint32_t u32ClkDiv);
+void     CLK_SetModuleClock(uint32_t u32ModuleIdx, uint32_t u32ClkSrc, uint32_t u32ClkDiv);
+void     CLK_SetSysTickClockSrc(uint32_t u32ClkSrc);
+void     CLK_EnableXtalRC(uint32_t u32ClkMask);
+void     CLK_DisableXtalRC(uint32_t u32ClkMask);
+void     CLK_EnableModuleClock(uint32_t u32ModuleIdx);
+void     CLK_DisableModuleClock(uint32_t u32ModuleIdx);
 uint32_t CLK_WaitClockReady(uint32_t u32ClkMask);
-void CLK_EnableSysTick(uint32_t u32ClkSrc, uint32_t u32Count);
-void CLK_DisableSysTick(void);
-void CLK_SetPowerDownMode(uint32_t u32PDMode);
-void CLK_EnableDPDWKPin(uint32_t u32TriggerType);
+void     CLK_EnableSysTick(uint32_t u32ClkSrc, uint32_t u32Count);
+void     CLK_DisableSysTick(void);
+int32_t  CLK_SetPowerDownMode(uint32_t u32PDMode);
+int32_t  CLK_EnableDPDWKPin(uint32_t u32TriggerType);
 uint32_t CLK_GetPMUWKSrc(void);
-void CLK_EnableSPDWKPin(uint32_t u32Port, uint32_t u32Pin, uint32_t u32TriggerType, uint32_t u32DebounceEn);
+void     CLK_EnableSPDWKPin(uint32_t u32Port, uint32_t u32Pin, uint32_t u32TriggerType, uint32_t u32DebounceEn);
 uint32_t CLK_GetModuleClockSource(uint32_t u32ModuleIdx);
 uint32_t CLK_GetModuleClockDivider(uint32_t u32ModuleIdx);
 

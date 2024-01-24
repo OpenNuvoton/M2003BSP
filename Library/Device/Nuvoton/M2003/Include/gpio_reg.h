@@ -30,7 +30,7 @@ typedef struct
      * | :----: | :----:   | :---- |
      * |[2n+1:2n]|MODEn    |Port B-F I/O Pin[n] Mode Control
      * |        |          |Determine each I/O mode of Px.n pins.
-     * |        |          |00 = Px.n is in Input mode.
+     * |        |          |00 = Px.n is in Input mode (tri-state).
      * |        |          |01 = Px.n is in Push-pull Output mode.
      * |        |          |10 = Px.n is in Open-drain Output mode.
      * |        |          |11 = Px.n is in Quasi-bidirectional mode.
@@ -44,7 +44,7 @@ typedef struct
      * ---------------------------------------------------------------------------------------------------
      * |Bits    |Field     |Descriptions
      * | :----: | :----:   | :---- |
-     * |[n+16]  |DINOFFn   |Port B-F Pin[n] Digital Input Path Disable Control
+     * |[n+16]  |DINOFFn   |Port B-F Pin[n] Digital Input Path Disable Bit
      * |        |          |Each of these bits is used to control if the digital input path of corresponding Px.n pin is disabled.
      * |        |          |If input is analog signal, users can disable Px.n digital input path to avoid input current leakage.
      * |        |          |0 = Px.n digital input path Enabled.
@@ -68,7 +68,7 @@ typedef struct
      * |[n]     |DATMSKn   |Port B-F Pin[n] Data Output Write Mask
      * |        |          |These bits are used to protect the corresponding DOUT (Px_DOUT[n]) bit.
      * |        |          |When the DATMSK (Px_DATMSK[n]) bit is set to 1, the corresponding DOUT (Px_DOUT[n]) bit is protected.
-     * |        |          |If the write signal is masked, writing data to the protect bit is ignored.
+     * |        |          |If the write signal is masked, writing data to the protect bit is ineffective.
      * |        |          |0 = Corresponding DOUT (Px_DOUT[n]) bit can be updated.
      * |        |          |1 = Corresponding DOUT (Px_DOUT[n]) bit protected.
      * |        |          |Note 1: This function only protects the corresponding DOUT (Px_DOUT[n]) bit, and will not protect the corresponding PDIO (Pxn_PDIO[0]) bit.
@@ -84,7 +84,7 @@ typedef struct
      * |        |          |1 = The corresponding pin status is high.
      * |        |          |Note: The PB.6/PB.10/PC.0~13/PC.15/PE.0~14/PF.3~15 pins are ignored.
      * @var GPIO_T::DBEN
-     * Offset: 0x54/0x94/0x114/0x154  PB-F De-Bounce Enable Control
+     * Offset: 0x54/0x94/0x114/0x154  PB-F De-Bounce Enable Control Register
      * ---------------------------------------------------------------------------------------------------
      * |Bits    |Field     |Descriptions
      * | :----: | :----:   | :---- |
@@ -95,7 +95,7 @@ typedef struct
      * |        |          |0 = Px.n de-bounce function Disabled.
      * |        |          |1 = Px.n de-bounce function Enabled.
      * |        |          |The de-bounce function is valid only for edge triggered interrupt.
-     * |        |          |If the interrupt mode is level triggered, the de-bounce enable bit is ignored.
+     * |        |          |If the interrupt mode is level triggered, the de-bounce enable bit is ineffective.
      * |        |          |Note: The PB.6/PB.10/PC.0~13/PC.15/PE.0~14/PF.3~15 pins are ignored.
      * @var GPIO_T::INTTYPE
      * Offset: 0x58/0x98/0x118/0x158  PB-F Interrupt Trigger Type Control
@@ -109,12 +109,12 @@ typedef struct
      * |        |          |0 = Edge trigger interrupt.
      * |        |          |1 = Level trigger interrupt.
      * |        |          |If the pin is set as the level trigger interrupt, only one level can be set on the registers RHIEN (Px_INTEN[n+16])/FLIEN (Px_INTEN[n]).
-     * |        |          |If both levels to trigger interrupt are set, the setting is ignored and no interrupt will occur.
+     * |        |          |If both levels to trigger interrupt are set, the setting has no effect and no interrupt will occur.
      * |        |          |The de-bounce function is valid only for edge triggered interrupt.
-     * |        |          |If the interrupt mode is level triggered, the de-bounce enable bit is ignored.
+     * |        |          |If the interrupt mode is level triggered, the de-bounce enable bit is ineffective.
      * |        |          |Note: The PB.6/PB.10/PC.0~13/PC.15/PE.0~14/PF.3~15 pins are ignored.
      * @var GPIO_T::INTEN
-     * Offset: 0x5C/0x9C/0x11C/0x15C  PB-F Interrupt Enable Control
+     * Offset: 0x5C/0x9C/0x11C/0x15C  PB-F Interrupt Enable Control Register
      * ---------------------------------------------------------------------------------------------------
      * |Bits    |Field     |Descriptions
      * | :----: | :----:   | :---- |
@@ -142,33 +142,34 @@ typedef struct
      * |Bits    |Field     |Descriptions
      * | :----: | :----:   | :---- |
      * |[n]     |INTSRCn   |Port B-F Pin[n] Interrupt Source Flag
-     * |        |          |Write Operation :
+     * |        |          |Write Operation:
      * |        |          |0 = No action.
      * |        |          |1 = Clear the corresponding pending interrupt.
-     * |        |          |Read Operation :
+     * |        |          |Read Operation:
      * |        |          |0 = No interrupt at Px.n.
      * |        |          |1 = Px.n generates an interrupt.
      * |        |          |Note: The PB.6/PB.10/PC.0~13/PC.15/PE.0~14/PF.3~15 pins are ignored.
      * @var GPIO_T::SMTEN
-     * Offset: 0x64/0xA4/0x164  PB-F Input Schmitt Trigger Enable
+     * Offset: 0x64/0xA4/0x164  PB-F Input Schmitt Trigger Enable Register
      * ---------------------------------------------------------------------------------------------------
      * |Bits    |Field     |Descriptions
      * | :----: | :----:   | :---- |
      * |[n]     |SMTENn    |Port B-F Pin[n] Input Schmitt Trigger Enable Bit
-     * |        |          |0 = Px.n input Schmitt trigger function Disabled.
-     * |        |          |1 = Px.n input Schmitt trigger function Enabled.
+     * |        |          |0 = Px.n input schmitt trigger function Disabled.
+     * |        |          |1 = Px.n input schmitt trigger function Enabled.
      * |        |          |Note: The PB.6/PB.10/PC.0~13/PC.15/PE.0~15/PF.3~15 pins are ignored.
      * @var GPIO_T::SLEWCTL
-     * Offset: 0x68/0xA8/0x168  PB-F High Slew Rate Control
+     * Offset: 0x68/0xA8/0x168  PB-F High Slew Rate Control Register
      * ---------------------------------------------------------------------------------------------------
      * |Bits    |Field     |Descriptions
      * | :----: | :----:   | :---- |
      * |[2n+1:2n]|HSRENn   |Port B-F Pin[n] High Slew Rate Control
      * |        |          |00 = Px.n output with normal slew rate mode
      * |        |          |01 = Px.n output with high slew rate mode
-     * |        |          |10 = Px.n output with fast slew rate mode
+     * |        |          |10 = Px.n output with hith slew rate mode
      * |        |          |11 = Reserved.
-     * |        |          |Note: The PB.6/PB.10/PC.0~13/PC.15/PE.0~15/PF.3~15 pins are ignored.
+     * |        |          |Note 1: The PB.6/PB.10/PC.0~13/PC.15/PE.0~15/PF.3~15 pins are ignored.
+     * |        |          |Note 2: Please refer to the Datasheet for detailed pin operation voltage information about VDD, VDDIO and VBAT electrical characteristics.
      * @var GPIO_T::PUSEL
      * Offset: 0x70/0xB0/0x130/0x170  PB-F Pull-up and Pull-down Selection Register
      * ---------------------------------------------------------------------------------------------------
@@ -180,18 +181,17 @@ typedef struct
      * |        |          |01 = Px.n pull-up enabled.
      * |        |          |10 = Px.n pull-down enabled.
      * |        |          |11 = Px.n pull-up and pull-down disabled.
-     * |        |          |Note 1:
-     * |        |          |Basically, the pull-up control and pull-down control has following behavior limitation.
-     * |        |          |The independent pull-up control register only valid when MODEn (Px_MODE[2n+1:2n]) set as tri-state and open-drain mode.
-     * |        |          |The independent pull-down control register only valid when MODEn (Px_MODE[2n+1:2n]) set as tri-state mode.
-     * |        |          |When both pull-up pull-down is set as 1 at tri-state mode, keep I/O in tri-state mode.
-     * |        |          |Note 2: The PB.6/PB.10/PC.0~13/PC.15/PE.0~14/PF.3~15 pins are ignored.
+     * |        |          |Note 1: Basically, the pull-up control and pull-down control has following behavior limitation.
+     * |        |          |The independent pull-up control register only valid when MODEn set as input and open-drain mode even if I/O function is switched to multi-function pin. Ex: UARTx_RXD.
+     * |        |          |The independent pull-down control register only valid when MODEn set as tri-state mode.
+     * |        |          |When both pull-uppull-down is set as 1 at "tri-state" mode, keep I/O in tri-state mode.
+     * |        |          |Note 2: The PB.6/PB.10/PC.0~13/PC.15/PE.0~14/PF.3~15 pins are ignored, PE.15 pin only support pull-up enabled or disalbed.
      * @var GPIO_T::DBCTL
      * Offset: 0x74/0xB4/0x134/0x174  PB-F Interrupt De-bounce Control Register
      * ---------------------------------------------------------------------------------------------------
      * |Bits    |Field     |Descriptions
      * | :----: | :----:   | :---- |
-     * |[3:0]   |DBCLKSEL  |De-bounce Sampling Cycle Selection
+     * |[3:0]   |DBCLKSEL  |De-bounce Sampling Cycle Selection - Secure only
      * |        |          |0000 = Sample interrupt input once per 1 clocks.
      * |        |          |0001 = Sample interrupt input once per 2 clocks.
      * |        |          |0010 = Sample interrupt input once per 4 clocks.
@@ -208,34 +208,34 @@ typedef struct
      * |        |          |1101 = Sample interrupt input once per 32*256 clocks.
      * |        |          |1110 = Sample interrupt input once per 64*256 clocks.
      * |        |          |1111 = Sample interrupt input once per 128*256 clocks.
-     * |[4]     |DBCLKSRC  |De-bounce Counter Clock Source Selection
+     * |        |          |Note: These bits are only accessible from the Secure state.
+     * |[4]     |DBCLKSRC  |De-bounce Counter Clock Source Selection - Secure only
      * |        |          |0 = De-bounce counter clock source is the HCLK.
-     * |        |          |1 = De-bounce counter clock source is the 32 kHz internal low speed RC oscillator (LIRC).
-     * |[5]     |ICLKON    |Interrupt Clock on Mode
+     * |        |          |1 = De-bounce counter clock source is the 10 kHz internal low speed RC oscillator (LIRC).
+     * |        |          |Note: This bit is only accessible from the Secure state.
+     * |[5]     |ICLKON    |Interrupt Clock on Mode - Secure Only
      * |        |          |0 = Edge detection circuit is active only if I/O pin corresponding RHIEN (Px_INTEN[n+16])/FLIEN (Px_INTEN[n]) bit is set to 1.
      * |        |          |1 = All I/O pins edge detection circuit is always active after reset.
-     * |        |          |Note: It is recommended to disable this bit to save system power if no special application concern.
+     * |        |          |Note 1: It is recommended to disable this bit to save system power if no special application concern.
+     * |        |          |Note 2: This bit is only accessible from the Secure state.
      */
-
 
     __IO uint32_t MODE;                  /*!< [0x40/0x80/0x140]       Port B-F I/O Mode Control                         */
     __IO uint32_t DINOFF;                /*!< [0x44/0x84/0x144]       Port B-F Digital Input Path Disable Control       */
     __IO uint32_t DOUT;                  /*!< [0x48/0x88/0x148]       Port B-F Data Output Value                        */
     __IO uint32_t DATMSK;                /*!< [0x4C/0x8C/0x14C]       Port B-F Data Output Write Mask                   */
     __I  uint32_t PIN;                   /*!< [0x50/0x90/0x110/0x150] Port B-F Pin Value                                */
-    __IO uint32_t DBEN;                  /*!< [0x54/0x94/0x114/0x154] Port B-F De-Bounce Enable Control                 */
+    __IO uint32_t DBEN;                  /*!< [0x54/0x94/0x114/0x154] Port B-F De-bounce Enable Control Register        */
     __IO uint32_t INTTYPE;               /*!< [0x58/0x98/0x118/0x158] Port B-F Interrupt Trigger Type Control           */
-    __IO uint32_t INTEN;                 /*!< [0x5C/0x9C/0x11C/0x15C] Port B-F Interrupt Enable Control                 */
+    __IO uint32_t INTEN;                 /*!< [0x5C/0x9C/0x11C/0x15C] Port B-F Interrupt Enable Control Register        */
     __IO uint32_t INTSRC;                /*!< [0x60/0xA0/0x120/0x160] Port B-F Interrupt Source Flag                    */
-    __IO uint32_t SMTEN;                 /*!< [0x64/0xA4/0x164]       Port B-F Input Schmitt Trigger Enable             */
-    __IO uint32_t SLEWCTL;               /*!< [0x68/0xA8/0x168]       Port B-F High Slew Rate Control                   */
+    __IO uint32_t SMTEN;                 /*!< [0x64/0xA4/0x164]       Port B-F Input Schmitt Trigger Enable Register    */
+    __IO uint32_t SLEWCTL;               /*!< [0x68/0xA8/0x168]       Port B-F High Slew Rate Control Register          */
     __I  uint32_t RESERVE0[1];
     __IO uint32_t PUSEL;                 /*!< [0x70/0xB0/0x130/0x170] Port B-F Pull-up and Pull-down Selection Register */
-    __IO uint32_t DBCTL;                 /*!< [0x74/0xB4/0x134/0x174] Port B-F Interrupt De-bounce Control              */
+    __IO uint32_t DBCTL;                 /*!< [0x74/0xB4/0x134/0x174] Port B-F Interrupt De-bounce Control Register     */
 
 } GPIO_T;
-
-
 
 /**
     @addtogroup GPIO_CONST GPIO Bit Field Definition

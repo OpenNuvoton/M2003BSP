@@ -64,14 +64,14 @@ typedef struct
      * |        |          |1 = The BOD had issued the reset signal to reset the system.
      * |        |          |Note: Write 1 to clear this bit to 0.
      * |[5]     |SYSRF     |System Reset Flag
-     * |        |          |The system reset flag is set by the "Reset Signal" from the Cortex-M23 Core to indicate the previous reset source.
+     * |        |          |The system reset flag is set by the "Reset Signal" from the Cortex-M23 core to indicate the previous reset source.
      * |        |          |0 = No reset from Cortex-M23.
      * |        |          |1 = The Cortex-M23 had issued the reset signal to reset the system by writing 1 to the bit SYSRESETREQ(AIRCR[2], Application Interrupt and Reset Control Register, address = 0xE000ED0C) in system control registers of Cortex-M23 core.
      * |        |          |Note: Write 1 to clear this bit to 0.
      * |[7]     |CPURF     |CPU Reset Flag
-     * |        |          |The CPU reset flag is set by hardware if software writes CPURST (SYS_IPRST0[1]) 1 to reset Cortex-M23 Core and Flash Memory Controller (FMC).
+     * |        |          |The CPU reset flag is set by hardware if software writes CPURST (SYS_IPRST0[1]) 1 to reset Cortex-M23 core and Flash Memory Controller (FMC).
      * |        |          |0 = No reset from CPU.
-     * |        |          |1 = The Cortex-M23 Core and FMC are reset by software setting CPURST to 1.
+     * |        |          |1 = The Cortex-M23 core and FMC are reset by software setting CPURST to 1.
      * |        |          |Note: Write 1 to clear this bit to 0.
      * |[8]     |CPULKRF   |CPU Lockup Reset Flag
      * |        |          |The CPU Lockup reset flag is set by hardware if Cortex-M23 lockup happened.
@@ -139,6 +139,9 @@ typedef struct
      * |[16]    |PWM0RST   |PWM0 Controller Reset
      * |        |          |0 = PWM0 controller normal operation.
      * |        |          |1 = PWM0 controller reset.
+     * |[26]    |ECAP0RST  |ECAP0 Controller Reset
+     * |        |          |0 = ECAP0 controller normal operation.
+     * |        |          |1 = ECAP0 controller reset.
      * @var SYS_T::BODCTL
      * Offset: 0x18  Brown-out Detector Control Register
      * ---------------------------------------------------------------------------------------------------
@@ -358,7 +361,7 @@ typedef struct
      * | :----: | :----:   | :---- |
      * |[7:0]   |REGLCTL   |Register Lock Control Code
      * |        |          |Some registers have write-protection function
-     * |        |          |Writing these registers have to disable the protected function by writing the sequence value 59h, 16h, 88h to this field.
+     * |        |          |Writing these registers have to disable the protected function by writing the sequence value "59h", "16h", "88h" to this field.
      * |        |          |After this sequence is completed, the REGLCTL bit will be set to 1 and write-protection registers can be normal write.
      * |        |          |REGLCTL[0]
      * |        |          |Register Lock Control Disable Index
@@ -490,6 +493,9 @@ typedef struct
 
 #define SYS_IPRST2_PWM0RST_Pos           (16)                                              /*!< SYS_T::IPRST2: PWM0RST Position        */
 #define SYS_IPRST2_PWM0RST_Msk           (0x1ul << SYS_IPRST2_PWM0RST_Pos)                 /*!< SYS_T::IPRST2: PWM0RST Mask            */
+
+#define SYS_IPRST2_ECAP0RST_Pos          (26)                                              /*!< SYS_T::IPRST2: ECAP0RST Position       */
+#define SYS_IPRST2_ECAP0RST_Msk          (0x1ul << SYS_IPRST2_ECAP0RST_Pos)                /*!< SYS_T::IPRST2: ECAP0RST Mask           */
 
 #define SYS_BODCTL_BODEN_Pos             (0)                                               /*!< SYS_T::BODCTL: BODEN Position          */
 #define SYS_BODCTL_BODEN_Msk             (0x1ul << SYS_BODCTL_BODEN_Pos)                   /*!< SYS_T::BODCTL: BODEN Mask              */

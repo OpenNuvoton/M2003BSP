@@ -19,7 +19,7 @@
 */
 
 /**
-    @addtogroup TIMER Timer Controller(TIMER)
+    @addtogroup TIMER Timer Controller (TIMER)
     Memory Mapped Structure for TIMER Controller
 @{ */
 
@@ -58,8 +58,8 @@ typedef struct
      * |        |          |1 = Toggle mode output to TMx_EXT (Timer External Capture Pin).
      * |[22]    |CAPSRC    |Capture Pin Source Selection
      * |        |          |0 = Capture Function source is from TMx_EXT (x= 0~3) pin.
-     * |        |          |1 = Capture Function source is from internal clock (LIRC, HIRC).
-     * |        |          |Note: When CAPSRC = 1,User can set INTERCAPSEL (TIMERx_EXTCTL[10:8]) to decide which clock is as timer capture source.
+     * |        |          |1 = Reserved.
+     * |        |          |Note: Set this bit to 0 .
      * |[23]    |WKEN      |Wake-up Function Enable Bit
      * |        |          |If this bit is set to 1, while timer interrupt flag TIF (TIMERx_INTSTS[0]) is 1 and INTEN (TIMERx_CTL[29]) is enabled, the timer interrupt signal will generate a wake-up trigger event to CPU.
      * |        |          |0 = Wake-up function Disabled if timer interrupt signal generated.
@@ -181,10 +181,12 @@ typedef struct
      * |        |          |1 = TMx (x= 0~3) pin de-bounce Enabled.
      * |        |          |Note: If this bit is enabled, the edge detection of TMx pin is detected with de-bounce circuit.
      * |[10:8]  |INTERCAPSEL|Internal Capture Source Select
+     * |        |          |000 = Capture Function source is from TMx_EXT (x=0~3) pin.
+     * |        |          |001 = Capture Function source is from TMx_EXT (x=0~3) pin.
      * |        |          |100 = Capture Function source is from HIRC.
      * |        |          |101 = Capture Function source is from LIRC.
-     * |        |          |111 = Reserved.
-     * |        |          |Note: these bits only available when CAPSRC (TIMERx_CTL[22]) is 1.
+     * |        |          |Others = Reserved.
+     * |        |          |Note: 000 and 001 are only available when CAPSRC (TIMERx_CTL[22]) is 0.
      * |[14:12] |CAPEDGE   |Timer External Capture Pin Edge Detect
      * |        |          |When first capture event is generated, the CNT (TIMERx_CNT[23:0]) will be reset to 0 and first CAPDAT (TIMERx_CAP[23:0]) should be to 0.
      * |        |          |000 = Capture event occurred when detect falling edge transfer on TMx_EXT (x= 0~3) pin.
@@ -197,12 +199,13 @@ typedef struct
      * |        |          |Note: Set CAPSRC (TIMERx_CTL[22]) and INTERCAPSEL (TIMERx_EXTCTL[10:8]) to select capture source.
      * |[18:16] |ECNTSSEL  |Event Counter Source Selection to Trigger Event Counter Function
      * |        |          |000 = Event Counter input source is from external TMx (x= 0~3) pin.
-     * |        |          |101~111 = Reserved
+     * |        |          |001~111 = Reserved.
      * |[21:20] |CAPLSEL   |Capture Trigger Length Selection
      * |        |          |00 = TMx_EXT (x= 0,2) pin input capture length 1 selection.
      * |        |          |01 = TMx_EXT (x= 0,2) pin input capture length 2 selection.
      * |        |          |10 = TMx_EXT (x= 0,2) pin input capture length 3 selection.
      * |        |          |11 = TMx_EXT (x= 0,2) pin input capture length 4 selection.
+     * |        |          |Note: This function is exclusively operational in Timer0 and Timer2.
      * |[31:28] |CAPDIVSCL |Timer Capture Source Divider Scale
      * |        |          |This bits indicate the divide scale for capture source divider
      * |        |          |0000 = Capture source/1.
@@ -306,9 +309,9 @@ typedef struct
     __I  uint32_t RESERVE0[1];
     __IO uint32_t CAPNF;                 /*!< [0x0024] Timer Capture Input Noise Filter Register                        */
     __I  uint32_t RESERVE1[20];
-    __I  uint32_t CAP1;                  /*!< [0x0078] Timer Capture 1 Data Register                                    */
-    __I  uint32_t CAP2;                  /*!< [0x007c] Timer Capture 2 Data Register                                    */
-    __I  uint32_t CAP3;                  /*!< [0x0080] Timer Capture 3 Data Register                                    */
+    __I  uint32_t CAP1;                  /*!< [0x0078] Timer Capture Data 1 Register                                    */
+    __I  uint32_t CAP2;                  /*!< [0x007c] Timer Capture Data 2 Register                                    */
+    __I  uint32_t CAP3;                  /*!< [0x0080] Timer Capture Data 3 Register                                    */
     /** @endcond */
 
 } TIMER_T;
@@ -399,8 +402,8 @@ typedef struct
 #define TIMER_EXTCTL_ECNTSSEL_Pos        (16)                                              /*!< TIMER_T::EXTCTL: ECNTSSEL Position     */
 #define TIMER_EXTCTL_ECNTSSEL_Msk        (0x7ul << TIMER_EXTCTL_ECNTSSEL_Pos)              /*!< TIMER_T::EXTCTL: ECNTSSEL Mask         */
 
-#define TIMER_EXTCTL_CAPLSEL_Pos          (20)                                             /*!< TIMER_T::EXTCTL: CAPLSEL Position       */
-#define TIMER_EXTCTL_CAPLSEL_Msk          (0x3ul << TIMER_EXTCTL_CAPLSEL_Pos)              /*!< TIMER_T::EXTCTL: CAPLSEL Mask           */
+#define TIMER_EXTCTL_CAPLSEL_Pos         (20)                                              /*!< TIMER_T::EXTCTL: CAPLSEL Position      */
+#define TIMER_EXTCTL_CAPLSEL_Msk         (0x3ul << TIMER_EXTCTL_CAPLSEL_Pos)               /*!< TIMER_T::EXTCTL: CAPLSEL Mask          */
 
 #define TIMER_EXTCTL_CAPDIVSCL_Pos       (28)                                              /*!< TIMER_T::EXTCTL: CAPDIVSCL Position    */
 #define TIMER_EXTCTL_CAPDIVSCL_Msk       (0xful << TIMER_EXTCTL_CAPDIVSCL_Pos)             /*!< TIMER_T::EXTCTL: CAPDIVSCL Mask        */
@@ -429,14 +432,14 @@ typedef struct
 #define TIMER_CAPNF_CAPNFCNT_Pos         (8)                                               /*!< TIMER_T::CAPNF: CAPNFCNT Position      */
 #define TIMER_CAPNF_CAPNFCNT_Msk         (0x7ul << TIMER_CAPNF_CAPNFCNT_Pos)               /*!< TIMER_T::CAPNF: CAPNFCNT Mask          */
 
-#define TIMER_CAP1_CAPDAT_Pos            (0)                                               /*!< TIMER_T::CAP1: CAPDAT Position         */
-#define TIMER_CAP1_CAPDAT_Msk            (0xfffffful << TIMER_CAP1_CAPDAT_Pos)             /*!< TIMER_T::CAP1: CAPDAT Mask             */
+#define TIMER_CAP1_CAPDAT_Pos            (0)                                               /*!< TIMER_T::CAP1: CAPDATn Position        */
+#define TIMER_CAP1_CAPDAT_Msk            (0xfffffful << TIMER_CAP1_CAPDAT_Pos)             /*!< TIMER_T::CAP1: CAPDATn Mask            */
 
-#define TIMER_CAP2_CAPDAT_Pos            (0)                                               /*!< TIMER_T::CAP2: CAPDAT Position         */
-#define TIMER_CAP2_CAPDAT_Msk            (0xfffffful << TIMER_CAP2_CAPDAT_Pos)             /*!< TIMER_T::CAP2: CAPDAT Mask             */
+#define TIMER_CAP2_CAPDAT_Pos            (0)                                               /*!< TIMER_T::CAP2: CAPDATn Position        */
+#define TIMER_CAP2_CAPDAT_Msk            (0xfffffful << TIMER_CAP2_CAPDAT_Pos)             /*!< TIMER_T::CAP2: CAPDATn Mask            */
 
-#define TIMER_CAP3_CAPDAT_Pos            (0)                                               /*!< TIMER_T::CAP3: CAPDAT Position         */
-#define TIMER_CAP3_CAPDAT_Msk            (0xfffffful << TIMER_CAP3_CAPDAT_Pos)             /*!< TIMER_T::CAP3: CAPDAT Mask             */
+#define TIMER_CAP3_CAPDAT_Pos            (0)                                               /*!< TIMER_T::CAP3: CAPDATn Position        */
+#define TIMER_CAP3_CAPDAT_Msk            (0xfffffful << TIMER_CAP3_CAPDAT_Pos)             /*!< TIMER_T::CAP3: CAPDATn Mask            */
 
 /**@}*/ /* TIMER_CONST */
 /**@}*/ /* end of TIMER register group */

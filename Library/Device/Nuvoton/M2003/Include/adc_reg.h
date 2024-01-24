@@ -27,12 +27,12 @@
 typedef struct
 {
     /**
-     * @var ADC_T::ADDR[31]
-     * Offset: 0x00-0x78  ADC Data Register 0-30
+     * @var ADC_T::ADDR[30]
+     * Offset: 0x00-0x74  ADC Data Register 0-29
      * ---------------------------------------------------------------------------------------------------
      * |Bits    |Field     |Descriptions
      * | :----: | :----:   | :---- |
-     * |[15:0]  |RSLT      |A/D Conversion Result (Read Only)
+     * |[11:0]  |RSLT      |A/D Conversion Result (Read Only)
      * |        |          |This field contains conversion result of ADC.
      * |[16]    |OVERRUN   |Overrun Flag (Read Only)
      * |        |          |If converted data in RSLT bits has not been read before new conversion result is loaded to this register, OVERRUN bit is set to 1
@@ -86,15 +86,14 @@ typedef struct
      * |        |          |Note: The ADC external trigger function is only supported in Single-cycle Scan mode.
      * |[11]    |ADST      |A/D Conversion Start
      * |        |          |ADST bit can be set to 1 from four sources: software, external pin ADC0_ST, PWM trigger and Timer trigger.
-     * |        |          |ADST bit will be cleared to 0 by hardware automatically at the ends of Single mode, Single-cycle Scan mode and Calibration mode.
+     * |        |          |ADST bit will be cleared to 0 by hardware automatically at the ends of Single mode and Single-cycle Scan mode.
      * |        |          |In Continuous Scan mode and Burst mode, A/D conversion is continuously performed until software writes 0 to this bit or chip is reset.
      * |        |          |0 = Conversion stops and A/D converter enters idle state.
      * |        |          |1 = Conversion starts.
      * |        |          |Note 1: When ADST becomes from 1 to 0, ADC macro will reset to initial state.
      * |        |          |After macro reset to initial state, user should wait at most 2 ADC clock and set this bit to start next conversion.
      * |[12]    |RESET     |ADC RESET (Write Protect)
-     * |        |          |If user writes this bit, the ADC analog macro will reset
-     * |        |          |Calibration data in macro will be deleted, but registers in ADC controller will keep.
+     * |        |          |If user writes this bit, the ADC analog macro will reset but registers in ADC controller will keep.
      * |        |          |Note: This bit is cleared by hardware.
      * @var ADC_T::ADCHER
      * Offset: 0x84  ADC Channel Enable Register
@@ -103,8 +102,9 @@ typedef struct
      * | :----: | :----:   | :---- |
      * |[31:0]  |CHEN      |Analog Input Channel Enable Control
      * |        |          |Set ADCHER[15:0] bits to enable the corresponding analog input channel 15 ~ 0.
-     * |        |          |Besides, setting the ADCHER[29] bit will enable internal channel for band-gap voltage and setting the ADCHER[30] bit will enable internal channel for temperature voltage.
+     * |        |          |ADCHER[29], ADCHER[12:11] and ADCCHER[5:0] are designed.
      * |        |          |Other bits are reserved.
+     * |        |          |Besides, setting the ADCHER[29] bit will enable internal channel for band-gap voltage.
      * |        |          |0 = Channel Disabled.
      * |        |          |1 = Channel Enabled.
      * |        |          |Note: If the internal channel for band-gap voltage (CHEN[29]) is active, the maximum sampling rate will be 50k SPS.
@@ -132,17 +132,8 @@ typedef struct
      * |        |          |00011 = Channel 3 conversion result is selected to be compared.
      * |        |          |00100 = Channel 4 conversion result is selected to be compared.
      * |        |          |00101 = Channel 5 conversion result is selected to be compared.
-     * |        |          |00110 = Channel 6 conversion result is selected to be compared.
-     * |        |          |00111 = Channel 7 conversion result is selected to be compared.
-     * |        |          |01000 = Channel 8 conversion result is selected to be compared.
-     * |        |          |01001 = Channel 9 conversion result is selected to be compared.
-     * |        |          |01010 = Channel 10 conversion result is selected to be compared.
      * |        |          |01011 = Channel 11 conversion result is selected to be compared.
      * |        |          |01100 = Channel 12 conversion result is selected to be compared.
-     * |        |          |01101 = Channel 13 conversion result is selected to be compared.
-     * |        |          |01110 = Channel 14 conversion result is selected to be compared.
-     * |        |          |01111 = Channel 15 conversion result is selected to be compared.
-     * |        |          |11100 = Floating detect channel conversion result is selected to be compared.
      * |        |          |11101 = Band-gap voltage conversion result is selected to be compared.
      * |        |          |Others = Reserved.
      * |[11:8]  |CMPMATCNT |Compare Match Count
@@ -198,18 +189,18 @@ typedef struct
      * |Bits    |Field     |Descriptions
      * | :----: | :----:   | :---- |
      * |[31:0]  |VALID     |Data Valid Flag (Read Only)
-     * |        |          |VALID[30, 29, 15:0] are the mirror of the VALID bits in ADDR30[17], ADDR29[17], ADDR15[17]~ ADDR0[17].
+     * |        |          |VALID[29, 12, 11, 5:0] are the mirror of the VALID bits in ADDR29[17], ADDR12[17], ADDR11[17], ADDR5[17] ~ ADDR0[17]
      * |        |          |The other bits are reserved.
-     * |        |          |Note: When ADC is in burst mode and any conversion result is valid, VALID[30, 29, 15:0] will be set to 1.
+     * |        |          |Note: When ADC is in burst mode and any conversion result is valid, VALID[29, 12, 11, 5:0] will be set to 1.
      * @var ADC_T::ADSR2
      * Offset: 0x98  ADC Status Register2
      * ---------------------------------------------------------------------------------------------------
      * |Bits    |Field     |Descriptions
      * | :----: | :----:   | :---- |
      * |[31:0]  |OVERRUN   |Overrun Flag (Read Only)
-     * |        |          |OVERRUN[30, 29, 15:0] are the mirror of the OVERRUN bit in ADDR30[16], ADDR29[16], ADDR15[16] ~ ADDR0[16].
+     * |        |          |OVERRUN[29, 12, 11, 5:0] are the mirror of the OVERRUN bit in ADDR29[16], ADDR12[16], ADDR11[16], ADDR5[16] ~ ADDR0[16]
      * |        |          |The other bits are reserved.
-     * |        |          |Note: When ADC is in burst mode and the FIFO is overrun, OVERRUN[30, 29, 15:0] will be set to 1.
+     * |        |          |Note: When ADC is in burst mode and the FIFO is overrun, OVERRUN[29, 12, 11, 5:0] will be set to 1.
      * @var ADC_T::ESMPCTL
      * Offset: 0xA0  ADC Extend Sample Time Control Register
      * ---------------------------------------------------------------------------------------------------
@@ -218,9 +209,18 @@ typedef struct
      * |[13:0]  |EXTSMPT   |ADC Sampling Time Extend
      * |        |          |When ADC converting at high conversion rate, the sampling time of analog input voltage may not enough if input channel loading is heavy, user can extend ADC sampling time after trigger source is coming to get enough sampling time.
      * |        |          |The range of start delay time is from 0~16383 ADC clock.
+     * @var ADC_T::CFDCTL
+     * Offset: 0xA4  ADC Detect Control Register
+     * ---------------------------------------------------------------------------------------------------
+     * |Bits    |Field     |Descriptions
+     * | :----: | :----:   | :---- |
+     * |[0]     |OVPEN     |ADC Over Voltage Protection Manual Enable
+     * |        |          |0 = ADC Over Voltage (VDD > 7V) Protection Disabled.
+     * |        |          |1 = ADC Over Voltage (VDD > 7V) Protection Enabled.
+     * |        |          |Note: Set this bit and wait more than 2us before ADEN (ADC_ADCR[0]) is set.
      */
-    __I  uint32_t ADDR[31];              /*!< [0x0000-0x0078] ADC Data Register 0 ~ 30                                  */
-    __I  uint32_t RESERVE1[1];
+    __I  uint32_t ADDR[30];              /*!< [0x0000-0x0074] ADC Data Register 0 ~ 29                                  */
+    __I  uint32_t RESERVE1[2];
     __IO uint32_t ADCR;                  /*!< [0x0080] ADC Control Register                                             */
     __IO uint32_t ADCHER;                /*!< [0x0084] ADC Channel Enable Register                                      */
     __IO uint32_t ADCMPR[2];             /*!< [0x0088-0x008c] ADC Compare Register 0/1                                  */
@@ -229,6 +229,7 @@ typedef struct
     __I  uint32_t ADSR2;                 /*!< [0x0098] ADC Status Register2                                             */
     __I  uint32_t RESERVE2[1];
     __IO uint32_t ESMPCTL;               /*!< [0x00a0] ADC Extend Sample Time Control Register                          */
+    __IO uint32_t CFDCTL;                /*!< [0x00a4] ADC Detect Control Register                                      */
 } ADC_T;
 
 /**
@@ -237,7 +238,7 @@ typedef struct
 @{ */
 
 #define ADC_ADDR_RSLT_Pos               (0)                                         /*!< ADC_T::ADDR: RSLT Position             */
-#define ADC_ADDR_RSLT_Msk               (0xfffful << ADC_ADDR_RSLT_Pos)             /*!< ADC_T::ADDR: RSLT Mask                 */
+#define ADC_ADDR_RSLT_Msk               (0xffful << ADC_ADDR_RSLT_Pos)              /*!< ADC_T::ADDR: RSLT Mask                 */
 
 #define ADC_ADDR_OVERRUN_Pos            (16)                                        /*!< ADC_T::ADDR: OVERRUN Position          */
 #define ADC_ADDR_OVERRUN_Msk            (0x1ul << ADC_ADDR_OVERRUN_Pos)             /*!< ADC_T::ADDR: OVERRUN Mask              */
@@ -325,6 +326,9 @@ typedef struct
 
 #define ADC_ESMPCTL_EXTSMPT_Pos         (0)                                         /*!< ADC_T::ESMPCTL: EXTSMPT Position       */
 #define ADC_ESMPCTL_EXTSMPT_Msk         (0x3ffful << ADC_ESMPCTL_EXTSMPT_Pos)       /*!< ADC_T::ESMPCTL: EXTSMPT Mask           */
+
+#define ADC_CFDCTL_OVPEN_Pos            (0)                                         /*!< ADC_T::CFDCTL: OVPEN Position          */
+#define ADC_CFDCTL_OVPEN_Msk            (0x1ul << ADC_CFDCTL_OVPEN_Pos)             /*!< ADC_T::CFDCTL: OVPEN Mask              */
 
 /**@}*/ /* ADC_CONST */
 /**@}*/ /* end of ADC register group */

@@ -186,11 +186,10 @@ extern "C"
 
 /**
  * @brief       Disable I/O Digital Input Path
- * @param[in]   port        GPIO port. It could be PB, PC, PE, or PF.
+ * @param[in]   port        GPIO port. It could be PB, PC, or PF.
  * @param[in]   u32PinMask  The single or multiple pins of specified GPIO port.
  *                          It could be BIT0 ~ BIT5, BIT7 ~ BIT9, BIT11 ~ BIT15 for PB.
  *                          It could be BIT14 for PC.
- *                          It could be BIT15 for PE.
  *                          It could be BIT0 ~ BIT1 for PF.
  * @return      None
  * @details     Disable I/O digital input path of specified GPIO pin.
@@ -199,11 +198,10 @@ extern "C"
 
 /**
  * @brief       Enable I/O Digital Input Path
- * @param[in]   port        GPIO port. It could be PB, PC, PE, or PF.
+ * @param[in]   port        GPIO port. It could be PB, PC, or PF.
  * @param[in]   u32PinMask  The single or multiple pins of specified GPIO port.
  *                          It could be BIT0 ~ BIT5, BIT7 ~ BIT9, BIT11 ~ BIT15 for PB.
  *                          It could be BIT14 for PC.
- *                          It could be BIT15 for PE.
  *                          It could be BIT0 ~ BIT1 for PF.
  * @return      None
  * @details     Enable I/O digital input path of specified GPIO pin.
@@ -212,11 +210,10 @@ extern "C"
 
 /**
  * @brief       Disable I/O DOUT mask
- * @param[in]   port        GPIO port. It could be PB, PC, PE, or PF.
+ * @param[in]   port        GPIO port. It could be PB, PC, or PF.
  * @param[in]   u32PinMask  The single or multiple pins of specified GPIO port.
  *                          It could be BIT0 ~ BIT5, BIT7 ~ BIT9, BIT11 ~ BIT15 for PB.
  *                          It could be BIT14 for PC.
- *                          It could be BIT15 for PE.
  *                          It could be BIT0 ~ BIT1 for PF.
  * @return      None
  * @details     Disable I/O DOUT mask of specified GPIO pin.
@@ -225,11 +222,10 @@ extern "C"
 
 /**
  * @brief       Enable I/O DOUT mask
- * @param[in]   port        GPIO port. It could be PB, PC, PE, or PF.
+ * @param[in]   port        GPIO port. It could be PB, PC, or PF.
  * @param[in]   u32PinMask  The single or multiple pins of specified GPIO port.
  *                          It could be BIT0 ~ BIT5, BIT7 ~ BIT9, BIT11 ~ BIT15 for PB.
  *                          It could be BIT14 for PC.
- *                          It could be BIT15 for PE.
  *                          It could be BIT0 ~ BIT1 for PF.
  * @return      None
  * @details     Enable I/O DOUT mask of specified GPIO pin.
@@ -287,7 +283,7 @@ extern "C"
   * @details     Set the I/O pins edge detection circuit always active after reset for specified port.
   * \hideinitializer
   */
-#define GPIO_SET_DEBOUNCE_ICLKON(port)  (GPIO->DBCTL |= GPIO_DBCTL_ICLKON_Msk)
+#define GPIO_SET_DEBOUNCE_ICLKON(port)  ((port)->DBCTL |= GPIO_DBCTL_ICLKON_Msk)
 
 /**
   * @brief       Clear GPIO Interrupt Clock on bit
@@ -296,7 +292,7 @@ extern "C"
   * @details     Set edge detection circuit active only if I/O pin edge interrupt enabled for specified port
   * \hideinitializer
   */
-#define GPIO_CLR_DEBOUNCE_ICLKON(port)  (GPIO->DBCTL &= ~(GPIO_DBCTL_ICLKON_Msk))
+#define GPIO_CLR_DEBOUNCE_ICLKON(port)  ((port)->DBCTL &= ~(GPIO_DBCTL_ICLKON_Msk))
 
 /**
  * @brief       Get GPIO Port IN Data
@@ -308,7 +304,7 @@ extern "C"
 
 /**
  * @brief       Set GPIO Port OUT Data
- * @param[in]   port        GPIO port. It could be PB, PC, PE, or PF.
+ * @param[in]   port        GPIO port. It could be PB, PC, or PF.
  * @param[in]   u32Data     GPIO port data.
  * @return      None
  * @details     Set the Data into specified GPIO port.

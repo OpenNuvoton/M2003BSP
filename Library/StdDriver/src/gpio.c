@@ -23,11 +23,10 @@
 
 /**
  * @brief       Set GPIO operation mode
- * @param[in]   port        GPIO port. It could be PB, PC, PE, or PF.
+ * @param[in]   port        GPIO port. It could be PB, PC, or PF.
  * @param[in]   u32PinMask  The single or multiple pins of specified GPIO port.
  *                          It could be BIT0 ~ BIT5, BIT7 ~ BIT9, BIT11 ~ BIT15 for PB.
  *                          It could be BIT14 for PC.
- *                          It could be BIT15 for PE.
  *                          It could be BIT0 ~ BIT1 for PF.
  * @param[in]   u32Mode     Operation mode. It could be
  *                          - \ref GPIO_MODE_INPUT
@@ -98,11 +97,10 @@ void GPIO_DisableInt(GPIO_T *port, uint32_t u32Pin)
 
 /**
  * @brief       Set GPIO slew rate control
- * @param[in]   port        GPIO port. It could be PB, PC, PE, or PF.
+ * @param[in]   port        GPIO port. It could be PB, PC, or PF.
  * @param[in]   u32PinMask  The single or multiple pins of specified GPIO port.
  *                          It could be BIT0 ~ BIT5, BIT7 ~ BIT9, BIT11 ~ BIT15 for PB.
  *                          It could be BIT14 for PC.
- *                          It could be BIT15 for PE.
  *                          It could be BIT0 ~ BIT1 for PF.
  * @param[in]   u32Mode     Slew rate mode. It could be
  *                          - \ref GPIO_SLEWCTL_NORMAL

@@ -16,6 +16,7 @@
   @{
 */
 
+int32_t g_SYS_i32ErrCode = 0;   /*!< SYS global error code */
 
 /** @addtogroup SYS_EXPORTED_FUNCTIONS SYS Exported Functions
   @{
@@ -72,7 +73,7 @@ uint32_t SYS_GetResetSrc(void)
   */
 uint32_t SYS_IsRegLocked(void)
 {
-    return SYS->REGLCTL & 1UL ? 0UL : 1UL;
+    return (SYS->REGLCTL & 1UL) ? 0UL : 1UL;
 }
 
 /**
@@ -124,6 +125,7 @@ void SYS_ResetCPU(void)
   *             - \ref ADC_RST
   *             - \ref USCI0_RST
   *             - \ref PWM0_RST
+  *             - \ref ECAP0_RST
   * @return     None
   * @details    This function reset selected module.
   */
@@ -151,31 +153,63 @@ void SYS_ResetModule(uint32_t u32ModuleIndex)
   *             - \ref SYS_BODCTL_BODVL_2_7V
   *             - \ref SYS_BODCTL_BODVL_3_7V
   *             - \ref SYS_BODCTL_BODVL_4_4V
-  * @return     None
+  * @return     Setting success or not
+  * @retval     0                   Success
+  * @retval     SYS_TIMEOUT_ERR     Failed due to BODCTL register is busy
   * @details    This function configure Brown-out detector reset or interrupt mode, enable Brown-out function and set Brown-out voltage level.
   *             The register write-protection function should be disabled before using this function.
   */
-void SYS_EnableBOD(int32_t i32Mode, uint32_t u32BODLevel)
+int32_t SYS_EnableBOD(int32_t i32Mode, uint32_t u32BODLevel)
 {
+    uint32_t u32TimeOutCnt = SystemCoreClock * 2;
+
+    while(SYS->BODCTL & SYS_BODCTL_WRBUSY_Msk)
+    {
+        if(--u32TimeOutCnt == 0)
+        {
+            break;
+        }
+    }
+
     /* Enable Brown-out Detector function */
     /* Enable Brown-out interrupt or reset function */
     /* Select Brown-out Detector threshold voltage */
-    while(SYS->BODCTL & SYS_BODCTL_WRBUSY_Msk);
     SYS->BODCTL = (SYS->BODCTL & ~(SYS_BODCTL_BODRSTEN_Msk | SYS_BODCTL_BODVL_Msk)) |
                   ((uint32_t)i32Mode) | (u32BODLevel) | (SYS_BODCTL_BODEN_Msk);
+
+    if(u32TimeOutCnt == 0)
+        return SYS_TIMEOUT_ERR;
+    else
+        return 0;
 }
 
 /**
   * @brief      Disable Brown-out detector function
   * @param      None
-  * @return     None
+  * @return     Setting success or not
+  * @retval     0                   Success
+  * @retval     SYS_TIMEOUT_ERR     Failed due to BODCTL register is busy
   * @details    This function disable Brown-out detector function.
   *             The register write-protection function should be disabled before using this function.
   */
-void SYS_DisableBOD(void)
+int32_t SYS_DisableBOD(void)
 {
-    while(SYS->BODCTL & SYS_BODCTL_WRBUSY_Msk);
+    uint32_t u32TimeOutCnt = SystemCoreClock * 2;
+
+    while(SYS->BODCTL & SYS_BODCTL_WRBUSY_Msk)
+    {
+        if(--u32TimeOutCnt == 0)
+        {
+            break;
+        }
+    }
+
     SYS->BODCTL &= ~SYS_BODCTL_BODEN_Msk;
+
+    if(u32TimeOutCnt == 0)
+        return SYS_TIMEOUT_ERR;
+    else
+        return 0;
 }
 
 /**@}*/ /* end of group SYS_EXPORTED_FUNCTIONS */

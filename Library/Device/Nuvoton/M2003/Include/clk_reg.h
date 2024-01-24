@@ -151,7 +151,6 @@ typedef struct
      * |[2:0]   |HCLKSEL   |HCLK Clock Source Selection (Write Protect)
      * |        |          |Before clock switching, the related clock sources (both pre-select and new-select) must be turned on.
      * |        |          |011 = Clock source from LIRC.
-     * |        |          |100 = Reserved.
      * |        |          |101 = Clock source from HIRC.
      * |        |          |Others = Reserved.
      * |        |          |Note: These bits are write protected. Refer to the SYS_REGLCTL register.
@@ -170,6 +169,7 @@ typedef struct
      * |[1:0]   |WDTSEL    |Watchdog Timer Clock Source Selection (Write Protect)
      * |        |          |10 = Clock source from HCLK/2048.
      * |        |          |11 = Clock source from 10 kHz internal low speed RC oscillator (LIRC).
+     * |        |          |Others = Reserved.
      * |        |          |Note: These bits are write protected. Refer to the SYS_REGLCTL register.
      * |[10:8]  |TMR0SEL   |TIMER0 Clock Source Selection
      * |        |          |010 = Clock source from PCLK0.
@@ -210,6 +210,7 @@ typedef struct
      * | :----: | :----:   | :---- |
      * |[0]     |PWM0SEL   |PWM0 Clock Source Selection (Read Only)
      * |        |          |The peripheral clock source of PWM0 is defined by PWM0SEL.
+     * |        |          |0 = Reserved.
      * |        |          |1 = Clock source from PCLK0.
      * |[18:16] |UART0SEL  |UART0 Clock Source Selection
      * |        |          |011 = Clock source from 24 MHz internal high speed RC oscillator (HIRC).
@@ -236,7 +237,7 @@ typedef struct
      * |        |          |UART1 clock frequency = (UART1 clock source frequency) / (UART1DIV + 1).
      * |[23:16] |ADCDIV    |ADC Clock Divide Number From ADC Clock Source
      * |        |          |ADC clock frequency = (ADC clock source frequency) / (ADCDIV + 1).
-     * |        |          |Note: This field write ignore when CLK_APBCLK0?uEA03 ADCCKEN = 1.
+     * |        |          |Note: This field write ignore when CLK_APBCLK0's ADCCKEN = 1.
      * @var CLK_T::PCLKDIV
      * Offset: 0x34  APB Clock Divider Register
      * ---------------------------------------------------------------------------------------------------
@@ -304,6 +305,8 @@ typedef struct
      * |[5]     |DIV1EN    |Clock Output Divide One Enable Bit
      * |        |          |0 = Clock Output will output clock with source frequency divided by FREQSEL.
      * |        |          |1 = Clock Output will output clock with source frequency.
+     * |[6]     |CLK1HZEN  |CLK1HZEN
+     * |        |          |Note: This bits has to set to 0.
      * @var CLK_T::PMUCTL
      * Offset: 0x90  Power Manager Control Register
      * ---------------------------------------------------------------------------------------------------
@@ -315,9 +318,9 @@ typedef struct
      * |        |          |001 = Reserved.
      * |        |          |010 = Reserved.
      * |        |          |011 = Reserved.
-     * |        |          |100 = Standby Power-down mode is selected (SPD).
+     * |        |          |100 = Reserved.
      * |        |          |101 = Reserved.
-     * |        |          |110 = Deep Power-down mode is selected (DPD).
+     * |        |          |110 = Reserved.
      * |        |          |111 = Reserved.
      * |        |          |Note: These bits are write protected. Refer to the SYS_REGLCTL register.
      * |[7]     |WRBUSY    |Write Busy Flag (Read Only)
@@ -325,11 +328,11 @@ typedef struct
      * |        |          |0 = CLK_PMUCTL write ready.
      * |        |          |1 = CLK_PMUCTL write ignore.
      * |[8]     |WKTMREN   |Wake-up Timer Enable Bit (Write Protect)
-     * |        |          |0 = Wake-up timer disable at Deep Power-down mode or Standby Power-down mode.
-     * |        |          |1 = Wake-up timer enabled at Deep Power-down mode or Standby Power-down mode.
+     * |        |          |0 = Wake-up timer disable at Power-down mode.
+     * |        |          |1 = Wake-up timer enabled at Power-down mode.
      * |        |          |Note: This bit is write protected. Refer to the SYS_REGLCTL register.
      * |[11:9]  |WKTMRIS   |Wake-up Timer Time-out Interval Select Bits (Write Protect)
-     * |        |          |These bits control wake-up timer time-out interval when chip under Deep Power-down mode or Standby Power-down mode.
+     * |        |          |These bits control wake-up timer time-out interval when chip under Power-down mode.
      * |        |          |000 = Time-out interval is 128 LIRC clocks (12.8ms).
      * |        |          |001 = Time-out interval is 256 LIRC clocks (25.6ms).
      * |        |          |010 = Time-out interval is 512 LIRC clocks (51.2ms).
@@ -341,24 +344,24 @@ typedef struct
      * |        |          |Note: These bits are write protected. Refer to the SYS_REGLCTL register.
      * |[25:24] |WKPINEN1  |Wake-up Pin 1 Enable Bits (Write Protect)
      * |        |          |This is control register for GPB.0 to wake-up pin.
-     * |        |          |00 = Wake-up pin disable at Deep Power-down mode.
-     * |        |          |01 = Wake-up pin rising edge enabled at Deep Power-down mode.
-     * |        |          |10 = Wake-up pin falling edge enabled at Deep Power-down mode.
-     * |        |          |11 = Wake-up pin both edge enabled at Deep Power-down mode.
+     * |        |          |00 = Wake-up pin disable at Power-down mode.
+     * |        |          |01 = Wake-up pin rising edge enabled at Power-down mode.
+     * |        |          |10 = Wake-up pin falling edge enabled at Power-down mode.
+     * |        |          |11 = Wake-up pin both edge enabled at Power-down mode.
      * |        |          |Note: These bits are write protected. Refer to the SYS_REGLCTL register.
      * |[27:26] |WKPINEN2  |Wake-up Pin 2 Enable Bits (Write Protect)
      * |        |          |This is control register for GPB.2 to wake-up pin.
-     * |        |          |00 = Wake-up pin disable at Deep Power-down mode.
-     * |        |          |01 = Wake-up pin rising edge enabled at Deep Power-down mode.
-     * |        |          |10 = Wake-up pin falling edge enabled at Deep Power-down mode.
-     * |        |          |11 = Wake-up pin both edge enabled at Deep Power-down mode.
+     * |        |          |00 = Wake-up pin disable at Power-down mode.
+     * |        |          |01 = Wake-up pin rising edge enabled at Power-down mode.
+     * |        |          |10 = Wake-up pin falling edge enabled at Power-down mode.
+     * |        |          |11 = Wake-up pin both edge enabled at Power-down mode.
      * |        |          |Note: These bits are write protected. Refer to the SYS_REGLCTL register.
      * |[29:28] |WKPINEN3  |Wake-up Pin 3 Enable Bits (Write Protect)
      * |        |          |This is control register for GPB.12 to wake-up pin.
-     * |        |          |00 = Wake-up pin disable at Deep Power-down mode.
-     * |        |          |01 = Wake-up pin rising edge enabled at Deep Power-down mode.
-     * |        |          |10 = Wake-up pin falling edge enabled at Deep Power-down mode.
-     * |        |          |11 = Wake-up pin both edge enabled at Deep Power-down mode.
+     * |        |          |00 = Wake-up pin disable at Power-down mode.
+     * |        |          |01 = Wake-up pin rising edge enabled at Power-down mode.
+     * |        |          |10 = Wake-up pin falling edge enabled at Power-down mode.
+     * |        |          |11 = Wake-up pin both edge enabled at Power-down mode.
      * |        |          |Note: These bits are write protected. Refer to the SYS_REGLCTL register.
      * @var CLK_T::PMUSTS
      * Offset: 0x94  Power Manager Status Register
@@ -366,39 +369,31 @@ typedef struct
      * |Bits    |Field     |Descriptions
      * | :----: | :----:   | :---- |
      * |[1]     |TMRWK     |Timer Wake-up Flag (Read Only)
-     * |        |          |This flag indicates that wake-up of chip from Deep Power-down mode (DPD) or Standby Power-down (SPD) mode was requested by wakeup timer time-out.
-     * |        |          |This flag is cleared when DPD or SPD mode is entered.
+     * |        |          |This flag indicates that wake-up of chip from Power-down mode was requested by wakeup timer time-out. 
      * |[3]     |PINWK1    |Pin 1 Wake-up Flag (Read Only)
-     * |        |          |This flag indicates that wake-up of chip from Deep Power-down mode (DPD) was requested by a transition of the Wake-up pin (GPB.0).
-     * |        |          |This flag is cleared when DPD mode is entered.
+     * |        |          |This flag indicates that wake-up of chip from Power-down mode uEE52as requested by a transition of the Wake-up pin (GPB.0).
      * |[4]     |PINWK2    |Pin 2 Wake-up Flag (Read Only)
-     * |        |          |This flag indicates that wake-up of chip from Deep Power-down mode (DPD) was requested by a transition of the Wake-up pin (GPB.2).
-     * |        |          |This flag is cleared when DPD mode is entered.
+     * |        |          |This flag indicates that wake-up of chip from Power-down mode uEE52as requested by a transition of the Wake-up pin (GPB.2).
      * |[5]     |PINWK3    |Pin 3 Wake-up Flag (Read Only)
-     * |        |          |This flag indicates that wake-up of chip from Deep Power-down mode (DPD) was requested by a transition of the Wake-up pin (GPB.12).
-     * |        |          |This flag is cleared when DPD mode is entered.
+     * |        |          |This flag indicates that wake-up of chip from Power-down mode uEE52as requested by a transition of the Wake-up pin (GPB.12).
      * |[9]     |GPBWK     |GPB Wake-up Flag (Read Only)
-     * |        |          |This flag indicates that wake-up of chip from Standby Power-down mode (SPD) was requested by a transition of selected one GPB group pins.
-     * |        |          |This flag is cleared when SPD mode is entered.
+     * |        |          |This flag indicates that wake-up of chip from Power-down mode uEE52as requested by a transition of selected one GPB group pins.
      * |[10]    |GPCWK     |GPC Wake-up Flag (Read Only)
-     * |        |          |This flag indicates that wake-up of chip from Standby Power-down mode (SPD) was requested by a transition of selected one GPC group pins.
-     * |        |          |This flag is cleared when SPD mode is entered.
+     * |        |          |This flag indicates that wake-up of chip from Power-down mode uEE52as requested by a transition of selected one GPC group pins.
      * |[12]    |LVRWK     |LVR Wake-up Flag (Read Only)
-     * |        |          |This flag indicates that wake-up of device from Standby Power-down mode (SPD) was requested with a LVR happened.
-     * |        |          |This flag is cleared when SPD mode is entered.
+     * |        |          |This flag indicates that wakeup of device from Power-down mode uEE52as requested with a LVR happened. 
      * |[13]    |BODWK     |BOD Wake-up Flag (Read Only)
-     * |        |          |This flag indicates that wake-up of device from Standby Power-down mode (SPD) was requested with a BOD happened.
-     * |        |          |This flag is cleared when SPD mode is entered.
+     * |        |          |This flag indicates that wakeup of device from Power-down mode uEE52as requested with a BOD happened.
      * |[31]    |CLRWK     |Clear Wake-up Flag
      * |        |          |0 = No clear.
      * |        |          |1 = Clear all of wake-up flag.
      * |        |          |Note: This bit is auto cleared by hardware.
      * @var CLK_T::SWKDBCTL
-     * Offset: 0x9C  Standby Power-down Wake-up De-bounce Control Register
+     * Offset: 0x9C  Power-down Wake-up De-bounce Control Register
      * ---------------------------------------------------------------------------------------------------
      * |Bits    |Field     |Descriptions
      * | :----: | :----:   | :---- |
-     * |[3:0]   |SWKDBCLKSEL|Standby Power-down Wake-up De-bounce Sampling Cycle Selection
+     * |[3:0]   |SWKDBCLKSEL|Power-down Wake-up De-bounce Sampling Cycle Selection
      * |        |          |0000 = Sample wake-up input once per 1 clocks.
      * |        |          |0001 = Sample wake-up input once per 2 clocks.
      * |        |          |0010 = Sample wake-up input once per 4 clocks.
@@ -417,11 +412,11 @@ typedef struct
      * |        |          |1111 = Sample wake-up input once per 128*256 clocks.
      * |        |          |Note: De-bounce counter clock source is the 10kHz internal low speed RC oscillator (LIRC).
      * @var CLK_T::PBSWKCTL
-     * Offset: 0xA4  GPB Standby Power-down Wake-up Control Register
+     * Offset: 0xA4  GPB Power-down Wake-up Control Register
      * ---------------------------------------------------------------------------------------------------
      * |Bits    |Field     |Descriptions
      * | :----: | :----:   | :---- |
-     * |[0]     |WKEN      |Standby Power-down Pin Wake-up Enable Bit
+     * |[0]     |WKEN      |Power-down Pin Wake-up Enable Bit
      * |        |          |0 = GPB group pin wake-up function Disabled.
      * |        |          |1 = GPB group pin wake-up function Enabled.
      * |[1]     |PRWKEN    |Pin Rising Edge Wake-up Enable Bit
@@ -437,25 +432,24 @@ typedef struct
      * |        |          |0011 = GPB.3 wake-up function Enabled.
      * |        |          |0100 = GPB.4 wake-up function Enabled.
      * |        |          |0101 = GPB.5 wake-up function Enabled.
-     * |        |          |0110 = Reserved.
      * |        |          |0111 = GPB.7 wake-up function Enabled.
      * |        |          |1000 = GPB.8 wake-up function Enabled.
      * |        |          |1001 = GPB.9 wake-up function Enabled.
-     * |        |          |1010 = Reserved.
      * |        |          |1011 = GPB.11 wake-up function Enabled.
      * |        |          |1100 = GPB.12 wake-up function Enabled.
      * |        |          |1101 = GPB.13 wake-up function Enabled.
      * |        |          |1110 = GPB.14 wake-up function Enabled.
      * |        |          |1111 = GPB.15 wake-up function Enabled.
+     * |        |          |Others are reserved.
      * |[8]     |DBEN      |GPB Input Signal De-bounce Enable Bit
      * |        |          |The DBEN bit is used to enable the de-bounce function for each corresponding I/O
      * |        |          |If the input signal pulse width cannot be sampled by continuous two de-bounce sample cycle, the input signal transition is seen as the signal bounce and will not trigger the wakeup.
      * |        |          |The de-bounce clock source is the 10 kHz internal low speed RC oscillator (LIRC).
-     * |        |          |0 = Standby power-down wake-up pin De-bounce function Disabled.
-     * |        |          |1 = Standby power-down wake-up pin De-bounce function Enabled.
+     * |        |          |0 = power-down wake-up pin De-bounce function Disabled.
+     * |        |          |1 = power-down wake-up pin De-bounce function Enabled.
      * |        |          |Note: The de-bounce function is valid only for edge triggered.
      * @var CLK_T::PCSWKCTL
-     * Offset: 0xA8  GPC Standby Power-down Wake-up Control Register
+     * Offset: 0xA8  GPC Power-down Wake-up Control Register
      * ---------------------------------------------------------------------------------------------------
      * |Bits    |Field     |Descriptions
      * | :----: | :----:   | :---- |
@@ -468,38 +462,24 @@ typedef struct
      * |[2]     |PFWKEN    |Pin Falling Edge Wake-up Enable Bit
      * |        |          |0 = GPC group pin falling edge wake-up function Disabled.
      * |        |          |1 = GPC group pin falling edge wake-up function Enabled.
-     * |[7:4]   |WKPSEL    |GPC Standby Power-down Wake-up Pin Select
-     * |        |          |0000 = Reserved.
-     * |        |          |0001 = Reserved.
-     * |        |          |0010 = Reserved.
-     * |        |          |0011 = Reserved.
-     * |        |          |0100 = Reserved.
-     * |        |          |0101 = Reserved.
-     * |        |          |0110 = Reserved.
-     * |        |          |0111 = Reserved.
-     * |        |          |1000 = Reserved.
-     * |        |          |1001 = Reserved.
-     * |        |          |1010 = Reserved.
-     * |        |          |1011 = Reserved.
-     * |        |          |1100 = Reserved.
-     * |        |          |1101 = Reserved.
+     * |[7:4]   |WKPSEL    |GPC Power-down Wake-up Pin Select
      * |        |          |1110 = GPC.14 wake-up function Enabled.
-     * |        |          |1111 = Reserved.
+     * |        |          |Others are reserved
      * |[8]     |DBEN      |GPC Input Signal De-bounce Enable Bit
      * |        |          |The DBEN bit is used to enable the de-bounce function for each corresponding I/O
      * |        |          |If the input signal pulse width cannot be sampled by continuous two de-bounce sample cycle, the input signal transition is seen as the signal bounce and will not trigger the wakeup.
      * |        |          |The de-bounce clock source is the 10 kHz internal low speed RC oscillator (LIRC).
-     * |        |          |0 = Standby power-down wake-up pin De-bounce function Disabled.
-     * |        |          |1 = Standby power-down wake-up pin De-bounce function Enabled.
+     * |        |          |0 = power-down wake-up pin De-bounce function Disabled.
+     * |        |          |1 = power-down wake-up pin De-bounce function Enabled.
      * |        |          |The de-bounce function is valid only for edge triggered.
      * @var CLK_T::IOPDCTL
-     * Offset: 0xB0  GPIO Standby Power-down Control Register
+     * Offset: 0xB0  GPIO Power-down Control Register
      * ---------------------------------------------------------------------------------------------------
      * |Bits    |Field     |Descriptions
      * | :----: | :----:   | :---- |
      * |[0]     |IOHR      |GPIO Hold Release
-     * |        |          |When GPIO enter standby power-down mode, all I/O status are hold to keep normal operating status.
-     * |        |          |After chip was waked up from standby Power-down mode, the I/O still keeps hold status until user sets this bit to release I/O hold status.
+     * |        |          |When GPIO enter power-down mode, all I/O status are hold to keep normal operating status.
+     * |        |          |After chip was waked up from power-down mode, the I/O are still keep hold status until user set this bit to release I/O hold status.
      * |        |          |Note: This bit is auto cleared by hardware.
      */
 
@@ -693,6 +673,9 @@ typedef struct
 #define CLK_CLKOCTL_DIV1EN_Pos           (5)                                               /*!< CLK_T::CLKOCTL: DIV1EN Position        */
 #define CLK_CLKOCTL_DIV1EN_Msk           (0x1ul << CLK_CLKOCTL_DIV1EN_Pos)                 /*!< CLK_T::CLKOCTL: DIV1EN Mask            */
 
+#define CLK_CLKOCTL_CLK1HZEN_Pos         (6)                                               /*!< CLK_T::CLKOCTL: CLK1HZEN Position      */
+#define CLK_CLKOCTL_CLK1HZEN_Msk         (0x1ul << CLK_CLKOCTL_CLK1HZEN_Pos)               /*!< CLK_T::CLKOCTL: CLK1HZEN Mask          */
+
 #define CLK_PMUCTL_PDMSEL_Pos            (0)                                               /*!< CLK_T::PMUCTL: PDMSEL Position         */
 #define CLK_PMUCTL_PDMSEL_Msk            (0x7ul << CLK_PMUCTL_PDMSEL_Pos)                  /*!< CLK_T::PMUCTL: PDMSEL Mask             */
 
@@ -776,7 +759,6 @@ typedef struct
 
 #define CLK_IOPDCTL_IOHR_Pos             (0)                                               /*!< CLK_T::IOPDCTL: IOHR Position          */
 #define CLK_IOPDCTL_IOHR_Msk             (0x1ul << CLK_IOPDCTL_IOHR_Pos)                   /*!< CLK_T::IOPDCTL: IOHR Mask              */
-
 
 /**@}*/ /* CLK_CONST */
 /**@}*/ /* end of CLK register group */

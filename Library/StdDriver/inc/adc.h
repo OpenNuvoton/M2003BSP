@@ -184,7 +184,6 @@ extern "C"
   * @details Before starting A/D conversion function, ADEN bit (ADCR[0]) should be set to 1.
   * \hideinitializer
   */
-//#define ADC_POWER_ON(adc) { ((adc)->ADCR |= ADC_ADCR_ADEN_Msk); while(((adc)->ADSR0 & ADC_ADSR0_PWURDY_Msk) == 0); }
 #define ADC_POWER_ON(adc) { ((adc)->ADCR |= ADC_ADCR_ADEN_Msk); }
 
 /**
@@ -254,6 +253,26 @@ extern "C"
   * \hideinitializer
   */
 #define ADC_DISABLE_CMP1(adc) ((adc)->ADCMPR[1] = 0)
+
+/**
+  * @brief Enable the compare window mode.
+  * @param[in] adc The pointer of the specified ADC module.
+  * @param[in] u32CMP Specifies the compare register, valid value are 0.
+  * @return None
+  * @details CMPF0 (ADSR0[1]) will be set when both ADC_CMP0 and ADC_CMP1 compared condition matched.
+  * \hideinitializer
+  */
+#define ADC_ENABLE_CMP_WINDOW_MODE(adc, u32CMP) ((adc)->ADCMPR[(u32CMP)] |= ADC_ADCMPR_CMPWEN_Msk)
+
+/**
+  * @brief Disable the compare window mode.
+  * @param[in] adc The pointer of the specified ADC module.
+  * @param[in] u32CMP Specifies the compare register, valid value are 0.
+  * @return None
+  * @details Disable the compare window mode for specified ADC module.
+  * \hideinitializer
+  */
+#define ADC_DISABLE_CMP_WINDOW_MODE(adc, u32CMP) ((adc)->ADCMPR[(u32CMP)] &= ~ADC_ADCMPR_CMPWEN_Msk)
 
 /**
   * @brief Set ADC input channel.

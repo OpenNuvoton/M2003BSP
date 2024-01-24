@@ -42,6 +42,7 @@ extern "C"
 
 #define USCI0_RST   ((0x8UL<<24)|(uint32_t)SYS_IPRST2_USCI0RST_Pos)     /*!< USCI0 reset is one of the SYS_ResetModule parameter */
 #define PWM0_RST    ((0x8UL<<24)|(uint32_t)SYS_IPRST2_PWM0RST_Pos)      /*!< PWM0 reset is one of the SYS_ResetModule parameter */
+#define ECAP0_RST   ((0x8UL<<24)|(uint32_t)SYS_IPRST2_ECAP0RST_Pos)     /*!< ECAP0 reset is one of the SYS_ResetModule parameter */
 
 
 /*---------------------------------------------------------------------------------------------------------*/
@@ -247,43 +248,108 @@ Example: If user want to set PA.1 as UART0_TXD and PA.0 as UART0_RXD in initial 
 #define SYS_GPF_MFPL_PF1MFP_ICE_CLK         (0xeUL<<SYS_GPF_MFPL_PF1MFP_Pos)    /*!< GPF_MFPL PF1 setting for ICE_CLK           */
 #define SYS_GPF_MFPL_PF1MFP_TM2_EXT         (0xfUL<<SYS_GPF_MFPL_PF1MFP_Pos)    /*!< GPF_MFPL PF1 setting for TM2_EXT           */
 
+#define SYS_TIMEOUT_ERR             (-1)    /*!< SYS timeout error value \hideinitializer */
+
+/**@}*/ /* end of group SYS_EXPORTED_CONSTANTS */
+
+extern int32_t g_SYS_i32ErrCode;
+
+/** @addtogroup SYS_EXPORTED_FUNCTIONS SYS Exported Functions
+  @{
+*/
+
 /**
   * @brief      Clear Brown-out detector interrupt flag
   * @param      None
-  * @return     None
+  * @return     Setting success or not
+  * @retval     0                   Success
+  * @retval     SYS_TIMEOUT_ERR     Failed due to BODCTL register is busy
   * @details    This macro clear Brown-out detector interrupt flag.
   */
-#define SYS_CLEAR_BOD_INT_FLAG() \
-   do{ \
-        while(SYS->BODCTL & SYS_BODCTL_WRBUSY_Msk); \
-        SYS->BODCTL |= SYS_BODCTL_BODIF_Msk; \
-    }while(0)
+__STATIC_INLINE int32_t SYS_CLEAR_BOD_INT_FLAG(void)
+{
+    uint32_t u32TimeOutCnt = SystemCoreClock * 2;
+
+    while(SYS->BODCTL & SYS_BODCTL_WRBUSY_Msk)
+    {
+        if(--u32TimeOutCnt == 0)
+        {
+            break;
+        }
+    }
+    SYS->BODCTL |= SYS_BODCTL_BODIF_Msk;
+
+    if(u32TimeOutCnt == 0)
+        return SYS_TIMEOUT_ERR;
+    else
+        return 0;
+}
+
+/**
+  * @brief      Set Brown-out detector function to normal mode
+  * @param      None
+  * @return     None
+  * @details    This macro set Brown-out detector to normal mode.
+  *             The register write-protection function should be disabled before using this macro.
+  * \hideinitializer
+  */
+#define SYS_CLEAR_BOD_LPM()             (SYS->BODCTL &= ~SYS_BODCTL_BODLPM_Msk)
 
 /**
   * @brief      Disable Brown-out detector function
   * @param      None
-  * @return     None
+  * @return     Setting success or not
+  * @retval     0                   Success
+  * @retval     SYS_TIMEOUT_ERR     Failed due to BODCTL register is busy
   * @details    This macro disable Brown-out detector function.
   *             The register write-protection function should be disabled before using this macro.
   */
-#define SYS_DISABLE_BOD() \
-   do{ \
-        while(SYS->BODCTL & SYS_BODCTL_WRBUSY_Msk); \
-        SYS->BODCTL &= ~SYS_BODCTL_BODEN_Msk; \
-    }while(0)
+__STATIC_INLINE int32_t SYS_DISABLE_BOD(void)
+{
+    uint32_t u32TimeOutCnt = SystemCoreClock * 2;
+
+    while(SYS->BODCTL & SYS_BODCTL_WRBUSY_Msk)
+    {
+        if(--u32TimeOutCnt == 0)
+        {
+            break;
+        }
+    }
+    SYS->BODCTL &= ~SYS_BODCTL_BODEN_Msk;
+
+    if(u32TimeOutCnt == 0)
+        return SYS_TIMEOUT_ERR;
+    else
+        return 0;
+}
 
 /**
   * @brief      Enable Brown-out detector function
   * @param      None
-  * @return     None
+  * @return     Setting success or not
+  * @retval     0                   Success
+  * @retval     SYS_TIMEOUT_ERR     Failed due to BODCTL register is busy
   * @details    This macro enable Brown-out detector function.
   *             The register write-protection function should be disabled before using this macro.
   */
-#define SYS_ENABLE_BOD() \
-   do{ \
-        while(SYS->BODCTL & SYS_BODCTL_WRBUSY_Msk); \
-        SYS->BODCTL |= SYS_BODCTL_BODEN_Msk; \
-    }while(0)
+__STATIC_INLINE int32_t SYS_ENABLE_BOD(void)
+{
+    uint32_t u32TimeOutCnt = SystemCoreClock * 2;
+
+    while(SYS->BODCTL & SYS_BODCTL_WRBUSY_Msk)
+    {
+        if(--u32TimeOutCnt == 0)
+        {
+            break;
+        }
+    }
+    SYS->BODCTL |= SYS_BODCTL_BODEN_Msk;
+
+    if(u32TimeOutCnt == 0)
+        return SYS_TIMEOUT_ERR;
+    else
+        return 0;
+}
 
 /**
   * @brief      Get Brown-out detector interrupt flag
@@ -305,30 +371,70 @@ Example: If user want to set PA.1 as UART0_TXD and PA.0 as UART0_RXD in initial 
 #define SYS_GET_BOD_OUTPUT()            (SYS->BODCTL & SYS_BODCTL_BODOUT_Msk)
 
 /**
-  * @brief      Enable Brown-out detector interrupt function
+  * @brief      Disable Brown-out detector reset function
   * @param      None
-  * @return     None
-  * @details    This macro enable Brown-out detector interrupt function.
+  * @return     Setting success or not
+  * @retval     0                   Success
+  * @retval     SYS_TIMEOUT_ERR     Failed due to BODCTL register is busy
+  * @details    This macro disable Brown-out detector reset function.
   *             The register write-protection function should be disabled before using this macro.
   */
-#define SYS_DISABLE_BOD_RST() \
-   do{ \
-        while(SYS->BODCTL & SYS_BODCTL_WRBUSY_Msk); \
-        SYS->BODCTL &= ~SYS_BODCTL_BODRSTEN_Msk; \
-    }while(0)
+__STATIC_INLINE int32_t SYS_DISABLE_BOD_RST(void)
+{
+    uint32_t u32TimeOutCnt = SystemCoreClock * 2;
+
+    while(SYS->BODCTL & SYS_BODCTL_WRBUSY_Msk)
+    {
+        if(--u32TimeOutCnt == 0)
+        {
+            break;
+        }
+    }
+    SYS->BODCTL &= ~SYS_BODCTL_BODRSTEN_Msk;
+
+    if(u32TimeOutCnt == 0)
+        return SYS_TIMEOUT_ERR;
+    else
+        return 0;
+}
 
 /**
   * @brief      Enable Brown-out detector reset function
   * @param      None
-  * @return     None
+  * @return     Setting success or not
+  * @retval     0                   Success
+  * @retval     SYS_TIMEOUT_ERR     Failed due to BODCTL register is busy
   * @details    This macro enable Brown-out detect reset function.
   *             The register write-protection function should be disabled before using this macro.
   */
-#define SYS_ENABLE_BOD_RST() \
-   do{ \
-        while(SYS->BODCTL & SYS_BODCTL_WRBUSY_Msk); \
-        SYS->BODCTL |= SYS_BODCTL_BODRSTEN_Msk; \
-    }while(0)
+__STATIC_INLINE int32_t SYS_ENABLE_BOD_RST(void)
+{
+    uint32_t u32TimeOutCnt = SystemCoreClock * 2;
+
+    while(SYS->BODCTL & SYS_BODCTL_WRBUSY_Msk)
+    {
+        if(--u32TimeOutCnt == 0)
+        {
+            break;
+        }
+    }
+    SYS->BODCTL |= SYS_BODCTL_BODRSTEN_Msk;
+
+    if(u32TimeOutCnt == 0)
+        return SYS_TIMEOUT_ERR;
+    else
+        return 0;
+}
+
+/**
+  * @brief      Set Brown-out detector function low power mode
+  * @param      None
+  * @return     None
+  * @details    This macro set Brown-out detector to low power mode.
+  *             The register write-protection function should be disabled before using this macro.
+  * \hideinitializer
+  */
+#define SYS_SET_BOD_LPM()               (SYS->BODCTL |= SYS_BODCTL_BODLPM_Msk)
 
 /**
   * @brief      Set Brown-out detector voltage level
@@ -337,15 +443,30 @@ Example: If user want to set PA.1 as UART0_TXD and PA.0 as UART0_RXD in initial 
   *             - \ref SYS_BODCTL_BODVL_2_7V
   *             - \ref SYS_BODCTL_BODVL_3_7V
   *             - \ref SYS_BODCTL_BODVL_4_4V
-  * @return     None
+  * @return     Setting success or not
+  * @retval     0                   Success
+  * @retval     SYS_TIMEOUT_ERR     Failed due to BODCTL register is busy
   * @details    This macro set Brown-out detector voltage level.
   *             The write-protection function should be disabled before using this macro.
   */
-#define SYS_SET_BOD_LEVEL(u32Level) \
-   do{ \
-        while(SYS->BODCTL & SYS_BODCTL_WRBUSY_Msk); \
-        SYS->BODCTL = (SYS->BODCTL & ~SYS_BODCTL_BODVL_Msk) | (u32Level); \
-    }while(0)
+__STATIC_INLINE int32_t SYS_SET_BOD_LEVEL(uint32_t u32Level)
+{
+    uint32_t u32TimeOutCnt = SystemCoreClock * 2;
+
+    while(SYS->BODCTL & SYS_BODCTL_WRBUSY_Msk)
+    {
+        if(--u32TimeOutCnt == 0)
+        {
+            break;
+        }
+    }
+    SYS->BODCTL = (SYS->BODCTL & ~SYS_BODCTL_BODVL_Msk) | (u32Level);
+
+    if(u32TimeOutCnt == 0)
+        return SYS_TIMEOUT_ERR;
+    else
+        return 0;
+}
 
 /**
   * @brief      Get reset source is from Brown-out detector reset
@@ -413,28 +534,58 @@ Example: If user want to set PA.1 as UART0_TXD and PA.0 as UART0_RXD in initial 
 /**
   * @brief      Disable Low-Voltage-Reset function
   * @param      None
-  * @return     None
+  * @return     Setting success or not
+  * @retval     0                   Success
+  * @retval     SYS_TIMEOUT_ERR     Failed due to BODCTL register is busy
   * @details    This macro disable Low-Voltage-Reset function.
   *             The register write-protection function should be disabled before using this macro.
   */
-#define SYS_DISABLE_LVR() \
-   do{ \
-        while(SYS->BODCTL & SYS_BODCTL_WRBUSY_Msk); \
-        SYS->BODCTL &= ~SYS_BODCTL_LVREN_Msk; \
-    }while(0)
+__STATIC_INLINE int32_t SYS_DISABLE_LVR(void)
+{
+    uint32_t u32TimeOutCnt = SystemCoreClock * 2;
+
+    while(SYS->BODCTL & SYS_BODCTL_WRBUSY_Msk)
+    {
+        if(--u32TimeOutCnt == 0)
+        {
+            break;
+        }
+    }
+    SYS->BODCTL &= ~SYS_BODCTL_LVREN_Msk;
+
+    if(u32TimeOutCnt == 0)
+        return SYS_TIMEOUT_ERR;
+    else
+        return 0;
+}
 
 /**
   * @brief      Enable Low-Voltage-Reset function
   * @param      None
-  * @return     None
+  * @return     Setting success or not
+  * @retval     0                   Success
+  * @retval     SYS_TIMEOUT_ERR     Failed due to BODCTL register is busy
   * @details    This macro enable Low-Voltage-Reset function.
   *             The register write-protection function should be disabled before using this macro.
   */
-#define SYS_ENABLE_LVR() \
-   do{ \
-        while(SYS->BODCTL & SYS_BODCTL_WRBUSY_Msk); \
-        SYS->BODCTL |= SYS_BODCTL_LVREN_Msk; \
-    }while(0)
+__STATIC_INLINE int32_t SYS_ENABLE_LVR(void)
+{
+    uint32_t u32TimeOutCnt = SystemCoreClock * 2;
+
+    while(SYS->BODCTL & SYS_BODCTL_WRBUSY_Msk)
+    {
+        if(--u32TimeOutCnt == 0)
+        {
+            break;
+        }
+    }
+    SYS->BODCTL |= SYS_BODCTL_LVREN_Msk;
+
+    if(u32TimeOutCnt == 0)
+        return SYS_TIMEOUT_ERR;
+    else
+        return 0;
+}
 
 /**
   * @brief      Disable Power-on Reset function
@@ -518,21 +669,21 @@ __STATIC_INLINE void SYS_LockReg(void)
 }
 
 
-void SYS_ClearResetSrc(uint32_t u32Src);
+void     SYS_ClearResetSrc(uint32_t u32Src);
 uint32_t SYS_GetBODStatus(void);
 uint32_t SYS_GetResetSrc(void);
 uint32_t SYS_IsRegLocked(void);
 uint32_t SYS_ReadPDID(void);
-void SYS_ResetChip(void);
-void SYS_ResetCPU(void);
-void SYS_ResetModule(uint32_t u32ModuleIndex);
-void SYS_EnableBOD(int32_t i32Mode, uint32_t u32BODLevel);
-void SYS_DisableBOD(void);
-void SYS_SetPowerLevel(uint32_t u32PowerLevel);
+void     SYS_ResetChip(void);
+void     SYS_ResetCPU(void);
+void     SYS_ResetModule(uint32_t u32ModuleIndex);
+int32_t  SYS_EnableBOD(int32_t i32Mode, uint32_t u32BODLevel);
+int32_t  SYS_DisableBOD(void);
+void     SYS_SetPowerLevel(uint32_t u32PowerLevel);
 uint32_t SYS_SetPowerRegulator(uint32_t u32PowerRegulator);
-void SYS_SetSSRAMPowerMode(uint32_t u32SRAMSel, uint32_t u32PowerMode);
-void SYS_SetPSRAMPowerMode(uint32_t u32SRAMSel, uint32_t u32PowerMode);
-void SYS_SetVRef(uint32_t u32VRefCTL);
+void     SYS_SetSSRAMPowerMode(uint32_t u32SRAMSel, uint32_t u32PowerMode);
+void     SYS_SetPSRAMPowerMode(uint32_t u32SRAMSel, uint32_t u32PowerMode);
+void     SYS_SetVRef(uint32_t u32VRefCTL);
 
 
 /**@}*/ /* end of group SYS_EXPORTED_FUNCTIONS */

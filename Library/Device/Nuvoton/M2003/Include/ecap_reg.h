@@ -26,7 +26,7 @@ typedef struct
 
     /**
      * @var ECAP_T::CNT
-     * Offset: 0x00  Input Capture Counter (24-bit up counter)
+     * Offset: 0x00  Input Capture Counter (24-bit Up Counter)
      * ---------------------------------------------------------------------------------------------------
      * |Bits    |Field     |Descriptions
      * | :----: | :----:   | :---- |
@@ -93,21 +93,18 @@ typedef struct
      * |[9:8]   |CAPSEL0   |CAP0 Input Source Selection
      * |        |          |00 = CAP0 input is from port pin ICAP0.
      * |        |          |01 = Reserved.
-     * |        |          |10 = CAP0 input is from signal CHA of QEI controller unit n.
+     * |        |          |10 = Reserved.
      * |        |          |11 = Reserved.
-     * |        |          |Note: Input capture unit n matches QEIn, where n = 0~1.
      * |[11:10] |CAPSEL1   |CAP1 Input Source Selection
      * |        |          |00 = CAP1 input is from port pin ICAP1.
      * |        |          |01 = Reserved.
-     * |        |          |10 = CAP1 input is from signal CHB of QEI controller unit n.
+     * |        |          |10 = Reserved.
      * |        |          |11 = Reserved.
-     * |        |          |Note: Input capture unit n matches QEIn, where n = 0~1.
      * |[13:12] |CAPSEL2   |CAP2 Input Source Selection
      * |        |          |00 = CAP2 input is from port pin ICAP2.
      * |        |          |01 = Reserved.
-     * |        |          |10 = CAP2 input is from signal CHX of QEI controller unit n.
+     * |        |          |10 = Reserved.
      * |        |          |11 = Reserved.
-     * |        |          |Note: Input capture unit n matches QEIn, where n = 0~1.
      * |[16]    |CAPIEN0   |Input Capture Channel 0 Interrupt Enable Control
      * |        |          |0 = The flag CAPTF0 can trigger Input Capture interrupt Disabled.
      * |        |          |1 = The flag CAPTF0 can trigger Input Capture interrupt Enabled.
@@ -246,7 +243,7 @@ typedef struct
      * |        |          |0 = CAP1 Window Mode is Disabled.
      * |        |          |1 = CAP1 Window Mode is Enabled.
      * |[2]     |WCAP2EN   |Window Mode CAP2 Enable Bit
-     * |        |          |0 = CAP2 Window Mode is Disabled.d
+     * |        |          |0 = CAP2 Window Mode is Disabled.
      * |        |          |1 = CAP2 Window Mode is Enabled.
      * @var ECAP_T::WMDLY
      * Offset: 0x24  Window Mode CAP Trigger Delay Control Register

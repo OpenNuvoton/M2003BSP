@@ -17,6 +17,8 @@
   @{
 */
 
+int32_t g_CLK_i32ErrCode = 0;   /*!< CLK global error code */
+
 /** @addtogroup CLK_EXPORTED_FUNCTIONS CLK Exported Functions
   @{
 */
@@ -118,7 +120,6 @@ void CLK_Idle(void)
   * @return     HCLK frequency
   * @details    This function get HCLK frequency. The frequency unit is Hz.
   */
-//__NONSECURE_ENTRY_WEAK
 uint32_t CLK_GetHCLKFreq(void)
 {
     SystemCoreClockUpdate();
@@ -131,7 +132,6 @@ uint32_t CLK_GetHCLKFreq(void)
   * @return     PCLK0 frequency
   * @details    This function get PCLK0 frequency. The frequency unit is Hz.
   */
-//__NONSECURE_ENTRY_WEAK
 uint32_t CLK_GetPCLK0Freq(void)
 {
     uint32_t PCLK0Div;
@@ -147,7 +147,6 @@ uint32_t CLK_GetPCLK0Freq(void)
   * @return     PCLK1 frequency
   * @details    This function get PCLK1 frequency. The frequency unit is Hz.
   */
-//__NONSECURE_ENTRY_WEAK
 uint32_t CLK_GetPCLK1Freq(void)
 {
     uint32_t PCLK1Div;
@@ -178,7 +177,6 @@ uint32_t CLK_GetPCLK2Freq(void)
   * @return     CPU frequency
   * @details    This function get CPU frequency. The frequency unit is Hz.
   */
-//__NONSECURE_ENTRY_WEAK
 uint32_t CLK_GetCPUFreq(void)
 {
     SystemCoreClockUpdate();
@@ -461,17 +459,27 @@ void CLK_DisableModuleClock(uint32_t u32ModuleIdx)
   * @retval     0  clock is not stable
   * @retval     1  clock is stable
   * @details    To wait for clock ready by specified clock source stable flag or timeout (~500ms)
+  * @note       This function sets g_CLK_i32ErrCode to CLK_TIMEOUT_ERR if clock source status is not stable
   */
 uint32_t CLK_WaitClockReady(uint32_t u32ClkMask)
 {
-    int32_t i32TimeOutCnt = 3096000;
+    uint32_t u32TimeOutCnt = SystemCoreClock / 2;
+    uint32_t u32Ret = 1U;
 
+    g_CLK_i32ErrCode = 0;
     while((CLK->STATUS & u32ClkMask) != u32ClkMask)
     {
-        if(i32TimeOutCnt-- <= 0)
-            return 0;
+        if(--u32TimeOutCnt == 0)
+        {
+            u32Ret = 0U;
+            break;
+        }
     }
-    return 1;
+
+    if(u32TimeOutCnt == 0)
+        g_CLK_i32ErrCode = CLK_TIMEOUT_ERR;
+
+    return u32Ret;
 }
 
 /**
@@ -529,13 +537,28 @@ void CLK_DisableSysTick(void)
   *             - \ref CLK_PMUCTL_PDMSEL_PD
   *             - \ref CLK_PMUCTL_PDMSEL_SPD
   *             - \ref CLK_PMUCTL_PDMSEL_DPD
-  * @return     None
+  * @return     Setting success or not
+  * @retval     0                   Success
+  * @retval     CLK_TIMEOUT_ERR     Failed due to PMUCTL register is busy
   * @details    This function is used to set power-down mode.
   */
-void CLK_SetPowerDownMode(uint32_t u32PDMode)
+int32_t CLK_SetPowerDownMode(uint32_t u32PDMode)
 {
-    while(CLK->PMUCTL & CLK_PMUCTL_WRBUSY_Msk);
+    uint32_t u32TimeOutCnt = SystemCoreClock * 2;
+
+    while(CLK->PMUCTL & CLK_PMUCTL_WRBUSY_Msk)
+    {
+        if(--u32TimeOutCnt == 0)
+        {
+            break;
+        }
+    }
     CLK->PMUCTL = (CLK->PMUCTL & (~CLK_PMUCTL_PDMSEL_Msk)) | (u32PDMode);
+
+    if(u32TimeOutCnt == 0)
+        return CLK_TIMEOUT_ERR;
+    else
+        return 0;
 }
 
 /**
@@ -550,18 +573,27 @@ void CLK_SetPowerDownMode(uint32_t u32PDMode)
  *              - \ref CLK_DPDWKPIN3_RISING
  *              - \ref CLK_DPDWKPIN3_FALLING
  *              - \ref CLK_DPDWKPIN3_BOTHEDGE
- * @return      None
+  * @return     Setting success or not
+  * @retval     0                   Success
+  * @retval     CLK_TIMEOUT_ERR     Failed due to PMUCTL register is busy
  * @details     This function is used to enable Wake-up pin trigger type.
  */
-void CLK_EnableDPDWKPin(uint32_t u32TriggerType)
+int32_t CLK_EnableDPDWKPin(uint32_t u32TriggerType)
 {
+    uint32_t u32TimeOutCnt = SystemCoreClock * 2;
     uint32_t u32Pin1, u32Pin2, u32Pin3;
 
     u32Pin1 = ((u32TriggerType) & CLK_PMUCTL_WKPINEN1_Msk);
     u32Pin2 = ((u32TriggerType) & CLK_PMUCTL_WKPINEN2_Msk);
     u32Pin3 = ((u32TriggerType) & CLK_PMUCTL_WKPINEN3_Msk);
 
-    while(CLK->PMUCTL & CLK_PMUCTL_WRBUSY_Msk);
+    while(CLK->PMUCTL & CLK_PMUCTL_WRBUSY_Msk)
+    {
+        if(--u32TimeOutCnt == 0)
+        {
+            break;
+        }
+    }
 
     if(u32Pin1)
     {
@@ -579,6 +611,11 @@ void CLK_EnableDPDWKPin(uint32_t u32TriggerType)
     {
         CLK->PMUCTL = (CLK->PMUCTL & ~(CLK_PMUCTL_WKPINEN1_Msk)) | u32TriggerType;
     }
+
+    if(u32TimeOutCnt == 0)
+        return CLK_TIMEOUT_ERR;
+    else
+        return 0;
 }
 
 /**
