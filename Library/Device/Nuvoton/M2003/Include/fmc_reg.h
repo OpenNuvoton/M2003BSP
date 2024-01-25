@@ -72,7 +72,7 @@ typedef struct
      * |        |          |(5) Erase or Program command at brown-out detected
      * |        |          |(6) Destination address is illegal, such as over an available range.
      * |        |          |(7) Invalid ISP commands
-     * |        |          |u7E5A Mass erase when MERASE (CFG0[13]) is disabled
+     * |        |          |(8) Mass erase when MERASE (CFG0[13]) is disabled
      * |        |          |Note: This bit is write protected. Refer to the SYS_REGLCTL register.
      * |[24]    |INTEN     |Interrupt Enable (Write Protect)
      * |        |          |0 = ISP INT Disabled.
@@ -163,17 +163,7 @@ typedef struct
      * |        |          |(5) Erase or Program command at brown-out detected
      * |        |          |(6) Destination address is illegal, such as over an available range.
      * |        |          |(7) Invalid ISP commands
-     * |        |          |(8) KPROM is erased/programmed if KEYLOCK is set to 1
-     * |        |          |(9) APROM is erased/programmed if KEYLOCK is set to 1
-     * |        |          |(10) LDROM is erased/programmed if KEYLOCK is set to 1
-     * |        |          |(11) CONFIG is erased/programmed if KEYLOCK is set to 1 and KEYENROM[0] is 0.
-     * |        |          |(12) Read any content of boot loader with ICE connection
-     * |        |          |(13) The address of block erase and bank erase is not in APROM
-     * |        |          |(14) ISP CMD in XOM region, except mass erase, page erase and chksum command
-     * |        |          |(15) The wrong setting of page erase ISP CMD in XOM
-     * |        |          |(16) Violate XOM setting one time protection
-     * |        |          |(17) Page erase ISP CMD in Secure/Non-secure region setting page
-     * |        |          |(18) Mass erase when MERASE (CFG0[13]) is disable
+     * |        |          |(8) Mass erase when MERASE (CFG0[13]) is disable
      * |        |          |Note: This bit is write protected. Refer to the SYS_REGLCTL register.
      * |[7]     |ALLONE    |Flash All-one Verification Flag
      * |        |          |This bit is set by hardware if all of Flash bits are 1, and cleared if Flash bits are not all 1 after ?uEBB9un Flash All-One Verification??is complete; this bit also can be cleared by writing 1
@@ -196,12 +186,9 @@ typedef struct
      * | :----: | :----:   | :---- |
      * |[3:0]   |CYCLE     |Flash Access Cycle Control (Write Protect)
      * |        |          |This register is updated automatically by hardware while FCYCDIS (FMC_ISPSTS[4]) is 0, and updated by software while auto-tuning function disabled ( FADIS (FMC_CYCTL[8]) is 1).
-     * |        |          |When auto-tuning function disabled, user needs to check the speed of HCLK and set the cycle >0.
-     * |        |          |0000 = CPU access with zero wait cycle ; Flash access cycle is 1. The HCLK working frequency range is <27MHz; Cache is disabled by hardware.
-     * |        |          |0001 = CPU access with one wait cycle if cache miss; Flash access cycle is 1. The HCLK working frequency range range is<27MHz.
-     * |        |          |0010 = CPU access with two wait cycles if cache miss; Flash access cycle is 2. The optimized HCLK working frequency range is 25~52 MHz.
-     * |        |          |0011 = CPU access with three wait cycles if cache miss; Flash access cycle is 3. The optimized HCLK working frequency range is 49~79MHz.
-     * |        |          |Others = Reserved.
+     * |        |          |0001 = Flash access cycle is 1
+     * |        |          |The HCLK working frequency range is < 25 MHz
+     * |        |          |The others are reserved.
      * |        |          |Note: This bit is write protected. Refer to the SYS_REGLCTL register.
      * |[8]     |FADIS     |Flash Access Cycle Auto-tuning Disabled Control (Write Protect)
      * |        |          |Note: This bit is write protected. Refer to the SYS_REGLCTL register.
