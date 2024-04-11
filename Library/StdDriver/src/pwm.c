@@ -39,7 +39,7 @@ uint32_t PWM_ConfigCaptureChannel(PWM_T *pwm, uint32_t u32ChannelNum, uint32_t u
     uint32_t u32NearestUnitTimeNsec;
     uint16_t u16Prescale = 1, u16CNR = 0xFFFF;
 
-    //clock source is from PCLK
+    /* clock source is from PCLK */
     SystemCoreClockUpdate();
     u32PWMClockSrc = SystemCoreClock;
 
@@ -58,14 +58,11 @@ uint32_t PWM_ConfigCaptureChannel(PWM_T *pwm, uint32_t u32ChannelNum, uint32_t u
         break;
     }
 
-    // convert to real register value
-    // every two channels share a prescaler
+    /* convert to real register value, every two channels share a prescaler */
     PWM_SET_PRESCALER(pwm, u32ChannelNum, --u16Prescale);
 
-    // set PWM to down count type(edge aligned)
-    (pwm)->CTL1 = ((pwm)->CTL1 & ~(PWM_CTL1_CNTTYPE0_Msk << (u32ChannelNum << 1))) | (1UL << (u32ChannelNum << 1));
-    // set PWM to auto-reload mode
-    (pwm)->CTL1 &= ~(PWM_CTL1_CNTTYPE0_Msk << u32ChannelNum);
+    /* set PWM to down count type(edge aligned) */
+    (pwm)->CTL1 = ((pwm)->CTL1 & ~(PWM_CTL1_CNTTYPE0_Msk << ((u32ChannelNum >> 1UL) << 2UL))) | (1UL << ((u32ChannelNum >> 1UL) << 2UL));
     PWM_SET_CNR(pwm, u32ChannelNum, u16CNR);
 
     return (u32NearestUnitTimeNsec);
@@ -90,28 +87,27 @@ uint32_t PWM_ConfigOutputChannel(PWM_T *pwm, uint32_t u32ChannelNum, uint32_t u3
     uint32_t i;
     uint16_t u16Prescale = 1, u16CNR = 0xFFFF;
 
-    //clock source is from PCLK
+    /* clock source is from PCLK */
     SystemCoreClockUpdate();
     u32PWMClockSrc = SystemCoreClock;
 
     for(u16Prescale = 1; u16Prescale < 0xFFF; u16Prescale++)//prescale could be 0~0xFFF
     {
         i = (u32PWMClockSrc / u32Frequency) / u16Prescale;
-        // If target value is larger than CNR, need to use a larger prescaler
+        /* If target value is larger than CNR, need to use a larger prescaler */
         if(i > (0x10000))
             continue;
 
         u16CNR = i;
         break;
     }
-    // Store return value here 'cos we're gonna change u16Prescale & u16CNR to the real value to fill into register
+    /*store return value here 'cos we're gonna change u16Prescale & u16CNR to the real value to fill into register */
     i = u32PWMClockSrc / (u16Prescale * u16CNR);
 
-    // convert to real register value
-    // every two channels share a prescaler
+    /* convert to real register value, every two channels share a prescaler */
     PWM_SET_PRESCALER(pwm, u32ChannelNum, --u16Prescale);
-    // set PWM to up counter type(edge aligned) and auto-reload mode
-    (pwm)->CTL1 = ((pwm)->CTL1 & ~((PWM_CTL1_CNTTYPE0_Msk << (u32ChannelNum << 1)) | (PWM_CTL1_CNTTYPE0_Msk << u32ChannelNum)));
+    /* set PWM to up counter type (edge aligned) */
+    (pwm)->CTL1 = ((pwm)->CTL1 & ~(PWM_CTL1_CNTTYPE0_Msk << ((u32ChannelNum >> 1UL) << 2UL))) | (0UL << ((u32ChannelNum >> 1UL) << 2UL));
 
     PWM_SET_CNR(pwm, u32ChannelNum, --u16CNR);
     PWM_SET_CMR(pwm, u32ChannelNum, u32DutyCycle * (u16CNR + 1) / 100);
@@ -329,13 +325,13 @@ void PWM_EnableFaultBrake(PWM_T *pwm, uint32_t u32ChannelMask, uint32_t u32Level
         {
             if ((i & 0x1UL) == 0UL)
             {
-                //set brake action as high level for even channel
+                /* set brake action as high level for even channel */
                 (pwm)->BRKCTL[i >> 1UL] &= ~PWM_BRKCTL_BRKAEVEN_Msk;
                 (pwm)->BRKCTL[i >> 1UL] |= ((3UL) << PWM_BRKCTL_BRKAEVEN_Pos);
             }
             else
             {
-                //set brake action as high level for odd channel
+                /* set brake action as high level for odd channel */
                 (pwm)->BRKCTL[i >> 1UL] &= ~PWM_BRKCTL_BRKAODD_Msk;
                 (pwm)->BRKCTL[i >> 1UL] |= ((3UL) << PWM_BRKCTL_BRKAODD_Pos);
             }
@@ -344,13 +340,13 @@ void PWM_EnableFaultBrake(PWM_T *pwm, uint32_t u32ChannelMask, uint32_t u32Level
         {
             if ((i & 0x1UL) == 0UL)
             {
-                //set brake action as low level for even channel
+                /* set brake action as low level for even channel */
                 (pwm)->BRKCTL[i >> 1UL] &= ~PWM_BRKCTL_BRKAEVEN_Msk;
                 (pwm)->BRKCTL[i >> 1UL] |= ((2UL) << PWM_BRKCTL_BRKAEVEN_Pos);
             }
             else
             {
-                //set brake action as low level for odd channel
+                /* set brake action as low level for odd channel */
                 (pwm)->BRKCTL[i >> 1UL] &= ~PWM_BRKCTL_BRKAODD_Msk;
                 (pwm)->BRKCTL[i >> 1UL] |= ((2UL) << PWM_BRKCTL_BRKAODD_Pos);
             }
@@ -429,7 +425,7 @@ void PWM_DisableOutput(PWM_T *pwm, uint32_t u32ChannelMask)
  */
 void PWM_EnableDeadZone(PWM_T *pwm, uint32_t u32ChannelNum, uint32_t u32Duration)
 {
-    // every two channels share the same setting
+    /* every two channels share the same setting */
     (pwm)->DTCTL[(u32ChannelNum) >> 1UL] &= ~PWM_DTCTL_DTCNT_Msk;
     (pwm)->DTCTL[(u32ChannelNum) >> 1UL] |= PWM_DTCTL_DTEN_Msk | u32Duration;
 }
@@ -445,7 +441,7 @@ void PWM_EnableDeadZone(PWM_T *pwm, uint32_t u32ChannelNum, uint32_t u32Duration
  */
 void PWM_DisableDeadZone(PWM_T *pwm, uint32_t u32ChannelNum)
 {
-    // every two channels shares the same setting
+    /* every two channels shares the same setting */
     (pwm)->DTCTL[(u32ChannelNum) >> 1UL] &= ~PWM_DTCTL_DTEN_Msk;
 }
 
