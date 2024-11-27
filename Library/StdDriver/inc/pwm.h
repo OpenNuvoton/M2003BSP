@@ -404,7 +404,7 @@ extern "C"
  * @note PWM counter will stop if period length set to 0.
  * \hideinitializer
  */
-#define PWM_SET_CNR(pwm, u32ChannelNum, u32CNR)  ((pwm)->PERIOD[(u32ChannelNum)] = (u32CNR))
+#define PWM_SET_CNR(pwm, u32ChannelNum, u32CNR)  ((pwm)->PERIOD[(u32ChannelNum>>1)<<1] = (u32CNR))
 
 /**
  * @brief This macro get the period of the selected channel
@@ -414,7 +414,7 @@ extern "C"
  * @details This macro is used to get the period of specified channel.
  * \hideinitializer
  */
-#define PWM_GET_CNR(pwm, u32ChannelNum)  ((pwm)->PERIOD[(u32ChannelNum)])
+#define PWM_GET_CNR(pwm, u32ChannelNum)  ((pwm)->PERIOD[(u32ChannelNum>>1)<<1])
 
 /**
  * @brief This macro set the PWM aligned type
