@@ -12,6 +12,8 @@
 #include "targetdev.h"
 #include "uart_transfer.h"
 
+int32_t FMC_SetVectorAddr(uint32_t u32PageAddr);
+
 #define nRTSPin                 (PB8)
 #define RECEIVE_MODE            (0)
 #define TRANSMIT_MODE           (1)

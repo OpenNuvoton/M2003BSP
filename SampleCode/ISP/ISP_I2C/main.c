@@ -11,6 +11,7 @@
 #include <stdio.h>
 #include "targetdev.h"
 
+int32_t FMC_SetVectorAddr(uint32_t u32PageAddr);
 
 void SYS_Init(void)
 {
