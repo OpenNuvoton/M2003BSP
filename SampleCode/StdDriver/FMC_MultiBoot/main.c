@@ -123,17 +123,16 @@ int32_t main(void)
     uint8_t u8Ch;
     uint32_t u32Data;
 
-
     /* Init System, IP clock and multi-function I/O. */
     SYS_Init();
-    
-    /* Unlock protected registers to operate FMC ISP function */
-    SYS_UnlockReg();
 
     /* Configure UART0: 115200, 8-bit word, no parity bit, 1 stop bit. */
     UART_Open(UART0, 115200);
 
-    /* Enable FMC ISP function */
+    /* Unlock protected registers to operate FMC ISP function */
+    SYS_UnlockReg();
+
+    /* Enable FMC ISP function. Before using FMC function, it should unlock system register first. */
     FMC_Open();
 
     /*

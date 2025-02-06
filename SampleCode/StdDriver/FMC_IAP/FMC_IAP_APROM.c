@@ -19,6 +19,8 @@ void SYS_Init(void)
     /*---------------------------------------------------------------------------------------------------------*/
     /* Init System Clock                                                                                       */
     /*---------------------------------------------------------------------------------------------------------*/
+    /* Unlock protected registers  */
+    SYS_UnlockReg();
 
     /* Enable HIRC clock */
     CLK_EnableXtalRC(CLK_PWRCTL_HIRCEN_Msk);
@@ -39,6 +41,9 @@ void SYS_Init(void)
     /* Init I/O Multi-function                                                                                 */
     /*---------------------------------------------------------------------------------------------------------*/
     Uart0DefaultMPF();
+
+    /* Lock protected registers */
+    SYS_LockReg();
 }
 
 void UART_Init()
@@ -130,14 +135,8 @@ int main(void)
     char *ai8BootMode[] = {"LDROM+IAP", "LDROM", "APROM+IAP", "APROM"};
     uint32_t u32CBS;
 
-    /* Unlock protected registers to operate SYS_Init and FMC ISP function */
-    SYS_UnlockReg();
-
     /* Init system clock and multi-function I/O */
     SYS_Init();
-
-    /* Enable FMC ISP function */
-    FMC_Open();
 
     /* Init UART */
     UART_Init();
@@ -148,8 +147,10 @@ int main(void)
     printf("|          [APROM code]              |\n");
     printf("+------------------------------------+\n");
 
+    /* Unlock protected registers */
+    SYS_UnlockReg();
 
-    /* Enable FMC ISP function */
+    /* Enable FMC ISP function. Before using FMC function, it should unlock system register first. */
     FMC_Open();
 
     if (SetIAPBoot() < 0)

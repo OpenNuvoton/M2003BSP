@@ -147,9 +147,11 @@ int main()
     PutString("|          [LDROM code]               |\n");
     PutString("+-------------------------------------+\n");
 
-    SYS_UnlockReg();                   /* Unlock protected registers to operate FMC ISP function*/
+    /* Unlock protected registers */
+    SYS_UnlockReg();
 
-    FMC_Open();                        /* Enable FMC ISP function */
+    /* Enable FMC ISP function. Before using FMC function, it should unlock system register first. */
+    FMC_Open();
 
     PutString("\n\nPress any key to branch to APROM...\n");
     GetChar();                         /* block on waiting for any one character input from UART0 */

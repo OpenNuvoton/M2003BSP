@@ -14,6 +14,9 @@ void SYS_Init(void)
     /*---------------------------------------------------------------------------------------------------------*/
     /* Init System Clock                                                                                       */
     /*---------------------------------------------------------------------------------------------------------*/
+    /* Unlock protected registers */
+    SYS_UnlockReg();
+
     /* Enable HIRC clock */
     CLK_EnableXtalRC(CLK_PWRCTL_HIRCEN_Msk);
 
@@ -36,6 +39,9 @@ void SYS_Init(void)
     /* Init I/O Multi-function                                                                                 */
     /*---------------------------------------------------------------------------------------------------------*/
     Uart0DefaultMPF();
+
+    /* Lock protected registers */
+    SYS_LockReg();
 }
 
 void UART0_Init(void)
@@ -83,14 +89,8 @@ int32_t main(void)
     uint32_t u32Addr;
     uint32_t u32Cnt;
 
-    /* Unlock protected registers to operate SYS_Init and FMC ISP function */
-    SYS_UnlockReg();
-
     /* Init System, IP clock and multi-function I/O. */
     SYS_Init();
-
-    /* Lock protected registers */
-    SYS_LockReg();
 
     /* Configure UART0: 115200, 8-bit word, no parity bit, 1 stop bit. */
     UART0_Init();
@@ -112,7 +112,7 @@ int32_t main(void)
     /* Unlock protected registers to operate FMC ISP function */
     SYS_UnlockReg();
 
-    /* Enable FMC ISP functions */
+    /* Enable FMC ISP function. Before using FMC function, it should unlock system register first. */
     FMC_Open();
 
     /* Update APROM enabled */
