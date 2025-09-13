@@ -10,12 +10,6 @@
 #include <stdio.h>
 #include "NuMicro.h"
 
-void SetVTOR(void)
-{
-    extern uint32_t Image$$RO$$Base;
-    SCB->VTOR = (uint32_t)&Image$$RO$$Base;
-}
-
 void SYS_Init(void)
 {
     /*---------------------------------------------------------------------------------------------------------*/

@@ -556,6 +556,8 @@ int fputc(int ch, FILE *stream)
 
 #else
 
+#include <sys/stat.h>
+
 int _write(int fd, char *ptr, int len)
 {
     int i = len;
@@ -583,6 +585,38 @@ int _read(int fd, char *ptr, int len)
     while ((DEBUG_PORT->FIFOSTS & UART_FIFOSTS_RXEMPTY_Msk) != 0);
 
     *ptr = DEBUG_PORT->DAT;
+    return 1;
+}
+
+/* Add implementations to fix linker warnings from the newlib-nano C library in VSCode-GCC14.3.1 */
+int _close(int file) 
+{
+    return -1;
+}
+
+int _lseek(int file, int ptr, int dir) 
+{
+    return 0;
+}
+
+int _fstat(int file, struct stat *st) 
+{
+    st->st_mode = S_IFCHR;
+    return 0;
+}
+
+int _isatty(int file) 
+{
+    return 1;
+}
+
+int _kill(int pid, int sig) 
+{
+    return -1;
+}
+
+int _getpid(void) 
+{
     return 1;
 }
 #endif

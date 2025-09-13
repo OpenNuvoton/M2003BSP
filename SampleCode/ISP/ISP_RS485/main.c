@@ -14,6 +14,12 @@
 
 int32_t FMC_SetVectorAddr(uint32_t u32PageAddr);
 
+/* Add implementations to fix linker warnings from the newlib-nano C library in VSCode-GCC14.3.1 */
+void _close(void) {}
+void _lseek(void) {}
+void _read_r(void) {}
+void _write_r(void) {}
+
 #define nRTSPin                 (PB8)
 #define RECEIVE_MODE            (0)
 #define TRANSMIT_MODE           (1)
