@@ -169,8 +169,10 @@ int32_t main(void)
 #if defined(__BOOT2__)
     PutString("Boot from 0x6000\n");
 #endif
+#if defined(__ARMCC_VERSION) || !defined(__ICCARM__)
 #if defined(__LDROM__)
     PutString("Boot from 0x100000\n");
+#endif
 #endif
 
     u32Data = FMC_GetVECMAP();
@@ -179,14 +181,12 @@ int32_t main(void)
     PutString("\n");
 
     PutString("Select one boot image: \n");
-#if defined(__ARMCC_VERSION)
     PutString("[0] Boot 0, base = 0x2000\n");
-#endif
     PutString("[1] Boot 1, base = 0x4000\n");
-#if defined(__ARMCC_VERSION)
     PutString("[2] Boot 2, base = 0x6000\n");
+#if defined(__ARMCC_VERSION) || !defined(__ICCARM__)
     PutString("[3] Boot 4, base = 0x100000\n");
-#endif
+#endif   
     PutString("[Others] Boot, base = 0x0\n");
 
     u8Ch = GetChar();
@@ -204,7 +204,7 @@ int32_t main(void)
     case '2':
         FMC_SetVectorPageAddr(0x6000);
         break;
-#if defined(__ARMCC_VERSION)
+#if defined(__ARMCC_VERSION) || !defined(__ICCARM__)
     case '3':
         FMC_SetVectorPageAddr(0x100000);
         break;

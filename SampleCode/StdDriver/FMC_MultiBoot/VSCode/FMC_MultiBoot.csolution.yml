@@ -11,6 +11,11 @@ solution:
     - type: Boot0                # build-type name, used in context with: .Calibration
       optimize: size            # balanced optimization
       debug: on                     # generate debug info. for the debug build
+    - type: Boot1                # build-type name, used in context with: .Calibration
+      optimize: size            # balanced optimization
+      debug: on                     # generate debug info. for the debug build
+    - type: Boot2                # build-type name, used in context with: .Calibration
+      optimize: size            # balanced optimization
     - type: BootLD               # build-type name, used in context with: .Calibration
       optimize: size                # size optimization
       debug: on                     # generate debug info. for the debug build

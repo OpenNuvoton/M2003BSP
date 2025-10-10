@@ -10,7 +10,7 @@
 #endif
 
 #ifndef SRAM_SIZE
-    #define SRAM_SIZE       0x00002000
+    #define SRAM_SIZE       0x00001000
 #endif
 
 #ifndef STACK_SIZE
@@ -71,8 +71,8 @@ LR_ROM __RO_BASE __RO_SIZE  {                         ; load region size_region
         *.o (RESET, +First)
         *(InRoot$$Sections)
         .ANY (+XO)
-        startup_M2U51.o
-        system_M2U51.o
+        startup_M2003.o
+        system_M2003.o
     }
 
     RW_RAM __RW_BASE __RW_SIZE  {                     ; RW data

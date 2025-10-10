@@ -106,7 +106,6 @@ int32_t main(void)
        By setting KEIL's scatter file: scatter.scf,
                   IAR's linker configuration file: FMC_ExeInSRAM.icf,
                   GCC's linker script file: FMC_ExeInSRAM.ld,
-       RO code is placed to 0x20000000 ~ 0x20000600 with RW is placed to 0x20000600 ~ 0x20000A00.
     */
 
     /* Unlock protected registers to operate FMC ISP function */

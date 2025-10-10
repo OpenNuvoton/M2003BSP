@@ -166,10 +166,12 @@ Reset_Handler:
 
 .L_loop0_0:
 	subs	r3, #4
+	blt	.L_loop0_0_done
 	ldr	r0, [r1,r3]
 	str	r0, [r2,r3]
-	bge	.L_loop0_0
+	b	.L_loop0_0
 
+.L_loop0_0_done:
 	adds	r4, #12
 	b	.L_loop0
 
@@ -209,7 +211,7 @@ Reset_Handler:
  *  latter.
  *
  *  Define macro __STARTUP_CLEAR_BSS_MULTIPLE to choose the former.
- *  Otherwise efine macro __STARTUP_CLEAR_BSS to choose the later.
+ *  Otherwise define macro __STARTUP_CLEAR_BSS to choose the later.
  */
 #ifdef __STARTUP_CLEAR_BSS_MULTIPLE
 /*  Multiple sections scheme.
@@ -280,7 +282,6 @@ Reset_Handler:
 #endif
 
 /* Init POR */
-#if 1
 
 	ldr	r0, =0x40000024
 	movw r1, 0x00005AA5
@@ -288,7 +289,6 @@ Reset_Handler:
 
 	ldr	r0, =0x400001EC
 	str	r1, [r0]
-#endif
 
 /* Lock register */
 	ldr	r0, =0x40000100
