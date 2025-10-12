@@ -59,7 +59,7 @@ volatile uint8_t g_u32WWDTINTCounts;
  *
  * @return      None
  *
- * @details     The WDT_IRQHandler is default IRQ of WWDT
+ * @details     The WWDT_IRQHandler is default IRQ of WWDT
  */
 void WWDT_IRQHandler(void)
 {
