@@ -39,7 +39,7 @@ project:
     - for-compiler: GCC
       C:
         - -std=gnu11
-        - --specs=nano.specs
+        - --specs=nano.specs --specs=nosys.specs
         - -Wno-return-type
         - -Wno-unused-but-set-variable
         - -fdata-sections
@@ -63,7 +63,7 @@ project:
         - -fmessage-length=0
         - -fsigned-char
         - -g
-        - --specs=nano.specs
+        - --specs=nano.specs --specs=nosys.specs
         - -Wl,--gc-sections,-Map="$elf()$.map"
   setups:
     - output:

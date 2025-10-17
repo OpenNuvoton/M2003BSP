@@ -63,7 +63,7 @@ project:
     - -fmessage-length=0
     - -fsigned-char
     - -g
-    - --specs=nano.specs
+    - --specs=nano.specs --specs=nosys.specs
     - -Wl,--gc-sections,-Map="$elf()$.map"
   setups:
   - output:
