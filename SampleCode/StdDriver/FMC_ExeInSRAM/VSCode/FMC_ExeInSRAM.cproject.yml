@@ -47,6 +47,7 @@ project:
           Link:
             - -mthumb -fmessage-length=0 -fsigned-char --specs=nano.specs --specs=nosys.specs
             - -Wl,--gc-sections,-Map="$elf()$.map"
+            - -Wl,--no-warn-rwx-segments
   linker:
     - script: FMC_ExeInSRAM.sct
       for-compiler: AC6

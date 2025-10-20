@@ -44,6 +44,7 @@ project:
           Link:
             - -mthumb -fmessage-length=0 -fsigned-char --specs=nano.specs --specs=nosys.specs
             - -Wl,--gc-sections,-Map="$elf()$.map"
+            - -Wl,--no-warn-rwx-segments
     - setup: Options for FMC_MultiBoot_Base
       output :
         base-name: FMC_MultiBoot_Base
