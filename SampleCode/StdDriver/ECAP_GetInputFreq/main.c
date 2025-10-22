@@ -215,6 +215,7 @@ void ECAP_FunctionTest()
             {
                 /* If IC0 input frequency is changed, Update frquency */
                 u32Hz = u32Hz_DET;
+                printf("\nECAP0_IC0 input frequency is %d (Hz), gu32IC0Hold=0x%08X\n", u32Hz, gu32IC0Hold);
             }
             else
             {

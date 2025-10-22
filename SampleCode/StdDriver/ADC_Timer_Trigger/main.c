@@ -13,8 +13,8 @@
 /*----------------------------------------------*/
 /* Define global variables and constants        */
 /*----------------------------------------------*/
-volatile uint32_t g_u32AdcIntFlag = 0;
-volatile uint32_t g_u32COVNUMFlag = 0;
+#define DATA_NUMBER     (6)
+volatile uint32_t g_u32AdcIntFlag;
 
 
 /*----------------------------------------------*/
@@ -24,7 +24,6 @@ void ADC_IRQHandler(void)
 {
     ADC_CLR_INT_FLAG(ADC, ADC_ADF_INT); /* Clear the A/D interrupt flag */
     g_u32AdcIntFlag = 1;
-    g_u32COVNUMFlag++;
 }
 
 void SYS_Init(void)
@@ -96,8 +95,8 @@ void UART0_Init(void)
 
 void TIMER0_Init()
 {
-    /* Set timer0 periodic time-out frequency is 6Hz */
-    TIMER_Open(TIMER0, TIMER_PERIODIC_MODE, 6);
+    /* Set timer0 periodic time-out frequency is 1Hz */
+    TIMER_Open(TIMER0, TIMER_PERIODIC_MODE, 1);
 
     /* Enable timer interrupt trigger ADC */
     TIMER_SetTriggerSource(TIMER0, TIMER_TRGSRC_TIMEOUT_EVENT);
@@ -107,13 +106,14 @@ void TIMER0_Init()
 void ADC_FunctionTest()
 {
     uint8_t  u8Option;
-    int32_t  i32ConversionData[6] = {0};
+    int32_t  i32ConversionData[DATA_NUMBER] = {0};
+    uint32_t u32CovNum;
 
     printf("+----------------------------------------------------------------------+\n");
     printf("|                     ADC trigger by Timer test                        |\n");
     printf("+----------------------------------------------------------------------+\n");
 
-    printf("\nIn this test, software will get 6 conversion result from the specified channel within 1 second.\n");
+    printf("\nIn this test, software will get %d conversion result from the specified channel within %d second.\n", DATA_NUMBER, DATA_NUMBER);
 
     /* Enable ADC converter */
     ADC_POWER_ON(ADC);
@@ -143,7 +143,7 @@ void ADC_FunctionTest()
 
             /* Reset the ADC indicator and enable Timer0 counter */
             g_u32AdcIntFlag = 0;
-            g_u32COVNUMFlag = 0;
+            u32CovNum = 0;
             TIMER_Start(TIMER0);
 
             while(1)
@@ -155,9 +155,11 @@ void ADC_FunctionTest()
                 g_u32AdcIntFlag = 0;
 
                 /* Get the conversion result of ADC channel 2 */
-                i32ConversionData[g_u32COVNUMFlag - 1] = ADC_GET_CONVERSION_DATA(ADC, 2);
+                i32ConversionData[u32CovNum] = ADC_GET_CONVERSION_DATA(ADC, 2);
+                printf("                                0x%X (%d)\n", i32ConversionData[u32CovNum], i32ConversionData[u32CovNum]);
+                u32CovNum++;
 
-                if(g_u32COVNUMFlag >= 6)
+                if(u32CovNum >= DATA_NUMBER)
                     break;
             }
 
@@ -166,9 +168,6 @@ void ADC_FunctionTest()
 
             /* Disable the sample module interrupt */
             ADC_DISABLE_INT(ADC, ADC_ADF_INT);
-
-            for(g_u32COVNUMFlag = 0; (g_u32COVNUMFlag) < 6; g_u32COVNUMFlag++)
-                printf("                                0x%X (%d)\n", i32ConversionData[g_u32COVNUMFlag], i32ConversionData[g_u32COVNUMFlag]);
         }
         else
             return ;
