@@ -57,7 +57,7 @@ project:
         - file: ../../../../Library/Device/Nuvoton/M2003/Source/system_M2003.c
         - file: ../../../../Library/Device/Nuvoton/M2003/Source/ARM/startup_M2003.c
           for-compiler: AC6
-        - file: ../../../../Library/Device/Nuvoton/M2003/Source/GCC/startup_M2003.S
+        - file: ./startup_M2003.S
           for-compiler: GCC        
     - group: User
       files:
