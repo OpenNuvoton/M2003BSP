@@ -1,317 +1,354 @@
-;/******************************************************************************
-; * @file     startup_M2003.s
-; * @version  V1.00
-; * @brief    CMSIS Cortex-M Core Device Startup File for M2003
-; *
-; * SPDX-License-Identifier: Apache-2.0
-; * @copyright (C) 2017-2020 Nuvoton Technology Corp. All rights reserved.
-;*****************************************************************************/
-;/*
-;//-------- <<< Use Configuration Wizard in Context Menu >>> ------------------
-;*/
+/****************************************************************************//**
+ * @file     startup_M2003.S
+ * @version  V1.00
+ * @brief    CMSIS Cortex-M23 Core Device Startup File for M2003
+ *
+ * @copyright (C) 2018 Nuvoton Technology Corp. All rights reserved.
+ *****************************************************************************/
+
+	.syntax	unified
+	.arch	armv8-m.base
+
+	.section .stack
+	.align	3
+#ifdef __STACK_SIZE
+	.equ	Stack_Size, __STACK_SIZE
+#else
+	.equ	Stack_Size, 0x00000400
+#endif
+	.globl	__StackTop
+	.globl	__StackLimit
+__StackLimit:
+	.space	Stack_Size
+	.size	__StackLimit, . - __StackLimit
+__StackTop:
+	.size	__StackTop, . - __StackTop
+
+	.section .heap
+	.align	3
+#ifdef __HEAP_SIZE
+	.equ	Heap_Size, __HEAP_SIZE
+#else
+	.equ	Heap_Size, 0x00000100
+#endif
+	.globl	__HeapBase
+	.globl	__HeapLimit
+__HeapBase:
+	.if	Heap_Size
+	.space	Heap_Size
+	.endif
+	.size	__HeapBase, . - __HeapBase
+__HeapLimit:
+	.size	__HeapLimit, . - __HeapLimit
+
+	.section .vectors
+	.align	2
+	.globl	__Vectors
+__Vectors:
+	.long	__StackTop            /* Top of Stack                  */
+	.long	Reset_Handler         /* Reset Handler                 */
+	.long	NMI_Handler           /* NMI Handler                   */
+	.long	HardFault_Handler     /* Hard Fault Handler            */
+	.long	0                     /* Reserved                      */
+	.long	0                     /* Reserved                      */
+	.long	0                     /* Reserved                      */
+	.long	0                     /* Reserved                      */
+	.long	0                     /* Reserved                      */
+	.long	0                     /* Reserved                      */
+	.long	0                     /* Reserved                      */
+	.long	SVC_Handler           /* SVCall Handler                */
+	.long	0                     /* Reserved                      */
+	.long	0                     /* Reserved                      */
+	.long	PendSV_Handler        /* PendSV Handler                */
+	.long	SysTick_Handler       /* SysTick Handler               */
+
+	/* External interrupts */
+	.long	BOD_IRQHandler        /*  0: BOD                        */
+	.long	Default_Handler       /*  1: Reserved                   */
+	.long	PWRWU_IRQHandler      /*  2: PWRWU                      */
+	.long	Default_Handler       /*  3: Reserved                   */
+	.long	Default_Handler       /*  4: Reserved                   */
+	.long	ISP_IRQHandler        /*  5: FMC(ISP)                   */
+	.long	Default_Handler       /*  6: Reserved                   */
+	.long	Default_Handler       /*  7: Reserved                   */
+	.long	WDT_IRQHandler        /*  8: WDT                        */
+	.long	WWDT_IRQHandler       /*  9: WWDT                       */
+	.long	EINT0_IRQHandler      /* 10: EINT0                      */
+	.long	EINT1_IRQHandler      /* 11: EINT1                      */
+	.long	EINT2_IRQHandler      /* 12: EINT2                      */
+	.long	EINT3_IRQHandler      /* 13: EINT3                      */
+	.long	Default_Handler       /* 14: Reserved                   */
+	.long	EINT5_IRQHandler      /* 15: EINT5                      */
+	.long	Default_Handler       /* 16: Reserved                   */
+	.long	GPB_IRQHandler        /* 17: GPB                        */
+	.long	GPC_IRQHandler        /* 18: GPC                        */
+	.long	Default_Handler       /* 19: Reserved                   */
+	.long	GPE_IRQHandler        /* 20: GPE                        */
+	.long	GPF_IRQHandler        /* 21: GPF                        */
+	.long	Default_Handler       /* 22: Reserved                   */
+	.long	Default_Handler       /* 23: Reserved                   */
+	.long	Default_Handler       /* 24: Reserved                   */
+	.long	PWM0_IRQHandler       /* 25: PWM0                       */
+	.long	Default_Handler       /* 26: Reserved                   */
+	.long	Default_Handler       /* 27: Reserved                   */
+	.long	Default_Handler       /* 28: Reserved                   */
+	.long	Default_Handler       /* 29: Reserved                   */
+	.long	Default_Handler       /* 30: Reserved                   */
+	.long	Default_Handler       /* 31: Reserved                   */
+	.long	TMR0_IRQHandler       /* 32: TIMER0                     */
+	.long	TMR1_IRQHandler       /* 33: TIMER1                     */
+	.long	TMR2_IRQHandler       /* 34: TIMER2                     */
+	.long	TMR3_IRQHandler       /* 35: TIMER3                     */
+	.long	UART0_IRQHandler      /* 36: UART0                      */
+	.long	UART1_IRQHandler      /* 37: UART1                      */
+	.long	I2C0_IRQHandler       /* 38: I2C0                       */
+	.long	Default_Handler       /* 39: Reserved                   */
+	.long	Default_Handler       /* 40: Reserved                   */
+	.long	Default_Handler       /* 41: Reserved                   */
+	.long	ADC_IRQHandler        /* 42: ADC                        */
+	.long	Default_Handler       /* 43: Reserved                   */
+	.long	Default_Handler       /* 44: Reserved                   */
+	.long	Default_Handler       /* 45: Reserved                   */
+	.long	Default_Handler       /* 46: Reserved                   */
+	.long	Default_Handler       /* 47: Reserved                   */
+	.long	Default_Handler       /* 48: Reserved                   */
+	.long	Default_Handler       /* 49: Reserved                   */
+	.long	Default_Handler       /* 50: Reserved                   */
+	.long	Default_Handler       /* 51: Reserved                   */
+	.long	USCI0_IRQHandler      /* 52: UCSI0                      */
+	.long	Default_Handler       /* 53: Reserved                   */
+	.long	Default_Handler       /* 54: Reserved                   */
+	.long	Default_Handler       /* 55: Reserved                   */
+	.long	Default_Handler       /* 56: Reserved                   */
+	.long	Default_Handler       /* 57: Reserved                   */
+	.long	Default_Handler       /* 58: Reserved                   */
+	.long	Default_Handler       /* 59: Reserved                   */
+	.long	ECAP0_IRQHandler      /* 60: ECAP0                      */
+	.long	Default_Handler       /* 61: Reserved                   */
+	.long	Default_Handler       /* 62: Reserved                   */
+	.long	Default_Handler       /* 63: Reserved                   */
+
+	.size	__Vectors, . - __Vectors
+
+	.text
+	.thumb
+	.thumb_func
+	.align	2
+	.globl	Reset_Handler
+	.type	Reset_Handler, %function
+Reset_Handler:
+/*  Firstly it copies data from read only memory to RAM. There are two schemes
+ *  to copy. One can copy more than one sections. Another can only copy
+ *  one section.  The former scheme needs more instructions and read-only
+ *  data to implement than the latter.
+ *  Macro __STARTUP_COPY_MULTIPLE is used to choose between two schemes.  */
+
+#ifdef __STARTUP_COPY_MULTIPLE
+/*  Multiple sections scheme.
+ *
+ *  Between symbol address __copy_table_start__ and __copy_table_end__,
+ *  there are array of triplets, each of which specify:
+ *    offset 0: LMA of start of a section to copy from
+ *    offset 4: VMA of start of a section to copy to
+ *    offset 8: size of the section to copy. Must be multiply of 4
+ *
+ *  All addresses must be aligned to 4 bytes boundary.
+ */
+	ldr	r4, =__copy_table_start__
+	ldr	r5, =__copy_table_end__
+
+.L_loop0:
+	cmp	r4, r5
+	bge	.L_loop0_done
+	ldr	r1, [r4]
+	ldr	r2, [r4, #4]
+	ldr	r3, [r4, #8]
+
+.L_loop0_0:
+	subs	r3, #4
+	blt	.L_loop0_0_done
+	ldr	r0, [r1,r3]
+	str	r0, [r2,r3]
+	b	.L_loop0_0
+
+.L_loop0_0_done:
+	adds	r4, #12
+	b	.L_loop0
+
+.L_loop0_done:
+#else
+/*  Single section scheme.
+ *
+ *  The ranges of copy from/to are specified by following symbols
+ *    __etext: LMA of start of the section to copy from. Usually end of text
+ *    __data_start__: VMA of start of the section to copy to
+ *    __data_end__: VMA of end of the section to copy to
+ *
+ *  All addresses must be aligned to 4 bytes boundary.
+ */
+	ldr	r1, =__etext
+	ldr	r2, =__data_start__
+	ldr	r3, =__data_end__
+
+	subs	r3, r2
+	ble	.L_loop1_done
+
+.L_loop1:
+	subs	r3, #4
+	ldr	r0, [r1,r3]
+	str	r0, [r2,r3]
+	bgt	.L_loop1
+
+.L_loop1_done:
+
+#endif /*__STARTUP_COPY_MULTIPLE */
+
+/*  This part of work usually is done in C library startup code. Otherwise,
+ *  define this macro to enable it in this startup.
+ *
+ *  There are two schemes too. One can clear multiple BSS sections. Another
+ *  can only clear one section. The former is more size expensive than the
+ *  latter.
+ *
+ *  Define macro __STARTUP_CLEAR_BSS_MULTIPLE to choose the former.
+ *  Otherwise define macro __STARTUP_CLEAR_BSS to choose the later.
+ */
+#ifdef __STARTUP_CLEAR_BSS_MULTIPLE
+/*  Multiple sections scheme.
+ *
+ *  Between symbol address __copy_table_start__ and __copy_table_end__,
+ *  there are array of tuples specifying:
+ *    offset 0: Start of a BSS section
+ *    offset 4: Size of this BSS section. Must be multiply of 4
+ */
+	ldr	r3, =__zero_table_start__
+	ldr	r4, =__zero_table_end__
+
+.L_loop2:
+	cmp	r3, r4
+	bge	.L_loop2_done
+	ldr	r1, [r3]
+	ldr	r2, [r3, #4]
+	movs	r0, 0
+
+.L_loop2_0:
+	subs	r2, #4
+	str 	r0, [r1, r2]
+	bgt	.L_loop2_0
+
+	adds	r3, #8
+	b	.L_loop2
+.L_loop2_done:
+
+#elif defined (__STARTUP_CLEAR_BSS)
+/*  Single BSS section scheme.
+ *
+ *  The BSS section is specified by following symbols
+ *    __bss_start__: start of the BSS section.
+ *    __bss_end__: end of the BSS section.
+ *
+ *  Both addresses must be aligned to 4 bytes boundary.
+ */
+	ldr	r1, =__bss_start__
+	ldr	r2, =__bss_end__
+
+    movs    r0, 0
+
+    subs    r2, r1
+    ble .L_loop3_done
+
+.L_loop3:
+    subs    r2, #4
+    str r0, [r1, r2]
+    bgt .L_loop3
+.L_loop3_done:
+#endif /* __STARTUP_CLEAR_BSS_MULTIPLE || __STARTUP_CLEAR_BSS */
 
 
-; <h> Stack Configuration
-;   <o> Stack Size (in Bytes) <0x0-0xFFFFFFFF:8>
-; </h>
-
-	IF :LNOT: :DEF: Stack_Size
-Stack_Size      EQU     0x00000400
-	ENDIF
-
-                AREA    STACK, NOINIT, READWRITE, ALIGN=3
-Stack_Mem       SPACE   Stack_Size
-__initial_sp
 
 
-; <h> Heap Configuration
-;   <o>  Heap Size (in Bytes) <0x0-0xFFFFFFFF:8>
-; </h>
-
-	IF :LNOT: :DEF: Heap_Size
-Heap_Size       EQU     0x00000100
-	ENDIF
-
-                AREA    HEAP, NOINIT, READWRITE, ALIGN=3
-__heap_base
-Heap_Mem        SPACE   Heap_Size
-__heap_limit
+/*  Unlock Register */
+	ldr	r0, =0x40000100
+	movw r1, 0x00000059
+	str	r1, [r0]
+	movw r1, 0x00000016
+	str	r1, [r0]
+	movw r1, 0x00000088
+	str	r1, [r0]
 
 
-                PRESERVE8
-                THUMB
+#ifndef __NO_SYSTEM_INIT
+	bl	SystemInit
+#endif
+
+/* Init POR */
+
+	ldr	r0, =0x40000024
+	movw r1, 0x00005AA5
+	str	r1, [r0]
+
+	ldr	r0, =0x400001EC
+	str	r1, [r0]
+
+/* Lock register */
+	ldr	r0, =0x40000100
+	movw r1, 0x00000000
+	str	r1, [r0]
+
+#ifndef __START
+#define __START _start
+#endif
+	bl	__START
+
+	.pool
+	.size	Reset_Handler, . - Reset_Handler
+
+	.align	1
+	.thumb_func
+	.weak	Default_Handler
+	.type	Default_Handler, %function
+Default_Handler:
+	b	.
+	.size	Default_Handler, . - Default_Handler
+
+/*    Macro to define default handlers. Default handler
+ *    will be weak symbol and just dead loops. They can be
+ *    overwritten by other handlers */
+	.macro	def_irq_handler	handler_name
+	.weak	\handler_name
+	.set	\handler_name, Default_Handler
+	.endm
+	
+	def_irq_handler	NMI_Handler         
+    def_irq_handler	HardFault_Handler
+    def_irq_handler	SVC_Handler
+    def_irq_handler	PendSV_Handler      
+    def_irq_handler	SysTick_Handler     
+    def_irq_handler	BOD_IRQHandler      
+    def_irq_handler	PWRWU_IRQHandler
+	def_irq_handler ISP_IRQHandler
+    def_irq_handler	WDT_IRQHandler      
+    def_irq_handler	WWDT_IRQHandler     
+    def_irq_handler	EINT0_IRQHandler    
+    def_irq_handler	EINT1_IRQHandler    
+    def_irq_handler	EINT2_IRQHandler    
+    def_irq_handler	EINT3_IRQHandler    
+    def_irq_handler	EINT5_IRQHandler    
+    def_irq_handler	GPB_IRQHandler      
+    def_irq_handler	GPC_IRQHandler      
+    def_irq_handler	GPE_IRQHandler      
+    def_irq_handler	GPF_IRQHandler      
+    def_irq_handler	PWM0_IRQHandler  
+    def_irq_handler	TMR0_IRQHandler     
+    def_irq_handler	TMR1_IRQHandler     
+    def_irq_handler	TMR2_IRQHandler     
+    def_irq_handler	TMR3_IRQHandler     
+    def_irq_handler	UART0_IRQHandler    
+    def_irq_handler	UART1_IRQHandler    
+    def_irq_handler	I2C0_IRQHandler     
+    def_irq_handler	ADC_IRQHandler
+    def_irq_handler	USCI0_IRQHandler                
+	def_irq_handler ECAP0_IRQHandler
 
 
-; Vector Table Mapped to Address 0 at Reset
-
-                AREA    RESET, DATA, READONLY
-                EXPORT  __Vectors
-                EXPORT  __Vectors_End
-                EXPORT  __Vectors_Size
-
-__Vectors       DCD     __initial_sp              ; Top of Stack
-                DCD     Reset_Handler             ; Reset Handler
-                DCD     NMI_Handler               ; NMI Handler
-                DCD     HardFault_Handler         ; Hard Fault Handler
-                DCD     MemManage_Handler         ; MPU Fault Handler
-                DCD     BusFault_Handler          ; Bus Fault Handler
-                DCD     UsageFault_Handler        ; Usage Fault Handler
-                DCD     0                         ; Reserved
-                DCD     0                         ; Reserved
-                DCD     0                         ; Reserved
-                DCD     0                         ; Reserved
-                DCD     SVC_Handler               ; SVCall Handler
-                DCD     DebugMon_Handler          ; Debug Monitor Handler
-                DCD     0                         ; Reserved
-                DCD     PendSV_Handler            ; PendSV Handler
-                DCD     SysTick_Handler           ; SysTick Handler
-
-                ; External Interrupts
-                DCD     BOD_IRQHandler            ; 0: Brown Out detection
-                DCD     Default_Handler           ; 1:
-                DCD     PWRWU_IRQHandler          ; 2: Power down wake up
-                DCD     Default_Handler           ; 3:
-                DCD     Default_Handler           ; 4:
-                DCD     ISP_IRQHandler            ; 5: FMC(ISP)
-                DCD     Default_Handler           ; 6:
-                DCD     Default_Handler           ; 7:
-                DCD     WDT_IRQHandler            ; 8: Watchdog timer
-                DCD     WWDT_IRQHandler           ; 9: Window watchdog timer
-                DCD     EINT0_IRQHandler          ; 10: External Input 0
-                DCD     EINT1_IRQHandler          ; 11: External Input 1
-                DCD     EINT2_IRQHandler          ; 12: External Input 2
-                DCD     EINT3_IRQHandler          ; 13: External Input 3
-                DCD     Default_Handler           ; 14:
-                DCD     EINT5_IRQHandler          ; 15: External Input 5
-                DCD     Default_Handler           ; 16:
-                DCD     GPB_IRQHandler            ; 17: GPIO Port B
-                DCD     GPC_IRQHandler            ; 18: GPIO Port C
-                DCD     Default_Handler           ; 19:
-                DCD     GPE_IRQHandler            ; 20: GPIO Port E
-                DCD     GPF_IRQHandler            ; 21: GPIO Port F
-                DCD     Default_Handler           ; 22:
-                DCD     Default_Handler           ; 23:
-                DCD     Default_Handler           ; 24:
-                DCD     PWM0_IRQHandler           ; 25: PWM0
-                DCD     Default_Handler           ; 26:
-                DCD     Default_Handler           ; 27:
-                DCD     Default_Handler           ; 28:
-                DCD     Default_Handler           ; 29:
-                DCD     Default_Handler           ; 30:
-                DCD     Default_Handler           ; 31:
-                DCD     TMR0_IRQHandler           ; 32: Timer 0
-                DCD     TMR1_IRQHandler           ; 33: Timer 1
-                DCD     TMR2_IRQHandler           ; 34: Timer 2
-                DCD     TMR3_IRQHandler           ; 35: Timer 3
-                DCD     UART0_IRQHandler          ; 36: UART0
-                DCD     UART1_IRQHandler          ; 37: UART1
-                DCD     I2C0_IRQHandler           ; 38: I2C0
-                DCD     Default_Handler           ; 39:
-                DCD     Default_Handler           ; 40:
-                DCD     Default_Handler           ; 41:
-                DCD     ADC_IRQHandler            ; 42: ADC interrupt
-                DCD     Default_Handler           ; 43:
-                DCD     Default_Handler           ; 44:
-                DCD     Default_Handler           ; 45:
-                DCD     Default_Handler           ; 46:
-                DCD     Default_Handler           ; 47:
-                DCD     Default_Handler           ; 48:
-                DCD     Default_Handler           ; 49:
-                DCD     Default_Handler           ; 50:
-                DCD     Default_Handler           ; 51:
-                DCD     USCI0_IRQHandler          ; 52: USCI0
-                DCD     Default_Handler           ; 53:
-                DCD     Default_Handler           ; 54:
-                DCD     Default_Handler           ; 55:
-                DCD     Default_Handler           ; 56:
-                DCD     Default_Handler           ; 57:
-                DCD     Default_Handler           ; 58:
-                DCD     Default_Handler           ; 59:
-                DCD     ECAP0_IRQHandler          ; 60: ECAP0
-                DCD     Default_Handler           ; 61:
-                DCD     Default_Handler           ; 62:
-                DCD     Default_Handler           ; 63:
-
-__Vectors_End
-
-__Vectors_Size  EQU     __Vectors_End - __Vectors
-
-                AREA    |.text|, CODE, READONLY
-
-
-; Reset Handler
-
-Reset_Handler   PROC
-                EXPORT  Reset_Handler             [WEAK]
-                IMPORT  SystemInit
-                IMPORT  __main
-
-                 LDR     R0, =0x40000100
-                ; Unlock Register
-
-                LDR     R1, =0x59
-                STR     R1, [R0]
-                LDR     R1, =0x16
-                STR     R1, [R0]
-                LDR     R1, =0x88
-                STR     R1, [R0]
-
-                ; Init POR
-                LDR     R2, =0x40000024
-                LDR     R1, =0x5AA5
-                STR     R1, [R2]
-
-                LDR     R2, =0x400001EC
-                STR     R1, [R2]
-
-
-                ; Lock register
-                MOVS    R1, #0
-                STR     R1, [R0]
-
-                LDR     R0, =SystemInit
-                BLX     R0
-                LDR     R0, =__main
-                BX      R0
-
-                ENDP
-
-
-; Dummy Exception Handlers (infinite loops which can be modified)
-
-NMI_Handler     PROC
-                EXPORT  NMI_Handler               [WEAK]
-                B       .
-                ENDP
-HardFault_Handler\
-                PROC
-                EXPORT  HardFault_Handler         [WEAK]
-                B       .
-                ENDP
-MemManage_Handler\
-                PROC
-                EXPORT  MemManage_Handler         [WEAK]
-                B       .
-                ENDP
-BusFault_Handler\
-                PROC
-                EXPORT  BusFault_Handler          [WEAK]
-                B       .
-                ENDP
-UsageFault_Handler\
-                PROC
-                EXPORT  UsageFault_Handler        [WEAK]
-                B       .
-                ENDP
-SVC_Handler     PROC
-                EXPORT  SVC_Handler               [WEAK]
-                B       .
-                ENDP
-DebugMon_Handler\
-                PROC
-                EXPORT  DebugMon_Handler          [WEAK]
-                B       .
-                ENDP
-PendSV_Handler\
-                PROC
-                EXPORT  PendSV_Handler            [WEAK]
-                B       .
-                ENDP
-SysTick_Handler\
-                PROC
-                EXPORT  SysTick_Handler           [WEAK]
-                B       .
-                ENDP
-
-Default_Handler PROC
-
-                EXPORT  BOD_IRQHandler            [WEAK]
-                EXPORT  PWRWU_IRQHandler          [WEAK]
-                EXPORT  ISP_IRQHandler            [WEAK]
-                EXPORT  WDT_IRQHandler            [WEAK]
-                EXPORT  WWDT_IRQHandler           [WEAK]
-                EXPORT  EINT0_IRQHandler          [WEAK]
-                EXPORT  EINT1_IRQHandler          [WEAK]
-                EXPORT  EINT2_IRQHandler          [WEAK]
-                EXPORT  EINT3_IRQHandler          [WEAK]
-                EXPORT  EINT5_IRQHandler          [WEAK]
-                EXPORT  GPB_IRQHandler            [WEAK]
-                EXPORT  GPC_IRQHandler            [WEAK]
-                EXPORT  GPE_IRQHandler            [WEAK]
-                EXPORT  GPF_IRQHandler            [WEAK]
-                EXPORT  PWM0_IRQHandler          [WEAK]
-                EXPORT  TMR0_IRQHandler           [WEAK]
-                EXPORT  TMR1_IRQHandler           [WEAK]
-                EXPORT  TMR2_IRQHandler           [WEAK]
-                EXPORT  TMR3_IRQHandler           [WEAK]
-                EXPORT  UART0_IRQHandler          [WEAK]
-                EXPORT  UART1_IRQHandler          [WEAK]
-                EXPORT  I2C0_IRQHandler           [WEAK]
-                EXPORT  ADC_IRQHandler           [WEAK]
-                EXPORT  USCI0_IRQHandler          [WEAK]
-                EXPORT  ECAP0_IRQHandler          [WEAK]
-
-
-Default__IRQHandler
-BOD_IRQHandler
-IRC_IRQHandler
-PWRWU_IRQHandler
-ISP_IRQHandler
-WDT_IRQHandler
-WWDT_IRQHandler
-EINT0_IRQHandler
-EINT1_IRQHandler
-EINT2_IRQHandler
-EINT3_IRQHandler
-EINT5_IRQHandler
-GPB_IRQHandler
-GPC_IRQHandler
-GPE_IRQHandler
-GPF_IRQHandler
-PWM0_IRQHandler
-TMR0_IRQHandler
-TMR1_IRQHandler
-TMR2_IRQHandler
-TMR3_IRQHandler
-UART0_IRQHandler
-UART1_IRQHandler
-I2C0_IRQHandler
-ADC_IRQHandler
-USCI0_IRQHandler
-ECAP0_IRQHandler
-
-
-                B       .
-                ENDP
-
-
-                ALIGN
-
-
-; User Initial Stack & Heap
-
-                IF      :DEF:__MICROLIB
-
-                EXPORT  __initial_sp
-                EXPORT  __heap_base
-                EXPORT  __heap_limit
-
-                ELSE
-
-                IMPORT  __use_two_region_memory
-                EXPORT  __user_initial_stackheap
-
-__user_initial_stackheap PROC
-                LDR     R0, =  Heap_Mem
-                LDR     R1, =(Stack_Mem + Stack_Size)
-                LDR     R2, = (Heap_Mem +  Heap_Size)
-                LDR     R3, = Stack_Mem
-                BX      LR
-                ENDP
-
-                ALIGN
-
-                ENDIF
-
-                END
-;/*** (C) COPYRIGHT 2017 Nuvoton Technology Corp. ***/
+    .end

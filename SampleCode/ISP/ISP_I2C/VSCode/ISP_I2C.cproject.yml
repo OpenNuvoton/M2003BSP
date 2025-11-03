@@ -38,7 +38,7 @@ project:
       files:
         - file: ../startup_M2003_isp.c
           for-compiler: AC6
-        - file: ../../../../Library/Device/Nuvoton/M2003/Source/GCC/startup_M2003.S
+        - file: ../startup_M2003_isp.S
           for-compiler: GCC
         - file: ../../../../Library/Device/Nuvoton/M2003/Source/system_M2003.c
     - group: User
