@@ -106,5 +106,14 @@
 				<arguments>1.0-name-matches-false-false-fmc.c</arguments>
 			</matcher>
 		</filter>
+		<filter>
+			<id>1762147821888</id>
+			<name>CMSIS/CMSIS/GCC</name>
+			<type>6</type>
+			<matcher>
+				<id>org.eclipse.ui.ide.multiFilter</id>
+				<arguments>1.0-name-matches-false-false-startup_M2003.S</arguments>
+			</matcher>
+		</filter>
 	</filteredResources>
 </projectDescription>
