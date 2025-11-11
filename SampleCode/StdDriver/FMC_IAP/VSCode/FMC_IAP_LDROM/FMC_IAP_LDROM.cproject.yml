@@ -5,11 +5,11 @@ project:
     - output:
         # bin, elf, hex, lib
         type: bin
-    - setup: Options for fmcapmain
+    - setup: Options for fmcldiap
       add-path:
-        - ../../../../Library/Device/Nuvoton/M2003/Include
-        - ../../../../Library/CMSIS/Core/Include
-        - ../../../../Library/StdDriver/inc
+        - ../../../../../Library/CMSIS/Core/Include
+        - ../../../../../Library/Device/Nuvoton/M2003/Include
+        - ../../../../../Library/StdDriver/inc
       misc:
         - for-compiler: AC6
           C:
@@ -26,6 +26,7 @@ project:
             - -std=c++98
           ASM:
             - -masm=auto
+            - -D__MICROLIB
           Link:
             - --library_type=microlib
             - --map
@@ -45,25 +46,35 @@ project:
             - -mthumb -fmessage-length=0 -fsigned-char --specs=nano.specs --specs=nosys.specs
             - -Wl,--gc-sections,-Map="$elf()$.map"
             - -Wl,--no-warn-rwx-segments
+  linker:
+    - script: ../../../../../Library/Device/Nuvoton/M2003/Source/ARM/LDROM.sct
+      for-compiler: AC6
+    - script: ./LDROM_iap_4K.ld
+      for-compiler: GCC
   groups:
     - group: CMSIS
       files:
-        - file: ../../../../Library/Device/Nuvoton/M2003/Source/system_M2003.c
-        - file: ../../../../Library/Device/Nuvoton/M2003/Source/ARM/startup_M2003.c
+        - file: ../../../../../Library/Device/Nuvoton/M2003/Source/system_M2003.c
+        - file: ../../../../../Library/Device/Nuvoton/M2003/Source/ARM/startup_M2003.c
           for-compiler: AC6
-        - file: ../../../../Library/Device/Nuvoton/M2003/Source/GCC/startup_M2003.S
-          for-compiler: GCC
+        - file: ./startup_M2003.S
+          for-compiler: GCC        
     - group: User
       files:
-        - file: ../FMC_IAP_APROM.c
-        - file: ./ap_image.s
-          for-compiler: AC6
-        - file: ./ap_image_gcc.S
-          for-compiler: GCC
+        - file: ../../FMC_IAP_LDROM.c
     - group: Library
       files:
-        - file: ../../../../Library/StdDriver/src/retarget.c
-        - file: ../../../../Library/StdDriver/src/uart.c
-        - file: ../../../../Library/StdDriver/src/sys.c
-        - file: ../../../../Library/StdDriver/src/fmc.c
-        - file: ../../../../Library/StdDriver/src/clk.c
+        - file: ../../../../../Library/StdDriver/src/sys.c
+        - file: ../../../../../Library/StdDriver/src/clk.c
+        - file: ../../../../../Library/StdDriver/src/fmc.c
+        - file: ../../../../../Library/StdDriver/src/retarget.c
+
+  # The execute: node is processed only for an application build when no --context option is specified.
+  executes:
+    - execute: Copybinfile
+      run: ${CMAKE_COMMAND} -E copy $input$ $output$
+      always:
+      input:
+        - $bin()$
+      output:
+        - $SolutionDir()$/bin/fmc_ld_iap.bin
