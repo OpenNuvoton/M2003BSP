@@ -390,10 +390,10 @@ int32_t TIMER_ResetCounter(TIMER_T *timer)
 {
     uint32_t u32Delay;
 
-    timer->CTL |= TIMER_CNT_RSTACT_Msk;
+    timer->CNT |= TIMER_CNT_RSTACT_Msk;
     /* Takes 2~3 ECLKs to reset timer counter */
     u32Delay = (SystemCoreClock / TIMER_GetModuleClock(timer)) * 3;
-    while(((timer->CTL & TIMER_CNT_RSTACT_Msk) == TIMER_CNT_RSTACT_Msk) && (--u32Delay))
+    while(((timer->CNT & TIMER_CNT_RSTACT_Msk) == TIMER_CNT_RSTACT_Msk) && (--u32Delay))
     {
         __NOP();
     }
