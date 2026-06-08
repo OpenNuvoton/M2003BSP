@@ -7,9 +7,9 @@ project:
         type: bin
     - setup: Options for fmcapmain
       add-path:
-        - ../../../../Library/Device/Nuvoton/M2003J/Include
-        - ../../../../Library/CMSIS/Core/Include
-        - ../../../../Library/StdDriver/inc
+        - ../../../../../Library/Device/Nuvoton/M2003J/Include
+        - ../../../../../Library/CMSIS/Core/Include
+        - ../../../../../Library/StdDriver/inc
       misc:
         - for-compiler: AC6
           C:
@@ -44,29 +44,29 @@ project:
             - -mthumb -fmessage-length=0 -fsigned-char --specs=nano.specs --specs=nosys.specs
             - -Wl,--gc-sections,-Map="$elf()$.map"
   linker:
-    - script: ../../../../Library/Device/Nuvoton/M2003J/Source/ARM/APROM.sct
+    - script: ../../../../../Library/Device/Nuvoton/M2003J/Source/ARM/APROM.sct
       for-compiler: AC6
-    - script: ../../../../Library/Device/Nuvoton/M2003J/Source/GCC/gcc_arm.ld
+    - script: ../../../../../Library/Device/Nuvoton/M2003J/Source/GCC/gcc_arm.ld
       for-compiler: GCC
   groups:
     - group: CMSIS
       files:
-        - file: ../../../../Library/Device/Nuvoton/M2003J/Source/system_M2003J.c
-        - file: ../../../../Library/Device/Nuvoton/M2003J/Source/ARM/startup_M2003J.c
+        - file: ../../../../../Library/Device/Nuvoton/M2003J/Source/system_M2003J.c
+        - file: ../../../../../Library/Device/Nuvoton/M2003J/Source/ARM/startup_M2003J.c
           for-compiler: AC6
-        - file: ../../../../Library/Device/Nuvoton/M2003J/Source/GCC/startup_M2003J.S
+        - file: ../../../../../Library/Device/Nuvoton/M2003J/Source/GCC/startup_M2003J.S
           for-compiler: GCC
     - group: User
       files:
-        - file: ../FMC_IAP_APROM.c
+        - file: ../../FMC_IAP_APROM.c
         - file: ./ap_image.s
           for-compiler: AC6
         - file: ./ap_image_gcc.S
           for-compiler: GCC
     - group: Library
       files:
-        - file: ../../../../Library/StdDriver/src/retarget.c
-        - file: ../../../../Library/StdDriver/src/uart.c
-        - file: ../../../../Library/StdDriver/src/sys.c
-        - file: ../../../../Library/StdDriver/src/fmc.c
-        - file: ../../../../Library/StdDriver/src/clk.c
+        - file: ../../../../../Library/StdDriver/src/retarget.c
+        - file: ../../../../../Library/StdDriver/src/uart.c
+        - file: ../../../../../Library/StdDriver/src/sys.c
+        - file: ../../../../../Library/StdDriver/src/fmc.c
+        - file: ../../../../../Library/StdDriver/src/clk.c
