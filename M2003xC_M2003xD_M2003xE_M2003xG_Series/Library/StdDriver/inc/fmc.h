@@ -41,7 +41,7 @@ extern "C"
 #define FMC_USER_CONFIG_1       0x00300004UL    /*!< User Config 1 address                 \hideinitializer */
 #define FMC_USER_CONFIG_2       0x00300008UL    /*!< User Config 2 address                 \hideinitializer */
 
-#define FMC_FLASH_PAGE_SIZE     (0x200)         /*!< Flash Page Size (512 bytes)           \hideinitializer */
+#define FMC_FLASH_PAGE_SIZE     (0x200UL)         /*!< Flash Page Size (512 bytes)           \hideinitializer */
 #define FMC_PAGE_ADDR_MASK      (0xFFFFFE00UL)  /*!< Flash page address mask               \hideinitializer */
 
 #if (CHIP_TYPE == CHIP_TYPE_M2003G)
@@ -55,7 +55,7 @@ extern "C"
 #endif
 
 #define FMC_LDROM_SIZE          0x1000UL        /*!< LDROM Size (4 Kbytes)           */
-#define FMC_SPROM_SIZE          (0x400)         /*!< SPROM Size (1024 bytes)               \hideinitializer */
+#define FMC_SPROM_SIZE          (0x400UL)         /*!< SPROM Size (1024 bytes)               \hideinitializer */
 
 /*----------------------------------------------------------------------------------------------------------*/
 /*  ISPCMD constant definitions                                                                             */
@@ -79,12 +79,12 @@ extern "C"
 #define READ_ALLONE_NOT         0xA1100000UL    /*!< Check-all-one result is not all one.  \hideinitializer */
 #define READ_ALLONE_CMD_FAIL    0xFFFFFFFFUL    /*!< Check-all-one command failed.         \hideinitializer */
 
-#define FMC_TIMEOUT_READ        ((SystemCoreClock/10)/4) /*!< Read command time-out 100 ms         \hideinitializer */
-#define FMC_TIMEOUT_WRITE       ((SystemCoreClock/10)/4) /*!< Write command time-out 100 ms        \hideinitializer */
-#define FMC_TIMEOUT_MUL_WRITE   (SystemCoreClock/1)      /*!< Write command time-out 100 ms        \hideinitializer */
-#define FMC_TIMEOUT_ERASE       ((SystemCoreClock/10)/2) /*!< Erase command time-out 200 ms        \hideinitializer */
-#define FMC_TIMEOUT_CHKSUM      (SystemCoreClock/2)      /*!< Get checksum command time-out 2 s    \hideinitializer */
-#define FMC_TIMEOUT_CHKALLONE   (SystemCoreClock/2)      /*!< Check-all-one command time-out 2 s   \hideinitializer */
+#define FMC_TIMEOUT_READ        ((SystemCoreClock / 10UL) / 4UL) /*!< Read command time-out 100 ms         \hideinitializer */
+#define FMC_TIMEOUT_WRITE       ((SystemCoreClock / 10UL) / 4UL) /*!< Write command time-out 100 ms        \hideinitializer */
+#define FMC_TIMEOUT_MUL_WRITE   (SystemCoreClock / 1UL)      /*!< Write command time-out 100 ms        \hideinitializer */
+#define FMC_TIMEOUT_ERASE       ((SystemCoreClock / 10UL) / 2UL) /*!< Erase command time-out 200 ms        \hideinitializer */
+#define FMC_TIMEOUT_CHKSUM      (SystemCoreClock / 2UL)      /*!< Get checksum command time-out 2 s    \hideinitializer */
+#define FMC_TIMEOUT_CHKALLONE   (SystemCoreClock / 2UL)      /*!< Check-all-one command time-out 2 s   \hideinitializer */
 
 
 /*@}*/ /* end of group FMC_EXPORTED_CONSTANTS */
@@ -169,20 +169,22 @@ __STATIC_INLINE uint32_t FMC_ReadCID(void)
     FMC->ISPCMD = FMC_ISPCMD_READ_CID;           /* Set ISP Command Code */
     FMC->ISPADDR = 0x0u;                         /* Must keep 0x0 when read CID */
     FMC->ISPTRG = FMC_ISPTRG_ISPGO_Msk;          /* Trigger to start ISP procedure */
-#if ISBEN
+#ifdef ISBEN
+#if (ISBEN != 0)
     __ISB();
+#endif
 #endif                                           /* To make sure ISP/CPU be Synchronized */
-    while (tout-- > 0)
+    while (tout-- > 0UL)
     {
-        if (!(FMC->ISPTRG & FMC_ISPTRG_ISPGO_Msk))  /* Waiting for ISP Done */
+        if ((FMC->ISPTRG & FMC_ISPTRG_ISPGO_Msk) == 0UL)  /* Waiting for ISP Done */
         {
-            if (FMC->ISPDAT != 0xDA)
+            if (FMC->ISPDAT != 0xDAUL)
                 g_FMC_i32ErrCode = -1;
             return FMC->ISPDAT;
         }
     }
     g_FMC_i32ErrCode = -1;
-    return 0xFFFFFFFF;
+    return 0xFFFFFFFFUL;
 
 }
 
@@ -204,16 +206,18 @@ __STATIC_INLINE uint32_t FMC_ReadPID(void)
     FMC->ISPCMD = FMC_ISPCMD_READ_DID;          /* Set ISP Command Code */
     FMC->ISPADDR = 0x04u;                       /* Must keep 0x4 when read PID */
     FMC->ISPTRG = FMC_ISPTRG_ISPGO_Msk;         /* Trigger to start ISP procedure */
-#if ISBEN
+#ifdef ISBEN
+#if (ISBEN != 0)
     __ISB();
+#endif
 #endif                                          /* To make sure ISP/CPU be Synchronized */
-    while (tout-- > 0)
+    while (tout-- > 0UL)
     {
-        if (!(FMC->ISPTRG & FMC_ISPTRG_ISPGO_Msk))  /* Waiting for ISP Done */
+        if ((FMC->ISPTRG & FMC_ISPTRG_ISPGO_Msk) == 0UL)  /* Waiting for ISP Done */
             return FMC->ISPDAT;
     }
     g_FMC_i32ErrCode = -1;
-    return 0xFFFFFFFF;
+    return 0xFFFFFFFFUL;
 }
 
 /**
@@ -235,16 +239,18 @@ __STATIC_INLINE uint32_t FMC_ReadUID(uint8_t u8Index)
     FMC->ISPADDR = ((uint32_t)u8Index << 2u);
     FMC->ISPDAT = 0u;
     FMC->ISPTRG = 0x1u;
-#if ISBEN
+#ifdef ISBEN
+#if (ISBEN != 0)
     __ISB();
 #endif
-    while (tout-- > 0)
+#endif
+    while (tout-- > 0UL)
     {
-        if (!(FMC->ISPTRG & FMC_ISPTRG_ISPGO_Msk))  /* Waiting for ISP Done */
+        if ((FMC->ISPTRG & FMC_ISPTRG_ISPGO_Msk) == 0UL)  /* Waiting for ISP Done */
             return FMC->ISPDAT;
     }
     g_FMC_i32ErrCode = -1;
-    return 0xFFFFFFFF;
+    return 0xFFFFFFFFUL;
 }
 
 /**
@@ -265,16 +271,18 @@ __STATIC_INLINE uint32_t FMC_ReadUCID(uint32_t u32Index)
     FMC->ISPCMD = FMC_ISPCMD_READ_UID;            /* Set ISP Command Code */
     FMC->ISPADDR = (0x04u * u32Index) + 0x10u;    /* The UCID is at offset 0x10 with word alignment. */
     FMC->ISPTRG = FMC_ISPTRG_ISPGO_Msk;           /* Trigger to start ISP procedure */
-#if ISBEN
+#ifdef ISBEN
+#if (ISBEN != 0)
     __ISB();
+#endif
 #endif                                            /* To make sure ISP/CPU be Synchronized */
-    while (tout-- > 0)
+    while (tout-- > 0UL)
     {
-        if (!(FMC->ISPTRG & FMC_ISPTRG_ISPGO_Msk))  /* Waiting for ISP Done */
+        if ((FMC->ISPTRG & FMC_ISPTRG_ISPGO_Msk) == 0UL)  /* Waiting for ISP Done */
             return FMC->ISPDAT;
     }
     g_FMC_i32ErrCode = -1;
-    return 0xFFFFFFFF;
+    return 0xFFFFFFFFUL;
 }
 
 /**
@@ -300,12 +308,14 @@ __STATIC_INLINE int32_t FMC_SetVectorPageAddr(uint32_t u32PageAddr)
     FMC->ISPCMD = FMC_ISPCMD_VECMAP;  /* Set ISP Command Code */
     FMC->ISPADDR = u32PageAddr;       /* The address of specified page which will be map to address 0x0. It must be page alignment. */
     FMC->ISPTRG = 0x1u;               /* Trigger to start ISP procedure */
-#if ISBEN
+#ifdef ISBEN
+#if (ISBEN != 0)
     __ISB();
+#endif
 #endif                                /* To make sure ISP/CPU be Synchronized */
-    while (tout-- > 0)
+    while (tout-- > 0UL)
     {
-        if (!FMC->ISPTRG)             /* Waiting for ISP Done */
+        if (FMC->ISPTRG == 0UL)             /* Waiting for ISP Done */
             return 0;
     }
     g_FMC_i32ErrCode = -1;
@@ -327,7 +337,7 @@ extern uint32_t FMC_Read(uint32_t u32Addr);
 extern void FMC_SetBootSource(int32_t i32BootSrc);
 extern int32_t  FMC_Write(uint32_t u32Addr, uint32_t u32Data);
 extern int32_t  FMC_ReadConfig(uint32_t u32Config[], uint32_t u32Count);
-extern int32_t  FMC_WriteConfig(uint32_t u32Config[], uint32_t u32Count);
+extern int32_t  FMC_WriteConfig(const uint32_t u32Config[], uint32_t u32Count);
 extern uint32_t FMC_GetChkSum(uint32_t u32addr, uint32_t u32count);
 extern uint32_t FMC_CheckAllOne(uint32_t u32addr, uint32_t u32count);
 

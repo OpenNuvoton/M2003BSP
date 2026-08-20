@@ -247,7 +247,7 @@ __STATIC_INLINE uint32_t DFMC_ReadCID(void)
         if(i32TimeOutCnt-- <= 0)
         {
             g_DFMC_i32ErrCode = DFMC_ERR_TIMEOUT;
-            return 0xFFFFFFFF;
+            return 0xFFFFFFFFUL;
         }
     }
 
@@ -279,7 +279,7 @@ __STATIC_INLINE uint32_t DFMC_ReadUID(uint8_t u8Index)
         if(i32TimeOutCnt-- <= 0)
         {
             g_DFMC_i32ErrCode = DFMC_ERR_TIMEOUT;
-            return 0xFFFFFFFF;
+            return 0xFFFFFFFFUL;
         }
     }
 
@@ -310,7 +310,7 @@ __STATIC_INLINE uint32_t DFMC_ReadUCID(uint32_t u32Index)
         if(i32TimeOutCnt-- <= 0)
         {
             g_DFMC_i32ErrCode = DFMC_ERR_TIMEOUT;
-            return 0xFFFFFFFF;
+            return 0xFFFFFFFFUL;
         }
     }
 

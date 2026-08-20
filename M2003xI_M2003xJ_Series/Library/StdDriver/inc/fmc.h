@@ -377,7 +377,7 @@ __STATIC_INLINE uint32_t FMC_ReadCID(void)
         if(i32TimeOutCnt-- <= 0)
         {
             g_FMC_i32ErrCode = FMC_ERR_TIMEOUT;
-            return 0xFFFFFFFF;
+            return 0xFFFFFFFFUL;
         }
     }
 
@@ -408,7 +408,7 @@ __STATIC_INLINE uint32_t FMC_ReadUID(uint8_t u8Index)
         if(i32TimeOutCnt-- <= 0)
         {
             g_FMC_i32ErrCode = FMC_ERR_TIMEOUT;
-            return 0xFFFFFFFF;
+            return 0xFFFFFFFFUL;
         }
     }
 
@@ -438,7 +438,7 @@ __STATIC_INLINE uint32_t FMC_ReadUCID(uint32_t u32Index)
         if(i32TimeOutCnt-- <= 0)
         {
             g_FMC_i32ErrCode = FMC_ERR_TIMEOUT;
-            return 0xFFFFFFFF;
+            return 0xFFFFFFFFUL;
         }
     }
 
@@ -493,7 +493,7 @@ extern int32_t  FMC_Read_64(uint32_t u32addr, uint32_t * u32data0, uint32_t * u3
 extern int32_t  FMC_Write(uint32_t u32Addr, uint32_t u32Data);
 extern int32_t  FMC_Write8Bytes(uint32_t u32addr, uint32_t u32data0, uint32_t u32data1);
 extern int32_t  FMC_ReadConfig(uint32_t u32Config[], uint32_t u32Count);
-extern int32_t  FMC_WriteConfig(uint32_t u32Config[], uint32_t u32Count);
+extern int32_t  FMC_WriteConfig(const uint32_t u32Config[], uint32_t u32Count);
 extern uint32_t FMC_GetChkSum(uint32_t u32addr, uint32_t u32count);
 extern uint32_t FMC_CheckAllOne(uint32_t u32addr, uint32_t u32count);
 extern int32_t  FMC_RemapBank(uint32_t u32Bank);

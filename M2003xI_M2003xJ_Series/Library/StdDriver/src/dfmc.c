@@ -133,7 +133,7 @@ uint32_t DFMC_Read(uint32_t u32Addr)
         if(i32TimeOutCnt-- <= 0)
         {
             g_DFMC_i32ErrCode = -1;
-            return 0xFFFFFFFF;
+            return 0xFFFFFFFFUL;
         }
     }
 
@@ -188,17 +188,18 @@ int32_t DFMC_Write(uint32_t u32Addr, uint32_t u32Data)
 uint32_t  DFMC_GetChkSum(uint32_t u32addr, uint32_t u32count)
 {
     uint32_t   ret;
-    int32_t i32TimeOutCnt;
 
     g_DFMC_i32ErrCode = 0;
 
     if((u32addr % DFMC_FLASH_PAGE_SIZE) || (u32count % DFMC_FLASH_PAGE_SIZE))
     {
         g_DFMC_i32ErrCode = -2;
-        ret = 0xFFFFFFFF;
+        ret = 0xFFFFFFFFUL;
     }
     else
     {
+        int32_t i32TimeOutCnt;
+
         DFMC->ISPCMD  = DFMC_ISPCMD_RUN_CKS;
         DFMC->ISPADDR = u32addr;
         DFMC->ISPDAT  = u32count;
@@ -210,7 +211,7 @@ uint32_t  DFMC_GetChkSum(uint32_t u32addr, uint32_t u32count)
             if(i32TimeOutCnt-- <= 0)
             {
                 g_DFMC_i32ErrCode = -1;
-                return 0xFFFFFFFF;
+                return 0xFFFFFFFFUL;
             }
         }
 
@@ -224,7 +225,7 @@ uint32_t  DFMC_GetChkSum(uint32_t u32addr, uint32_t u32count)
             if(i32TimeOutCnt-- <= 0)
             {
                 g_DFMC_i32ErrCode = -1;
-                return 0xFFFFFFFF;
+                return 0xFFFFFFFFUL;
             }
         }
 
@@ -249,7 +250,7 @@ uint32_t  DFMC_GetChkSum(uint32_t u32addr, uint32_t u32count)
 uint32_t  DFMC_CheckAllOne(uint32_t u32addr, uint32_t u32count)
 {
     uint32_t  ret = READ_ALLONE_CMD_FAIL;
-    int32_t i32TimeOutCnt0, i32TimeOutCnt1;
+    int32_t i32TimeOutCnt0;
 
     g_DFMC_i32ErrCode = 0;
 
@@ -272,7 +273,7 @@ uint32_t  DFMC_CheckAllOne(uint32_t u32addr, uint32_t u32count)
 
     if(g_DFMC_i32ErrCode == 0)
     {
-        i32TimeOutCnt1 = DFMC_TIMEOUT_CHKALLONE;
+        int32_t i32TimeOutCnt1 = DFMC_TIMEOUT_CHKALLONE;
         do
         {
             DFMC->ISPCMD = DFMC_ISPCMD_READ_ALL1;
@@ -300,11 +301,17 @@ uint32_t  DFMC_CheckAllOne(uint32_t u32addr, uint32_t u32count)
     if(g_DFMC_i32ErrCode == 0)
     {
         if(DFMC->ISPDAT == DREAD_ALLONE_YES)
+        {
             ret = DREAD_ALLONE_YES;
+        }
         else if(DFMC->ISPDAT == DREAD_ALLONE_NOT)
+        {
             ret = DREAD_ALLONE_NOT;
+        }
         else
+        {
             g_DFMC_i32ErrCode = -1;
+        }
     }
 
     return ret;
