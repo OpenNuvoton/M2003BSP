@@ -232,7 +232,7 @@ extern "C"
  * @details     Check the selected channel is busy or not.
  * \hideinitializer
  */
-#define PDMA_IS_CH_BUSY(pdma, u32Ch) ((uint32_t)((pdma)->TRGSTS & (1UL << (u32Ch)))? 1 : 0)
+#define PDMA_IS_CH_BUSY(pdma, u32Ch) ((uint32_t)((pdma)->TRGSTS & (1UL << (u32Ch)))? 1UL : 0UL)
 
 /**
  * @brief       Set Source Address

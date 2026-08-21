@@ -103,7 +103,7 @@ __Vectors:
 	.long	UART1_IRQHandler      /* 37: UART1                      */
 	.long	I2C0_IRQHandler       /* 38: I2C0                       */
 	.long	Default_Handler       /* 39: Reserved                   */
-	.long	PDMA_IRQHandler       /* 40: PDMA                       */
+	.long	PDMA0_IRQHandler      /* 40: PDMA                       */
 	.long	Default_Handler       /* 41: Reserved                   */
 	.long	ADC_IRQHandler        /* 42: ADC                        */
 	.long	Default_Handler       /* 43: Reserved                   */
@@ -362,7 +362,7 @@ Default_Handler:
     def_irq_handler UART0_IRQHandler
     def_irq_handler UART1_IRQHandler
     def_irq_handler I2C0_IRQHandler
-    def_irq_handler PDMA_IRQHandler
+    def_irq_handler PDMA0_IRQHandler
     def_irq_handler ADC_IRQHandler
     def_irq_handler UART2_IRQHandler
     def_irq_handler USCI0_IRQHandler

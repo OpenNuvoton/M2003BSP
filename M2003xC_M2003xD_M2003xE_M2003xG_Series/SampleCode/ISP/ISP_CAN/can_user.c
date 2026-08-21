@@ -252,7 +252,7 @@ void CAN_WaitMsg(CAN_T *tCAN)
   * @return Current Bit-Rate (kilo bit per second)
   * @details Return current CAN bit rate according to the user bit-timing parameter settings
   */
-uint32_t CAN_GetCANBitRate(CAN_T *tCAN)
+uint32_t CAN_GetCANBitRate(const CAN_T *tCAN)
 {
     uint32_t u32Tseg1, u32Tseg2;
     uint32_t u32Bpr;
@@ -305,7 +305,7 @@ void CAN_LeaveTestMode(CAN_T *tCAN)
   * @retval 0 No message object has new data.
   * @details This function is used to get the waiting status of a received message.
   */
-uint32_t CAN_IsNewDataReceived(CAN_T *tCAN, uint8_t u8MsgObj)
+uint32_t CAN_IsNewDataReceived(const CAN_T *tCAN, uint8_t u8MsgObj)
 {
     return (u8MsgObj < 16ul ? tCAN->NDAT1 & (1ul << u8MsgObj) : tCAN->NDAT2 & (1ul << (u8MsgObj - 16ul)));
 }

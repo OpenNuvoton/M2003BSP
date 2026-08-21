@@ -84,7 +84,7 @@ __vector_table
         DCD     UART1_IRQHandler          ; 37: UART1
         DCD     I2C0_IRQHandler           ; 38: I2C0
         DCD     DEFAULT_IRQHandler        ; 39:
-        DCD     PDMA_IRQHandler           ; 40: PDMA
+        DCD     PDMA0_IRQHandler          ; 40: PDMA
         DCD     DEFAULT_IRQHandler        ; 41:
         DCD     ADC_IRQHandler            ; 42: ADC interrupt
         DCD     DEFAULT_IRQHandler        ; 43:
@@ -237,7 +237,7 @@ SysTick_Handler
         PUBWEAK  UART0_IRQHandler
         PUBWEAK  UART1_IRQHandler
         PUBWEAK  I2C0_IRQHandler
-        PUBWEAK  PDMA_IRQHandler
+        PUBWEAK  PDMA0_IRQHandler
         PUBWEAK  ADC_IRQHandler
         PUBWEAK  UART2_IRQHandler
         PUBWEAK  USCI0_IRQHandler
@@ -278,7 +278,7 @@ TMR3_IRQHandler
 UART0_IRQHandler
 UART1_IRQHandler
 I2C0_IRQHandler
-PDMA_IRQHandler
+PDMA0_IRQHandler
 ADC_IRQHandler
 UART2_IRQHandler
 USCI0_IRQHandler
