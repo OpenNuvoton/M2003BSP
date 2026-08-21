@@ -360,6 +360,9 @@ void SYS_Init(void)
     CLK_EnableModuleClock(UART0_MODULE);
     /* Enable UART1 peripheral clock */
     CLK_EnableModuleClock(UART1_MODULE);
+		
+    /* Enable PDMA peripheral clock */
+    CLK_EnableModuleClock(PDMA0_MODULE);	
 
     /* Update System Core Clock */
     /* User can use SystemCoreClockUpdate() to calculate PllClock, SystemCoreClock and CycylesPerUs automatically. */

@@ -27,37 +27,37 @@ extern "C"
   @{
 */
 
-#define USPI_MODE_0        (0x0ul << USPI_PROTCTL_SCLKMODE_Pos)        /*!< SCLK idle low; data transmit with falling edge and receive with rising edge \hideinitializer */
-#define USPI_MODE_1        (0x1ul << USPI_PROTCTL_SCLKMODE_Pos)        /*!< SCLK idle low; data transmit with rising edge and receive with falling edge \hideinitializer */
-#define USPI_MODE_2        (0x2ul << USPI_PROTCTL_SCLKMODE_Pos)        /*!< SCLK idle high; data transmit with rising edge and receive with falling edge \hideinitializer */
-#define USPI_MODE_3        (0x3ul << USPI_PROTCTL_SCLKMODE_Pos)        /*!< SCLK idle high; data transmit with falling edge and receive with rising edge \hideinitializer */
+#define USPI_MODE_0        (0x0UL << USPI_PROTCTL_SCLKMODE_Pos)        /*!< SCLK idle low; data transmit with falling edge and receive with rising edge \hideinitializer */
+#define USPI_MODE_1        (0x1UL << USPI_PROTCTL_SCLKMODE_Pos)        /*!< SCLK idle low; data transmit with rising edge and receive with falling edge \hideinitializer */
+#define USPI_MODE_2        (0x2UL << USPI_PROTCTL_SCLKMODE_Pos)        /*!< SCLK idle high; data transmit with rising edge and receive with falling edge \hideinitializer */
+#define USPI_MODE_3        (0x3UL << USPI_PROTCTL_SCLKMODE_Pos)        /*!< SCLK idle high; data transmit with falling edge and receive with rising edge \hideinitializer */
 
 #define USPI_SLAVE         (USPI_PROTCTL_SLAVE_Msk)                    /*!< Set as slave \hideinitializer */
-#define USPI_MASTER        (0x0ul)                                     /*!< Set as master \hideinitializer */
+#define USPI_MASTER        (0x0UL)                                     /*!< Set as master \hideinitializer */
 
 #define USPI_SS                (USPI_PROTCTL_SS_Msk)                   /*!< Set SS \hideinitializer */
-#define USPI_SS_ACTIVE_HIGH    (0x0ul)                                 /*!< SS active high \hideinitializer */
+#define USPI_SS_ACTIVE_HIGH    (0x0UL)                                 /*!< SS active high \hideinitializer */
 #define USPI_SS_ACTIVE_LOW     (USPI_LINECTL_CTLOINV_Msk)              /*!< SS active low \hideinitializer */
 
 /* USCI_SPI Interrupt Mask */
-#define USPI_SSINACT_INT_MASK        (0x001ul)                         /*!< Slave Select Inactive interrupt mask \hideinitializer */
-#define USPI_SSACT_INT_MASK          (0x002ul)                         /*!< Slave Select Active interrupt mask \hideinitializer */
-#define USPI_SLVTO_INT_MASK          (0x004ul)                         /*!< Slave Mode Time-out interrupt mask \hideinitializer */
-#define USPI_SLVBE_INT_MASK          (0x008ul)                         /*!< Slave Mode Bit Count Error interrupt mask \hideinitializer */
-#define USPI_TXUDR_INT_MASK          (0x010ul)                         /*!< Slave Transmit Under Run interrupt mask \hideinitializer */
-#define USPI_RXOV_INT_MASK           (0x020ul)                         /*!< Receive Buffer Overrun interrupt mask \hideinitializer */
-#define USPI_TXST_INT_MASK           (0x040ul)                         /*!< Transmit Start interrupt mask \hideinitializer */
-#define USPI_TXEND_INT_MASK          (0x080ul)                         /*!< Transmit End interrupt mask \hideinitializer */
-#define USPI_RXST_INT_MASK           (0x100ul)                         /*!< Receive Start interrupt mask \hideinitializer */
-#define USPI_RXEND_INT_MASK          (0x200ul)                         /*!< Receive End interrupt mask \hideinitializer */
+#define USPI_SSINACT_INT_MASK        (0x001UL)                         /*!< Slave Select Inactive interrupt mask \hideinitializer */
+#define USPI_SSACT_INT_MASK          (0x002UL)                         /*!< Slave Select Active interrupt mask \hideinitializer */
+#define USPI_SLVTO_INT_MASK          (0x004UL)                         /*!< Slave Mode Time-out interrupt mask \hideinitializer */
+#define USPI_SLVBE_INT_MASK          (0x008UL)                         /*!< Slave Mode Bit Count Error interrupt mask \hideinitializer */
+#define USPI_TXUDR_INT_MASK          (0x010UL)                         /*!< Slave Transmit Under Run interrupt mask \hideinitializer */
+#define USPI_RXOV_INT_MASK           (0x020UL)                         /*!< Receive Buffer Overrun interrupt mask \hideinitializer */
+#define USPI_TXST_INT_MASK           (0x040UL)                         /*!< Transmit Start interrupt mask \hideinitializer */
+#define USPI_TXEND_INT_MASK          (0x080UL)                         /*!< Transmit End interrupt mask \hideinitializer */
+#define USPI_RXST_INT_MASK           (0x100UL)                         /*!< Receive Start interrupt mask \hideinitializer */
+#define USPI_RXEND_INT_MASK          (0x200UL)                         /*!< Receive End interrupt mask \hideinitializer */
 
 /* USCI_SPI Status Mask */
-#define USPI_BUSY_MASK               (0x01ul)                          /*!< Busy status mask \hideinitializer */
-#define USPI_RX_EMPTY_MASK           (0x02ul)                          /*!< RX empty status mask \hideinitializer */
-#define USPI_RX_FULL_MASK            (0x04ul)                          /*!< RX full status mask \hideinitializer */
-#define USPI_TX_EMPTY_MASK           (0x08ul)                          /*!< TX empty status mask \hideinitializer */
-#define USPI_TX_FULL_MASK            (0x10ul)                          /*!< TX full status mask \hideinitializer */
-#define USPI_SSLINE_STS_MASK         (0x20ul)                          /*!< USCI_SPI_SS line status mask \hideinitializer */
+#define USPI_BUSY_MASK               (0x01UL)                          /*!< Busy status mask \hideinitializer */
+#define USPI_RX_EMPTY_MASK           (0x02UL)                          /*!< RX empty status mask \hideinitializer */
+#define USPI_RX_FULL_MASK            (0x04UL)                          /*!< RX full status mask \hideinitializer */
+#define USPI_TX_EMPTY_MASK           (0x08UL)                          /*!< TX empty status mask \hideinitializer */
+#define USPI_TX_FULL_MASK            (0x10UL)                          /*!< TX full status mask \hideinitializer */
+#define USPI_SSLINE_STS_MASK         (0x20UL)                          /*!< USCI_SPI_SS line status mask \hideinitializer */
 
 /*@}*/ /* end of group USCI_SPI_EXPORTED_CONSTANTS */
 
@@ -90,7 +90,7 @@ extern "C"
   * @retval 1: Rx buffer is empty
   * \hideinitializer
   */
-#define USPI_GET_RX_EMPTY_FLAG(uspi) ( ((uspi)->BUFSTS & USPI_BUFSTS_RXEMPTY_Msk) == USPI_BUFSTS_RXEMPTY_Msk ? 1:0 )
+#define USPI_GET_RX_EMPTY_FLAG(uspi) ( ((uspi)->BUFSTS & USPI_BUFSTS_RXEMPTY_Msk) == USPI_BUFSTS_RXEMPTY_Msk ? 1UL:0UL )
 
 /**
   * @brief  Get the Tx buffer empty flag.
@@ -100,7 +100,7 @@ extern "C"
   * @retval 1: Tx buffer is empty
   * \hideinitializer
   */
-#define USPI_GET_TX_EMPTY_FLAG(uspi) ( ((uspi)->BUFSTS & USPI_BUFSTS_TXEMPTY_Msk) == USPI_BUFSTS_TXEMPTY_Msk ? 1:0 )
+#define USPI_GET_TX_EMPTY_FLAG(uspi) ( ((uspi)->BUFSTS & USPI_BUFSTS_TXEMPTY_Msk) == USPI_BUFSTS_TXEMPTY_Msk ? 1UL:0UL )
 
 /**
   * @brief  Get the Tx buffer full flag.
@@ -110,7 +110,7 @@ extern "C"
   * @retval 1: Tx buffer is full
   * \hideinitializer
   */
-#define USPI_GET_TX_FULL_FLAG(uspi) ( ((uspi)->BUFSTS & USPI_BUFSTS_TXFULL_Msk) == USPI_BUFSTS_TXFULL_Msk ? 1:0 )
+#define USPI_GET_TX_FULL_FLAG(uspi) ( ((uspi)->BUFSTS & USPI_BUFSTS_TXFULL_Msk) == USPI_BUFSTS_TXFULL_Msk ? 1UL:0UL )
 
 /**
   * @brief  Get the datum read from RX register.
@@ -204,7 +204,7 @@ extern "C"
   * @retval 1: USCI_SPI module is busy
   * \hideinitializer
   */
-#define USPI_IS_BUSY(uspi) ( ((uspi)->PROTSTS & USPI_PROTSTS_BUSY_Msk) == USPI_PROTSTS_BUSY_Msk ? 1:0 )
+#define USPI_IS_BUSY(uspi) ( ((uspi)->PROTSTS & USPI_PROTSTS_BUSY_Msk) == USPI_PROTSTS_BUSY_Msk ? 1UL:0UL )
 
 /**
   * @brief Get the USCI_SPI wakeup flag.
@@ -214,7 +214,7 @@ extern "C"
   * @retval 1 Flag is set.
   * \hideinitializer
   */
-#define USPI_GET_WAKEUP_FLAG(uspi) ( ((uspi)->WKSTS & USPI_WKSTS_WKF_Msk) == USPI_WKSTS_WKF_Msk ? 1:0 )
+#define USPI_GET_WAKEUP_FLAG(uspi) ( ((uspi)->WKSTS & USPI_WKSTS_WKF_Msk) == USPI_WKSTS_WKF_Msk ? 1UL:0UL )
 
 /**
   * @brief Clear the USCI_SPI wakeup flag.
@@ -403,12 +403,12 @@ void USPI_ClearTxBuf(USPI_T *uspi);
 void USPI_DisableAutoSS(USPI_T *uspi);
 void USPI_EnableAutoSS(USPI_T *uspi, uint32_t u32SSPinMask, uint32_t u32ActiveLevel);
 uint32_t USPI_SetBusClock(USPI_T *uspi, uint32_t u32BusClock);
-uint32_t USPI_GetBusClock(USPI_T *uspi);
+uint32_t USPI_GetBusClock(const USPI_T *uspi);
 void USPI_EnableInt(USPI_T *uspi, uint32_t u32Mask);
 void USPI_DisableInt(USPI_T *uspi, uint32_t u32Mask);
-uint32_t USPI_GetIntFlag(USPI_T *uspi, uint32_t u32Mask);
+uint32_t USPI_GetIntFlag(const USPI_T *uspi, uint32_t u32Mask);
 void USPI_ClearIntFlag(USPI_T *uspi, uint32_t u32Mask);
-uint32_t USPI_GetStatus(USPI_T *uspi, uint32_t u32Mask);
+uint32_t USPI_GetStatus(const USPI_T *uspi, uint32_t u32Mask);
 void USPI_EnableWakeup(USPI_T *uspi);
 void USPI_DisableWakeup(USPI_T *uspi);
 

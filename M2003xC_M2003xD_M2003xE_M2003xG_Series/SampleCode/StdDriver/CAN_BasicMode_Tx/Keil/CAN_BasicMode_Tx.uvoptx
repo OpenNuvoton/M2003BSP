@@ -103,7 +103,7 @@
         <bEvRecOn>1</bEvRecOn>
         <bSchkAxf>0</bSchkAxf>
         <bTchkAxf>0</bTchkAxf>
-        <nTsel>13</nTsel>
+        <nTsel>19</nTsel>
         <sDll></sDll>
         <sDllPa></sDllPa>
         <sDlgDll></sDlgDll>
@@ -114,13 +114,13 @@
         <tDlgDll></tDlgDll>
         <tDlgPa></tDlgPa>
         <tIfile></tIfile>
-        <pMon>BIN\UL2V8M.DLL</pMon>
+        <pMon>Bin\Nu_Link.dll</pMon>
       </DebugOpt>
       <TargetDriverDllRegistry>
         <SetRegEntry>
           <Number>0</Number>
           <Key>UL2V8M</Key>
-          <Name>UL2V8M(-S0 -C0 -P0  -FN3 -FC1000 -FD20000000 -FF0M2003_AP_32 -FF1M2003_LD_4 -FF2M2003_SP_1 -FL08000 -FL11000 -FL2400 -FS00 -FS1100000 -FS2200000 -FP0($$Device:M2003XC1AE$Flash\M2003_AP_32.FLM) -FP1($$Device:M2003XC1AE$Flash\M2003_LD_4.FLM) -FP2($$Device:M2003XC1AE$Flash\M2003_SP_1.FLM)</Name>
+          <Name>UL2V8M(-S0 -C0 -P0  -FN3 -FC1000 -FD20000000 -FF0M2003_AP_256 -FF1M2003_LD_4 -FF2M2003_SP_1 -FL040000 -FL11000 -FL2400 -FS00 -FS1100000 -FS2200000 -FP0($$Device:M2003SG6AE$Flash\M2003_AP_256.FLM) -FP1($$Device:M2003SG6AE$Flash\M2003_LD_4.FLM) -FP2($$Device:M2003SG6AE$Flash\M2003_SP_1.FLM)</Name>
         </SetRegEntry>
         <SetRegEntry>
           <Number>0</Number>
@@ -145,7 +145,7 @@
       <DebugFlag>
         <trace>0</trace>
         <periodic>0</periodic>
-        <aLwin>0</aLwin>
+        <aLwin>1</aLwin>
         <aCover>0</aCover>
         <aSer1>0</aSer1>
         <aSer2>0</aSer2>
