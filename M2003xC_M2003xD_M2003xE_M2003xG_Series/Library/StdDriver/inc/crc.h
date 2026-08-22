@@ -188,7 +188,7 @@ extern "C"
  * @details     This macro sets the DMA source address.
  * \hideinitializer
  */
-#define CRC_SET_DMA_SADDR(Addr)           (CRC->SADDR = (uint32_t)Addr)
+#define CRC_SET_DMA_SADDR(Addr)           (CRC->SADDR = (uint32_t)(Addr))
 
 /**
  * @brief       Set the words for DMA to read
@@ -200,7 +200,7 @@ extern "C"
  * @details     This macro sets the words for DMA to read.
  * \hideinitializer
  */
-#define CRC_SET_DMACNT_WORD(Word)         (CRC->DMACNT = ((uint32_t)Word<<CRC_DMACNT_DMACNT_Pos))
+#define CRC_SET_DMACNT_WORD(Word)         (CRC->DMACNT = ((uint32_t)(Word)<<CRC_DMACNT_DMACNT_Pos))
 
 /**
  * @brief       Get CRC DMA Mode Status 

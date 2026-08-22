@@ -263,7 +263,7 @@ typedef struct
   * @details    This macro is used to select RTC clock source.
   * \hideinitializer
   */
-#define RTC_CLKSRCSEL(u32ClkSrc)        (RTC->LXTCTL = (RTC->LXTCTL & ~RTC_LXTCTL_RTCCKSEL_Msk) | u32ClkSrc);
+#define RTC_CLKSRCSEL(u32ClkSrc)        (RTC->LXTCTL = (RTC->LXTCTL & ~RTC_LXTCTL_RTCCKSEL_Msk) | (u32ClkSrc));
 
 int32_t RTC_Open(S_RTC_TIME_DATA_T *psPt);
 void RTC_Close(void);

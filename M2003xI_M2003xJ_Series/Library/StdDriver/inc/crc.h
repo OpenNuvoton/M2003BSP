@@ -103,7 +103,7 @@ extern "C"
 #define CRC_DMA_RESUME(crc)                  ((crc)->DMACTL &= ~CRC_DMACTL_PAUSE_Msk)
 #define CRC_IS_DMA_PAUSE(crc)                ((crc)->DMACTL & CRC_DMACTL_PAUSE_Msk)
 #define CRC_DMA_START(crc)                   ((crc)->DMACTL |= CRC_DMACTL_START_Msk)
-#define CRC_SET_DMA_SADDR(crc, Addr)         ((crc)->SADDR = Addr) //less than 0xE0000000
+#define CRC_SET_DMA_SADDR(crc, Addr)         ((crc)->SADDR = (Addr))
 #define CRC_SET_DMACNT_WORD(crc, Word)       ((crc)->DMACNT = (Word<<CRC_DMACNT_DMACNT_Pos))
 #define CRC_GET_STATUS(crc)                  ((crc)->DMASTS)
 #define CRC_SET_POLYNOMIAL(u32Polynomial)   (CRC->POLYNOMIAL = (u32Polynomial))

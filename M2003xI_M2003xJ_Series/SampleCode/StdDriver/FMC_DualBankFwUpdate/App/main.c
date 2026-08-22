@@ -253,7 +253,7 @@ int main()
             EnableSysTick(1000);
             StartTimer0();
 
-            i32Err = Xmodem(s_u32DbAddr);
+            i32Err = XmodemRecv(s_u32DbAddr);
             if(i32Err < 0)
             {
                 printf("Xmodem transfer fail!\n");
