@@ -1,0 +1,251 @@
+{
+  "$schema": "http://cyclonedx.org/schema/bom-1.6.schema.json",
+  "bomFormat": "CycloneDX",
+  "specVersion": "1.6",
+  "serialNumber": "urn:uuid:6f82ac1c-84ae-485d-a7ae-99d2c952f7d4",
+  "version": 1,
+  "metadata": {
+    "timestamp": "2026-08-25T17:58:13+08:00",
+    "tools": {
+      "components": [
+        {
+          "type": "application",
+          "author": "anchore",
+          "name": "syft",
+          "version": "1.50.0"
+        }
+      ]
+    },
+    "component": {
+      "bom-ref": "3bdc61bf07b49143",
+      "type": "library",
+      "name": "MCU Driver",
+      "version": "12543d9",
+      "licenses": [
+        {
+          "license": {
+            "id": "Apache-2.0"
+          }
+        }
+      ],
+      "properties": [
+        {
+          "name": "bsp:sbom-category",
+          "value": "product"
+        },
+        {
+          "name": "bsp:scope",
+          "value": "Components included in, linked with, deployed to, or reasonably expected to be integrated into final product firmware/software."
+        },
+        {
+          "name": "bsp:scope-policy-file",
+          "value": "product-scope.yaml"
+        },
+        {
+          "name": "bsp:runtime-scope",
+          "value": "true"
+        },
+        {
+          "name": "bsp:included-in-product-firmware",
+          "value": "true"
+        },
+        {
+          "name": "bsp:third-party-components",
+          "value": "none identified in product scope based on the defined Product SBOM scope policy"
+        },
+        {
+          "name": "bsp:product-scope-include-path",
+          "value": "Library/CMSIS/Core/Include"
+        },
+        {
+          "name": "bsp:product-scope-include-path",
+          "value": "Library/CMSIS/Driver"
+        },
+        {
+          "name": "bsp:product-scope-include-path",
+          "value": "Library/CMSIS/RTOS2"
+        },
+        {
+          "name": "bsp:product-scope-include-path",
+          "value": "Library/Device/Nuvoton/M2003J"
+        },
+        {
+          "name": "bsp:product-scope-include-path",
+          "value": "Library/StdDriver"
+        },
+        {
+          "name": "bsp:product-scope-exclude-path",
+          "value": "Library/CMSIS/Core/Test"
+        },
+        {
+          "name": "bsp:product-scope-exclude-path",
+          "value": "Library/CMSIS/Documentation"
+        },
+        {
+          "name": "bsp:product-scope-exclude-path",
+          "value": "SampleCode"
+        }
+      ]
+    }
+  },
+  "components": [
+    {
+      "type": "library",
+      "bom-ref": "m2003xi_m2003xj_series:product-component:library-device-nuvoton-m2003j",
+      "name": "M2003xI_M2003xJ_Series M2003J",
+      "version": "12543d9",
+      "licenses": [
+        {
+          "license": {
+            "id": "Apache-2.0"
+          }
+        }
+      ],
+      "scope": "required",
+      "description": "Directory-level first-party BSP product component included from product scope path Library/Device/Nuvoton/M2003J",
+      "properties": [
+        {
+          "name": "bsp:sbom-category",
+          "value": "product"
+        },
+        {
+          "name": "bsp:path",
+          "value": "Library/Device/Nuvoton/M2003J"
+        },
+        {
+          "name": "bsp:component-origin",
+          "value": "first-party"
+        },
+        {
+          "name": "bsp:component-granularity",
+          "value": "directory"
+        },
+        {
+          "name": "bsp:scope-policy-file",
+          "value": "product-scope.yaml"
+        },
+        {
+          "name": "bsp:runtime-scope",
+          "value": "true"
+        },
+        {
+          "name": "bsp:included-in-product-firmware",
+          "value": "true"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "m2003xi_m2003xj_series:product-component:library-stddriver",
+      "name": "M2003xI_M2003xJ_Series StdDriver",
+      "version": "12543d9",
+      "licenses": [
+        {
+          "license": {
+            "id": "Apache-2.0"
+          }
+        }
+      ],
+      "scope": "required",
+      "description": "Directory-level first-party BSP product component included from product scope path Library/StdDriver",
+      "properties": [
+        {
+          "name": "bsp:sbom-category",
+          "value": "product"
+        },
+        {
+          "name": "bsp:path",
+          "value": "Library/StdDriver"
+        },
+        {
+          "name": "bsp:component-origin",
+          "value": "first-party"
+        },
+        {
+          "name": "bsp:component-granularity",
+          "value": "directory"
+        },
+        {
+          "name": "bsp:scope-policy-file",
+          "value": "product-scope.yaml"
+        },
+        {
+          "name": "bsp:runtime-scope",
+          "value": "true"
+        },
+        {
+          "name": "bsp:included-in-product-firmware",
+          "value": "true"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "group": "Arm",
+      "name": "CMSIS",
+      "version": "6.1.0",
+      "supplier": {
+        "name": "Arm Limited"
+      },
+      "licenses": [
+        {
+          "expression": "Apache-2.0"
+        }
+      ],
+      "purl": "pkg:github/ARM-software/CMSIS_6@6.1.0",
+      "bom-ref": "pkg:github/ARM-software/CMSIS_6@6.1.0?source=vendored&path=Library/CMSIS",
+      "properties": [
+        {
+          "name": "bsp:component-origin",
+          "value": "third-party"
+        },
+        {
+          "name": "bsp:component-source",
+          "value": "vendored"
+        },
+        {
+          "name": "bsp:integration",
+          "value": "source"
+        },
+        {
+          "name": "bsp:cmsis-core-version",
+          "value": "6.1.0"
+        },
+        {
+          "name": "bsp:cmsis-rtos2-api-version",
+          "value": "2.3.0"
+        },
+        {
+          "name": "bsp:cmsis-driver-release",
+          "value": "2.10.0"
+        },
+        {
+          "name": "bsp:cmsis-driver-common-version",
+          "value": "2.0"
+        },
+        {
+          "name": "bsp:cmsis-driver-interface-api-versions",
+          "value": "ARM_CAN_API_VERSION=1.3; ARM_ETH_MAC_API_VERSION=2.2; ARM_ETH_PHY_API_VERSION=2.2; ARM_FLASH_API_VERSION=2.3; ARM_I2C_API_VERSION=2.4; ARM_MCI_API_VERSION=2.4; ARM_NAND_API_VERSION=2.4; ARM_SAI_API_VERSION=1.2; ARM_SPI_API_VERSION=2.3; ARM_STORAGE_API_VERSION=1.2; ARM_USART_API_VERSION=2.4; ARM_USBD_API_VERSION=2.3; ARM_USBH_API_VERSION=2.4; ARM_WIFI_API_VERSION=1.1"
+        },
+        {
+          "name": "bsp:included-paths",
+          "value": "Library/CMSIS/Core/Include; Library/CMSIS/Driver; Library/CMSIS/RTOS2"
+        },
+        {
+          "name": "bsp:excluded-paths",
+          "value": "Library/CMSIS/Core/Test; Library/CMSIS/Documentation"
+        }
+      ]
+    }
+  ],
+  "dependencies": [
+    {
+      "ref": "3bdc61bf07b49143",
+      "dependsOn": [
+        "m2003xi_m2003xj_series:product-component:library-device-nuvoton-m2003j",
+        "m2003xi_m2003xj_series:product-component:library-stddriver",
+        "pkg:github/ARM-software/CMSIS_6@6.1.0?source=vendored&path=Library/CMSIS"
+      ]
+    }
+  ]
+}
