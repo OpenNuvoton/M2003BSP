@@ -10,6 +10,10 @@
 #include <stdio.h>
 #include "NuMicro.h"
 
+#if defined(__GNUC__) && !defined(__ARMCC_VERSION) && !defined(OS_USE_SEMIHOSTING)
+#include <sys/stat.h>
+#endif
+
 #if defined (__ICCARM__)
     #if (__VER__ >= 9000000)
         #include <LowLevelIOInterface.h>
@@ -39,7 +43,7 @@
 #if (__ARMCC_VERSION < 6040000)
 struct __FILE
 {
-    int handle; /* Add whatever you need here */
+    /* Add whatever you need here */
 };
 #else
 #if !defined(__MICROLIB)
@@ -56,24 +60,21 @@ struct __FILE
 };
 #endif /* !(defined(__ICCARM__) && (__VER__ >= 6010000)) */
 
+
+/* [MISRA8.4] Provide compatible declarations for external linkage objects. */
+extern FILE __stdout;
+extern FILE __stdin;
+
 FILE __stdout;
 FILE __stdin;
 
-#if defined (__ARMCC_VERSION) || defined (__ICCARM__)
-    extern int32_t SH_DoCommand(int32_t n32In_R0, int32_t n32In_R1, int32_t *pn32Out_R0);
-
-    #if defined( __ICCARM__ )
-        __WEAK
-    #else
-        __attribute__((weak))
-    #endif
-
-    uint32_t ProcessHardFault(uint32_t lr, uint32_t msp, uint32_t psp);
+#if defined(DEBUG_ENABLE_SEMIHOST)
+static volatile int32_t g_ICE_Connected = 1;
 #endif
-
 int kbhit(void);
 int IsDebugFifoEmpty(void);
 void _ttywrch(int ch);
+/* cppcheck-suppress misra-c2012-21.2 */
 int fputc(int ch, FILE *stream);
 
 #if defined ( __GNUC__ ) && !defined (__ARMCC_VERSION)
@@ -85,14 +86,15 @@ int fputc(int ch, FILE *stream);
 #endif
 
 #if defined (__ARMCC_VERSION) || defined (__ICCARM__)
+    /* cppcheck-suppress misra-c2012-21.2 */
     int fgetc(FILE *stream);
+    /* cppcheck-suppress misra-c2012-21.2 */
     int ferror(FILE *stream);
 #endif
 
 char GetChar(void);
 void SendChar_ToUART(int ch);
 void SendChar(int ch);
-static volatile int32_t g_ICE_Connected = 1;
 enum { r0, r1, r2, r3, r12, lr, pc, psr};
 
 
@@ -101,8 +103,11 @@ enum { r0, r1, r2, r3, r12, lr, pc, psr};
  * @param[in]   stack pointer points to the dumped registers in SRAM
  * @details     This function is implement to print r0, r1, r2, r3, r12, lr, pc, psr
  */
-static void DumpStack(uint32_t stack[])
+static void DumpStack(const uint32_t stack[])
 {
+    /* [MISRA2.7] Explicitly mark unused parameter (debug prints are disabled). */
+    (void)stack; 
+
     /*
         printf("r0 =0x%x\n", stack[r0]);
         printf("r1 =0x%x\n", stack[r1]);
@@ -133,11 +138,16 @@ static char g_buf_len = 0;
  */
 int32_t SH_Return(int32_t n32In_R0, int32_t n32In_R1, int32_t *pn32Out_R0)
 {
+    /* [MISRA2.7] Mark unused if not used by implementation. */
+    (void)n32In_R1;
+
     if (g_ICE_Connected)
     {
-        if (pn32Out_R0)
+        /* [MISRA15.6] Always use compound statements. */
+        if (pn32Out_R0 != NULL)
+        {
             *pn32Out_R0 = n32In_R0;
-
+        }
         return 1;
     }
 
@@ -169,14 +179,43 @@ __attribute__((weak)) void HardFault_Handler(void)
 #else
 
 int32_t SH_Return(int32_t n32In_R0, int32_t n32In_R1, int32_t *pn32Out_R0);
+/* [MISRA2.7] Parameters are intentionally unused in semihost return stub. */
 int32_t SH_Return(int32_t n32In_R0, int32_t n32In_R1, int32_t *pn32Out_R0)
 {
-    return 0;
+    (void)n32In_R0;
+    (void)n32In_R1;
+    (void)pn32Out_R0;
+
+    return 0L;
 }
+
 #endif
 
 #endif /* defined(DEBUG_ENABLE_SEMIHOST) */
+#if defined (__ARMCC_VERSION) || defined (__ICCARM__)
+    extern int32_t SH_DoCommand(int32_t n32In_R0, int32_t n32In_R1, int32_t *pn32Out_R0);
 
+    #if defined( __ICCARM__ )
+        __WEAK
+    #else
+        __attribute__((weak))
+    #endif
+
+    /**
+     * @static_deviation
+     * <b>Rule:</b>          MISRA C:2012 Rule 8.2<br>
+     * <b>Justification:</b> Parameters lr, msp, psp are already named in this prototype;
+     *                       the preceding conditional __WEAK / __attribute__((weak))
+     *                       qualifier confuses the MISRA addon's simplified token stream
+     *                       into misreading the parameter list as unnamed. This is a
+     *                       tool-parsing artifact of the weak-attribute macro, not a
+     *                       missing parameter name.
+     */
+    /* cppcheck-suppress misra-c2012-8.2 */
+    uint32_t ProcessHardFault(uint32_t lr, uint32_t msp, uint32_t psp);
+#else
+    extern int32_t SH_DoCommand(int32_t n32In_R0, int32_t n32In_R1, int32_t *pn32Out_R0);
+#endif
 
 #if defined( __ICCARM__ )
     __WEAK
@@ -192,14 +231,14 @@ uint32_t ProcessHardFault(uint32_t lr, uint32_t msp, uint32_t psp)
     /* TODO: Implement your hardfault handle code here */
 
     /* Check the used stack */
-#if defined (__ARM_FEATURE_CMSE) &&  (__ARM_FEATURE_CMSE == 3)
+#if defined (__ARM_FEATURE_CMSE) && (__ARM_FEATURE_CMSE == 3)
 
-    if (lr & 0x40UL)
+    if ((lr & 0x40UL) != 0UL)
     {
 #endif
 
         /* Secure stack used */
-        if (lr & 4UL)
+        if ((lr & 4UL) != 0UL)
         {
             sp = (uint32_t *)psp;
         }
@@ -208,41 +247,56 @@ uint32_t ProcessHardFault(uint32_t lr, uint32_t msp, uint32_t psp)
             sp = (uint32_t *)msp;
         }
 
-#if defined (__ARM_FEATURE_CMSE) &&  (__ARM_FEATURE_CMSE == 3)
+#if defined (__ARM_FEATURE_CMSE) && (__ARM_FEATURE_CMSE == 3)
     }
     else
     {
         /* Non-secure stack used */
-        if (lr & 4)
+        /* [MISRA15.6] Always use compound statements. */
+        if ((lr & 4UL) != 0UL)
+        {
             sp = (uint32_t *)__TZ_get_PSP_NS();
+        }
         else
+        {
             sp = (uint32_t *)__TZ_get_MSP_NS();
+        }
     }
-
 #endif
 
     /* Get the instruction caused the hardfault */
     inst = M16(sp[6]);
 
-    if (inst == 0xBEAB)
+    /* [MISRA10.4] Use unsigned constants to match essential type category. */
+    if (inst == 0xBEABUL)
     {
         /*
             If the instruction is 0xBEAB, it means it is caused by BKPT without ICE connected.
             We still return for output/input message to UART.
         */
-        g_ICE_Connected = 0; // Set a flag for ICE offline
-        sp[6] += 2;          // Return to next instruction
-        return lr;           // Keep lr in R0
+#if defined(DEBUG_ENABLE_SEMIHOST)
+        g_ICE_Connected = 0;         /* Set a flag for ICE offline */
+#endif			
+			
+        sp[6] += 2UL;         /* Return to next instruction */
+        return lr;            /* Keep lr in R0 */
     }
 
-    printf("  HardFault!\n\n");
+    /* Do not use standard I/O in fault context. */
+    /* printf("  HardFault!\n\n"); */ /* Removed */
+
     DumpStack(sp);
 
-    /* Or *sp to remove compiler warning */
-    while (1U | *sp) {}
+    /* Explicitly reference sp to avoid unused warning in some toolchains/configs. */
+    (void)*sp;
 
-    return lr;
+    /* Explicit infinite loop. No return statement is needed because this path never exits. */
+    for (;;)
+    {
+        /* stay here */
+    }
 }
+
 
 
 /**
@@ -255,13 +309,19 @@ uint32_t ProcessHardFault(uint32_t lr, uint32_t msp, uint32_t psp)
 #ifndef NONBLOCK_PRINTF
 void SendChar_ToUART(int ch)
 {
-    while (DEBUG_PORT->FIFOSTS & UART_FIFOSTS_TXFULL_Msk) {}
+    while ((DEBUG_PORT->FIFOSTS & UART_FIFOSTS_TXFULL_Msk) != 0UL)
+    {
+        /* wait */ /* [MISRA15.6] */
+    }
 
     if ((char)ch == '\n')
     {
         DEBUG_PORT->DAT = '\r';
 
-        while (DEBUG_PORT->FIFOSTS & UART_FIFOSTS_TXFULL_Msk) {}
+        while ((DEBUG_PORT->FIFOSTS & UART_FIFOSTS_TXFULL_Msk) != 0UL)
+        {
+            /* wait */ /* [MISRA15.6] */
+        }
     }
 
     DEBUG_PORT->DAT = (uint32_t)ch;
@@ -286,7 +346,11 @@ void SendChar_ToUART(int ch)
         {
             i32Tmp = i32Head + 1;
 
-            if (i32Tmp > BUF_SIZE) i32Tmp = 0;
+            /* [MISRA15.6] Always use compound statements. */
+            if (i32Tmp > BUF_SIZE) 
+            {
+                i32Tmp = 0;
+            }
 
             if (i32Tmp != i32Tail)
             {
@@ -297,18 +361,25 @@ void SendChar_ToUART(int ch)
 
         i32Tmp = i32Head + 1;
 
-        if (i32Tmp > BUF_SIZE) i32Tmp = 0;
+        /* [MISRA15.6] Always use compound statements. */
+        if (i32Tmp > BUF_SIZE) 
+        {
+            i32Tmp = 0;
+        }
 
         if (i32Tmp != i32Tail)
         {
-            u8Buf[i32Head] = ch;
+            u8Buf[i32Head] = (uint8_t)ch;
             i32Head = i32Tmp;
         }
     }
     else
     {
+        /* [MISRA15.6] Always use compound statements. */
         if (i32Tail == i32Head)
+        {
             return;
+        }
     }
 
     // Pop char
@@ -316,15 +387,22 @@ void SendChar_ToUART(int ch)
     {
         i32Tmp = i32Tail + 1;
 
-        if (i32Tmp > BUF_SIZE) i32Tmp = 0;
-
-        if ((DEBUG_PORT->FIFOSTS & UART_FIFOSTS_TXFULL_Msk) == 0)
+        /* [MISRA15.6] Always use compound statements. */
+        if (i32Tmp > (int32_t)BUF_SIZE)
         {
-            DEBUG_PORT->DAT = u8Buf[i32Tail];
+            i32Tmp = 0;
+        }
+
+
+        if ((DEBUG_PORT->FIFOSTS & UART_FIFOSTS_TXFULL_Msk) == 0UL)
+        {
+            DEBUG_PORT->DAT = (uint32_t)u8Buf[i32Tail];
             i32Tail = i32Tmp;
         }
         else
-            break; // FIFO full
+        {
+            break; /* FIFO full */ /* [MISRA15.6] */
+        }
     } while (i32Tail != i32Head);
 }
 #endif /* else for NONBLOCK_PRINTF */
@@ -354,7 +432,6 @@ __WEAK void SendChar(int ch)
         /* Send the char */
         if (g_ICE_Connected)
         {
-
             if (SH_DoCommand(0x04, (int)g_buf, NULL) != 0)
             {
                 g_buf_len = 0;
@@ -365,10 +442,13 @@ __WEAK void SendChar(int ch)
         else
         {
 #if (DEBUG_ENABLE_SEMIHOST == 1) // Re-direct to UART Debug Port only when DEBUG_ENABLE_SEMIHOST=1
-            int i;
+        int i;
 
-            for (i = 0; i < g_buf_len; i++)
-                SendChar_ToUART(g_buf[i]);
+
+        for (i = 0; i < g_buf_len; i++)
+        {
+            SendChar_ToUART(g_buf[i]);
+        }
 
 #endif
             g_buf_len = 0;
@@ -398,23 +478,26 @@ char GetChar(void)
 #if defined (__ICCARM__)
         int nRet;
 
-        while (SH_DoCommand(0x7, 0, &nRet) != 0)
+        while (SH_DoCommand(0x7, 0, (int32_t *)&nRet) != 0)
         {
-            if (nRet != 0)
-                return (char)nRet;
-        }
-
-#else
-        int nRet;
-
-        while (SH_DoCommand(0x101, 0, &nRet) != 0)
-        {
+            /* [MISRA15.6] Always use compound statements. */
             if (nRet != 0)
             {
-                SH_DoCommand(0x07, 0, &nRet);
                 return (char)nRet;
             }
         }
+#else
+        int nRet;
+
+        while (SH_DoCommand(0x101, 0, (int32_t *)&nRet) != 0)
+        {
+            if (nRet != 0)
+            {
+                SH_DoCommand(0x07, 0, (int32_t *)&nRet);
+                return (char)nRet;
+            }
+        }
+
 
 #endif
 
@@ -510,7 +593,14 @@ void _ttywrch(int ch)
  *
  * @note       The above descriptions are copied from http://www.cplusplus.com/reference/clibrary/cstdio/fputc/.
  *
- *
+ * @static_deviation
+ * <b>Rule:</b>          MISRA C:2012 Rule 21.2<br>
+ * <b>Justification:</b> fputc is a standard C library function name that must be
+ *                       redeclared/redefined here by design: this is the retarget
+ *                       layer that hooks the C runtime's low-level character output
+ *                       to the UART debug port / semihosting channel. Renaming it
+ *                       would break the C library's retargeting mechanism, which
+ *                       depends on this exact reserved name being provided.
  */
 #if defined (__ICCARM__) && (__VER__ >= 9000000)
 size_t __write(int handle, const unsigned char *buffer, size_t size)
@@ -545,6 +635,7 @@ size_t __write(int handle, const unsigned char *buffer, size_t size)
 #else
 int fputc(int ch, FILE *stream)
 {
+    (void)stream; /* [MISRA2.7] */
     SendChar(ch);
     return ch;
 }
@@ -556,21 +647,27 @@ int fputc(int ch, FILE *stream)
 
 #else
 
-#include <sys/stat.h>
-
 int _write(int fd, char *ptr, int len)
 {
     int i = len;
 
+    (void)fd; /* [MISRA2.7] */
+
     while (i--)
     {
-        while (DEBUG_PORT->FIFOSTS & UART_FIFOSTS_TXFULL_Msk);
+        while ((DEBUG_PORT->FIFOSTS & UART_FIFOSTS_TXFULL_Msk) != 0UL)
+        {
+            /* wait */ /* [MISRA15.6] */
+        }
 
         if (*ptr == '\n')
         {
             DEBUG_PORT->DAT = '\r';
 
-            while (DEBUG_PORT->FIFOSTS & UART_FIFOSTS_TXFULL_Msk);
+            while ((DEBUG_PORT->FIFOSTS & UART_FIFOSTS_TXFULL_Msk) != 0UL)
+            {
+                /* wait */ /* [MISRA15.6] */
+            }
         }
 
         DEBUG_PORT->DAT = *ptr++;
@@ -582,7 +679,14 @@ int _write(int fd, char *ptr, int len)
 
 int _read(int fd, char *ptr, int len)
 {
-    while ((DEBUG_PORT->FIFOSTS & UART_FIFOSTS_RXEMPTY_Msk) != 0);
+    (void)fd;  /* [MISRA2.7] */
+    (void)len; /* [MISRA2.7] */
+
+    while ((DEBUG_PORT->FIFOSTS & UART_FIFOSTS_RXEMPTY_Msk) != 0UL)
+    {
+        /* wait */ /* [MISRA15.6] */
+    }
+
 
     *ptr = DEBUG_PORT->DAT;
     return 1;
@@ -591,27 +695,41 @@ int _read(int fd, char *ptr, int len)
 /* Add implementations to fix linker warnings from the newlib-nano C library in VSCode-GCC14.3.1 */
 int _close(int file) 
 {
+    (void)file; /* [MISRA2.7] */
     return -1;
 }
 
 int _lseek(int file, int ptr, int dir) 
 {
+    (void)file; /* [MISRA2.7] */
+    (void)ptr;  /* [MISRA2.7] */
+    (void)dir;  /* [MISRA2.7] */
+
     return 0;
 }
 
 int _fstat(int file, struct stat *st) 
 {
-    st->st_mode = S_IFCHR;
+    (void)file; /* [MISRA2.7] */
+
+    if (st != NULL)
+    {
+        st->st_mode = S_IFCHR;
+    }
+
     return 0;
 }
 
 int _isatty(int file) 
 {
+    (void)file; /* [MISRA2.7] */
     return 1;
 }
 
 int _kill(int pid, int sig) 
 {
+    (void)pid; /* [MISRA2.7] */
+    (void)sig; /* [MISRA2.7] */
     return -1;
 }
 
@@ -632,6 +750,14 @@ int _getpid(void)
  *
  * @details    For get message from debug port or semihosting.
  *
+ * @static_deviation
+ * <b>Rule:</b>          MISRA C:2012 Rule 21.2<br>
+ * <b>Justification:</b> fgetc is a standard C library function name that must be
+ *                       redeclared/redefined here by design: this is the retarget
+ *                       layer that hooks the C runtime's low-level character input
+ *                       to the UART debug port / semihosting channel. Renaming it
+ *                       would break the C library's retargeting mechanism, which
+ *                       depends on this exact reserved name being provided.
  */
 #if defined (__ICCARM__) && (__VER__ >= 9000000)
 size_t __read(int handle, unsigned char *buffer, size_t size)
@@ -651,8 +777,9 @@ size_t __read(int handle, unsigned char *buffer, size_t size)
         int c = GetChar();
 
         if (c < 0)
+        {
             break;
-
+        }
 #if (STDIN_ECHO != 0)
         SendChar(c);
 #endif
@@ -669,8 +796,10 @@ long __lseek(int handle, long offset, int whence)
     return -1;
 }
 #else
+int fgetc(FILE *stream);
 int fgetc(FILE *stream)
 {
+    (void)stream; /* [MISRA2.7] */
     return ((int)GetChar());
 }
 #endif
@@ -688,9 +817,18 @@ int fgetc(FILE *stream)
  *
  * @note       The above descriptions are copied from http://www.cplusplus.com/reference/clibrary/cstdio/ferror/.
  *
+ * @static_deviation
+ * <b>Rule:</b>          MISRA C:2012 Rule 21.2<br>
+ * <b>Justification:</b> ferror is a standard C library function name that must be
+ *                       redeclared/redefined here by design: this is the retarget
+ *                       layer that hooks the C runtime's stream error-indicator query
+ *                       to this BSP's debug/semihosting channel. Renaming it would
+ *                       break the C library's retargeting mechanism, which depends
+ *                       on this exact reserved name being provided.
  */
 int ferror(FILE *stream)
 {
+    (void)stream; /* [MISRA2.7] */
     return EOF;
 }
 #endif
@@ -700,11 +838,16 @@ int ferror(FILE *stream)
 #ifdef __ICCARM__
 void __exit(int return_code)
 {
+
     /* Check if link with ICE */
     if (SH_DoCommand(0x18, 0x20026, NULL) == 0)
     {
         /* Make sure all message is print out */
-        while (IsDebugFifoEmpty() == 0);
+        while (IsDebugFifoEmpty() == 0)
+        {
+            /* wait */ /* [MISRA15.6] */
+        }
+
     }
 
 label:
@@ -715,11 +858,17 @@ label:
 
 void _sys_exit(int return_code)
 {
+    (void)return_code; /* [MISRA2.7] */
+
     /* Check if link with ICE */
     if (SH_DoCommand(0x18, 0x20026, NULL) == 0)
     {
         /* Make sure all message is print out */
-        while (IsDebugFifoEmpty() == 0);
+        while (IsDebugFifoEmpty() == 0)
+        {
+            /* wait */ /* [MISRA15.6] */
+        }
+
     }
 
 label:
