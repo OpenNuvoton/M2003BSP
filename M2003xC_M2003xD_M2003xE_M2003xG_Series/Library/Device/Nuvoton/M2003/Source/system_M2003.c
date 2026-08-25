@@ -7,18 +7,18 @@
  * @copyright (C) 2020 Nuvoton Technology Corp. All rights reserved.
  ****************************************************************************/
 
-//#include <arm_cmse.h>
-#include <stdio.h>
 #include <stdint.h>
+#include <stdio.h>
 #include "NuMicro.h"
 
 extern void *__Vectors;                   /* see startup file */
+extern const uint32_t gau32ClkSrcTbl[8];
 
 /*----------------------------------------------------------------------------
   Clock Variable definitions
  *----------------------------------------------------------------------------*/
 uint32_t SystemCoreClock  = __HIRC;              /*!< System Clock Frequency (Core Clock) */
-uint32_t CyclesPerUs      = (__HIRC / 1000000);  /*!< Cycles per micro second             */
+uint32_t CyclesPerUs      = (__HIRC / 1000000UL);  /*!< Cycles per micro second             */
 uint32_t PllClock         = __HIRC;              /*!< PLL Output Clock Frequency          */
 const uint32_t gau32ClkSrcTbl[8] = {__HXT, 0UL, 0UL, __LIRC, 0UL, __HIRC, 0UL, 0UL};
 
@@ -35,7 +35,8 @@ const uint32_t gau32ClkSrcTbl[8] = {__HXT, 0UL, 0UL, __LIRC, 0UL, __HIRC, 0UL, 0
  */
 void SystemCoreClockUpdate(void)
 {
-    uint32_t u32Freq, u32ClkSrc;
+    uint32_t u32Freq;
+    uint32_t u32ClkSrc;
     uint32_t u32HclkDiv;
 
     u32ClkSrc = CLK->CLKSEL0 & CLK_CLKSEL0_HCLKSEL_Msk;
@@ -43,12 +44,12 @@ void SystemCoreClockUpdate(void)
     /* Use the clock sources directly */
     u32Freq = gau32ClkSrcTbl[u32ClkSrc];
 
-    u32HclkDiv = (CLK->CLKDIV0 & CLK_CLKDIV0_HCLKDIV_Msk) + 1;
+    u32HclkDiv = (CLK->CLKDIV0 & CLK_CLKDIV0_HCLKDIV_Msk) + 1UL;
 
     /* Update System Core Clock */
     SystemCoreClock = u32Freq / u32HclkDiv;
 
-    CyclesPerUs = (SystemCoreClock + 500000) / 1000000;
+    CyclesPerUs = (SystemCoreClock + 500000UL) / 1000000UL;
 }
 
 
@@ -87,7 +88,10 @@ void AssertError(uint8_t *file, uint32_t line)
     printf("[%s] line %u : wrong parameters.\r\n", file, line);
 
     /* Infinite loop */
-    while (1) ;
+    for (;;)
+    {
+        /* Wait for reset after an assertion failure. */
+    }
 }
 #endif
 
