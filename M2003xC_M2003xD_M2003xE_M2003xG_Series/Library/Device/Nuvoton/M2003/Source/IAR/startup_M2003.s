@@ -3,6 +3,7 @@
 ; * @version  V0.10
 ; * @brief    CMSIS Cortex-M23 Core Device Startup File for M2003
 ; *
+; * SPDX-License-Identifier: Apache-2.0
 ; * @copyright (C) 2018 Nuvoton Technology Corp. All rights reserved.
 ;*****************************************************************************/
 

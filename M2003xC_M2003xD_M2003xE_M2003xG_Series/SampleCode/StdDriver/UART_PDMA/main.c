@@ -3,7 +3,7 @@
  * @version  V3.00
  * @brief    Transmit and receive UART data with PDMA.
  *
- * @copyright SPDX-License-Identifier: Apache-2.0
+ * SPDX-License-Identifier: Apache-2.0
  * @copyright Copyright (C) 2017-2026 Nuvoton Technology Corp. All rights reserved.
  ******************************************************************************/
 #include <stdio.h>

@@ -3,7 +3,7 @@
  * @version  V1.0
  * @brief    Peripheral Access Layer Header File
  *
- * @copyright SPDX-License-Identifier: Apache-2.0
+ * SPDX-License-Identifier: Apache-2.0
  * @copyright Copyright (c) 2017-2026 Nuvoton Technology Corp. All rights reserved.
  ******************************************************************************/
 
@@ -44,7 +44,7 @@
   *
   * <b>Copyright Notice</b>
   *
-  * @copyright SPDX-License-Identifier: Apache-2.0
+  * SPDX-License-Identifier: Apache-2.0<br/>
   * @copyright Copyright (c) 2017-2026 Nuvoton Technology Corp. All rights reserved.
   */
 

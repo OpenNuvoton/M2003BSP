@@ -3,7 +3,7 @@
  * @version  V1.00
  * @brief    Implement CRC in CRC-CCITT mode and get the CRC checksum result.
  *
- * @copyright SPDX-License-Identifier: Apache-2.0
+ * SPDX-License-Identifier: Apache-2.0
  * @copyright Copyright (c) 2017-2026 Nuvoton Technology Corp. All rights reserved.
  ******************************************************************************/
 #include <stdio.h>
