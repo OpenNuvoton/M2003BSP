@@ -200,5 +200,65 @@
                    "component_version":  "6.1.0",
                    "license_conclusion":  "Apache-2.0",
                    "test_and_documentation_excluded_from_product":  true
-               }
+               },
+    "components":  [
+                       {
+                           "type":  "library",
+                           "group":  "Arm",
+                           "name":  "CMSIS",
+                           "version":  "6.1.0",
+                           "supplier":  {
+                                            "name":  "Arm Limited"
+                                        },
+                           "licenses":  [
+                                            {
+                                                "expression":  "Apache-2.0"
+                                            }
+                                        ],
+                           "purl":  "pkg:github/ARM-software/CMSIS_6@6.1.0",
+                           "bom-ref":  "pkg:github/ARM-software/CMSIS_6@6.1.0?source=vendored\u0026path=Library/CMSIS",
+                           "properties":  [
+                                              {
+                                                  "name":  "bsp:component-origin",
+                                                  "value":  "third-party"
+                                              },
+                                              {
+                                                  "name":  "bsp:component-source",
+                                                  "value":  "vendored"
+                                              },
+                                              {
+                                                  "name":  "bsp:integration",
+                                                  "value":  "source"
+                                              },
+                                              {
+                                                  "name":  "bsp:cmsis-core-version",
+                                                  "value":  "6.1.0"
+                                              },
+                                              {
+                                                  "name":  "bsp:cmsis-rtos2-api-version",
+                                                  "value":  "2.3.0"
+                                              },
+                                              {
+                                                  "name":  "bsp:cmsis-driver-release",
+                                                  "value":  "2.10.0"
+                                              },
+                                              {
+                                                  "name":  "bsp:cmsis-driver-common-version",
+                                                  "value":  "2.0"
+                                              },
+                                              {
+                                                  "name":  "bsp:cmsis-driver-interface-api-versions",
+                                                  "value":  "ARM_CAN_API_VERSION=1.3; ARM_ETH_MAC_API_VERSION=2.2; ARM_ETH_PHY_API_VERSION=2.2; ARM_FLASH_API_VERSION=2.3; ARM_I2C_API_VERSION=2.4; ARM_MCI_API_VERSION=2.4; ARM_NAND_API_VERSION=2.4; ARM_SAI_API_VERSION=1.2; ARM_SPI_API_VERSION=2.3; ARM_STORAGE_API_VERSION=1.2; ARM_USART_API_VERSION=2.4; ARM_USBD_API_VERSION=2.3; ARM_USBH_API_VERSION=2.4; ARM_WIFI_API_VERSION=1.1"
+                                              },
+                                              {
+                                                  "name":  "bsp:included-paths",
+                                                  "value":  "Library/CMSIS/Core/Include; Library/CMSIS/Driver; Library/CMSIS/RTOS2"
+                                              },
+                                              {
+                                                  "name":  "bsp:excluded-paths",
+                                                  "value":  "Library/CMSIS/Core/Test; Library/CMSIS/Documentation"
+                                              }
+                                          ]
+                       }
+                   ]
 }
