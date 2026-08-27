@@ -481,11 +481,11 @@ extern "C"
 /** @addtogroup GPIO_EXPORTED_FUNCTIONS GPIO Exported Functions
   @{
 */
-void GPIO_SetMode    (GPIO_T *port, uint32_t u32PinMask, uint32_t u32Mode);
-void GPIO_EnableInt  (GPIO_T *port, uint32_t u32Pin, uint32_t u32IntAttribs);
-void GPIO_DisableInt (GPIO_T *port, uint32_t u32Pin);
-void GPIO_SetSlewCtl (GPIO_T *port, uint32_t u32PinMask, uint32_t u32Mode);
-void GPIO_SetPullCtl (GPIO_T *port, uint32_t u32PinMask, uint32_t u32Mode);
+void GPIO_SetMode(GPIO_T *port, uint32_t u32PinMask, uint32_t u32Mode);
+void GPIO_EnableInt(GPIO_T *port, uint32_t u32Pin, uint32_t u32IntAttribs);
+void GPIO_DisableInt(GPIO_T *port, uint32_t u32Pin);
+void GPIO_SetSlewCtl(GPIO_T *port, uint32_t u32PinMask, uint32_t u32Mode);
+void GPIO_SetPullCtl(GPIO_T *port, uint32_t u32PinMask, uint32_t u32Mode);
 void GPIO_EnableEINT(uint32_t u32EINTn, uint32_t u32IntAttribs);
 void GPIO_DisableEINT(uint32_t u32EINTn);
 
