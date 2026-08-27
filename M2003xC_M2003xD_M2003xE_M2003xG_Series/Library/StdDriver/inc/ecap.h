@@ -251,13 +251,14 @@ extern "C"
   * @details This macro will enable and select compare or capture event that can clear capture counter.
   * \hideinitializer
   */
-#define ECAP_SET_CNT_CLEAR_EVENT(ecap, u32Event) do{ \
-  if((u32Event) & ECAP_CTL0_CMPCLREN_Msk) \
+#define ECAP_SET_CNT_CLEAR_EVENT(ecap, u32Event) do { \
+  if ((u32Event) & ECAP_CTL0_CMPCLREN_Msk) { \
     (ecap)->CTL0 |= ECAP_CTL0_CMPCLREN_Msk; \
-  else \
+  } else { \
     (ecap)->CTL0 &= ~ECAP_CTL0_CMPCLREN_Msk; \
-  (ecap)->CTL1 = ((ecap)->CTL1 &~0x00700F00) | ((u32Event) & 0x00700F00); \
-  }while(0);
+  } \
+  (ecap)->CTL1 = (((ecap)->CTL1 & ~((uint32_t)0x00700F00UL)) | ((u32Event) & ((uint32_t)0x00700F00UL))); \
+} while (0)
 
 /**
   * @brief This macro is used to enable compare function
@@ -450,7 +451,7 @@ extern "C"
   * @details This macro will enable the window mode function.
   * \hideinitializer
   */
-#define ECAP_ENABLE_WINDOW_MODE(ecap, u32Index)     ((ecap)->WMCTL |= (ECAP_WMCTL_WCAP0EN_Msk << u32Index))
+#define ECAP_ENABLE_WINDOW_MODE(ecap, u32Index)     ((ecap)->WMCTL |= ((uint32_t)(ECAP_WMCTL_WCAP0EN_Msk) << (u32Index)))
 
 /**
   * @brief This macro is used to disable the window mode function
@@ -463,7 +464,7 @@ extern "C"
   * @details This macro will disable the window mode function.
   * \hideinitializer
   */
-#define ECAP_DISABLE_WINDOW_MODE(ecap, u32Index)    ((ecap)->WMCTL &= ~(ECAP_WMCTL_WCAP0EN_Msk << u32Index))
+#define ECAP_DISABLE_WINDOW_MODE(ecap, u32Index)    ((ecap)->WMCTL &= ~(((uint32_t)(ECAP_WMCTL_WCAP0EN_Msk)) << (u32Index)))
 
 /**
   * @brief This macro is used to set the window mode delay count
@@ -477,7 +478,7 @@ extern "C"
   * @details This macro will set the window mode delay count. Real delay time is (4 * u32Val) * ECAP_CLK.
   * \hideinitializer
   */
-#define ECAP_SET_WINDOW_MODE_DELAY(ecap, u32Index, u32Val)  ((ecap)->WMDLY = ((ecap)->WMDLY & ~((ECAP_WMDLY_WMCAP0DLY_Msk << (u32Index<<3)))) | ((u32Val & 0xFF) << (u32Index<<3)))
+#define ECAP_SET_WINDOW_MODE_DELAY(ecap, u32Index, u32Val)  ((ecap)->WMDLY = (((ecap)->WMDLY & ~(((uint32_t)(ECAP_WMDLY_WMCAP0DLY_Msk)) << ((u32Index) << 3U))) | (((u32Val) & 0xFFU) << ((u32Index) << 3U))))
 
 /**
   * @brief This macro is used to get the window mode counter hold value
