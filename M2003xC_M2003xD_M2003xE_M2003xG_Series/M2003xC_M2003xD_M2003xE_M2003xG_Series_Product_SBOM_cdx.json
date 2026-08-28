@@ -2,25 +2,32 @@
   "$schema": "http://cyclonedx.org/schema/bom-1.6.schema.json",
   "bomFormat": "CycloneDX",
   "specVersion": "1.6",
-  "serialNumber": "urn:uuid:a55f5f0d-f89e-46f6-be71-d13b9382f16e",
+  "serialNumber": "urn:uuid:ce640633-2114-45b9-b3cf-89aba55907d7",
   "version": 1,
   "metadata": {
-    "timestamp": "2026-08-25T16:22:21+08:00",
+    "timestamp": "2026-08-28T13:39:31+08:00",
     "tools": {
       "components": [
         {
           "type": "application",
           "author": "anchore",
           "name": "syft",
-          "version": "1.50.0"
+          "version": "1.45.1"
         }
       ]
     },
     "component": {
-      "bom-ref": "b3625606eb96a803",
+      "bom-ref": "1b3822420f2930f2",
       "type": "library",
       "name": "MCU Driver",
-      "version": "3ecceb2",
+      "version": "V3.01.000-2-g612f7b8",
+      "supplier": {
+        "name": "Nuvoton Technology Corp.",
+        "url": [
+          "https://www.nuvoton.com"
+        ]
+      },
+      "purl": "pkg:generic/nuvoton/mcu-driver@V3.01.000-2-g612f7b8",
       "licenses": [
         {
           "license": {
@@ -51,7 +58,7 @@
         },
         {
           "name": "bsp:third-party-components",
-          "value": "none identified in product scope based on the defined Product SBOM scope policy"
+          "value": "Third-party component status is represented by component-level bsp:component-origin properties and manual SCA evidence."
         },
         {
           "name": "bsp:product-scope-include-path",
@@ -90,14 +97,212 @@
           "value": "SampleCode/"
         }
       ]
-    }
+    },
+    "supplier": {
+      "name": "Nuvoton Technology Corp.",
+      "url": [
+        "https://www.nuvoton.com"
+      ]
+    },
+    "authors": [
+      {
+        "name": "Nuvoton Technology Corp."
+      }
+    ]
   },
   "components": [
     {
       "type": "library",
+      "bom-ref": "m2003xc_m2003xd_m2003xe_m2003xg_series:product-component:library-cmsis-core-include",
+      "name": "M2003xC_M2003xD_M2003xE_M2003xG_Series Include",
+      "version": "V3.01.000-2-g612f7b8",
+      "supplier": {
+        "name": "Nuvoton Technology Corp.",
+        "url": [
+          "https://www.nuvoton.com"
+        ]
+      },
+      "purl": "pkg:generic/nuvoton/library-cmsis-core-include@V3.01.000-2-g612f7b8",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "372ff6d3b9d7c71c498564eabf773f9aa9e55b18719690ac1d774bb0e93b2171"
+        }
+      ],
+      "licenses": [
+        {
+          "license": {
+            "id": "Apache-2.0"
+          }
+        }
+      ],
+      "scope": "required",
+      "description": "Directory-level first-party BSP product component included from product scope path Library/CMSIS/Core/Include",
+      "properties": [
+        {
+          "name": "bsp:sbom-category",
+          "value": "product"
+        },
+        {
+          "name": "bsp:path",
+          "value": "Library/CMSIS/Core/Include"
+        },
+        {
+          "name": "bsp:component-origin",
+          "value": "first-party"
+        },
+        {
+          "name": "bsp:component-granularity",
+          "value": "directory"
+        },
+        {
+          "name": "bsp:scope-policy-file",
+          "value": "product-scope.yaml"
+        },
+        {
+          "name": "bsp:runtime-scope",
+          "value": "true"
+        },
+        {
+          "name": "bsp:included-in-product-firmware",
+          "value": "true"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "m2003xc_m2003xd_m2003xe_m2003xg_series:product-component:library-cmsis-driver",
+      "name": "M2003xC_M2003xD_M2003xE_M2003xG_Series Driver",
+      "version": "V3.01.000-2-g612f7b8",
+      "supplier": {
+        "name": "Nuvoton Technology Corp.",
+        "url": [
+          "https://www.nuvoton.com"
+        ]
+      },
+      "purl": "pkg:generic/nuvoton/library-cmsis-driver@V3.01.000-2-g612f7b8",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "6200494708a64aa492fa67f9f120f5c2bb465aaf279063fe4499c2f4a7916866"
+        }
+      ],
+      "licenses": [
+        {
+          "license": {
+            "id": "Apache-2.0"
+          }
+        }
+      ],
+      "scope": "required",
+      "description": "Directory-level first-party BSP product component included from product scope path Library/CMSIS/Driver",
+      "properties": [
+        {
+          "name": "bsp:sbom-category",
+          "value": "product"
+        },
+        {
+          "name": "bsp:path",
+          "value": "Library/CMSIS/Driver"
+        },
+        {
+          "name": "bsp:component-origin",
+          "value": "first-party"
+        },
+        {
+          "name": "bsp:component-granularity",
+          "value": "directory"
+        },
+        {
+          "name": "bsp:scope-policy-file",
+          "value": "product-scope.yaml"
+        },
+        {
+          "name": "bsp:runtime-scope",
+          "value": "true"
+        },
+        {
+          "name": "bsp:included-in-product-firmware",
+          "value": "true"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "m2003xc_m2003xd_m2003xe_m2003xg_series:product-component:library-cmsis-rtos2",
+      "name": "M2003xC_M2003xD_M2003xE_M2003xG_Series RTOS2",
+      "version": "V3.01.000-2-g612f7b8",
+      "supplier": {
+        "name": "Nuvoton Technology Corp.",
+        "url": [
+          "https://www.nuvoton.com"
+        ]
+      },
+      "purl": "pkg:generic/nuvoton/library-cmsis-rtos2@V3.01.000-2-g612f7b8",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "970d76f81898928a28fa6461859791cbeea4050d2cb75bfce71f66b010a2824c"
+        }
+      ],
+      "licenses": [
+        {
+          "license": {
+            "id": "Apache-2.0"
+          }
+        }
+      ],
+      "scope": "required",
+      "description": "Directory-level first-party BSP product component included from product scope path Library/CMSIS/RTOS2",
+      "properties": [
+        {
+          "name": "bsp:sbom-category",
+          "value": "product"
+        },
+        {
+          "name": "bsp:path",
+          "value": "Library/CMSIS/RTOS2"
+        },
+        {
+          "name": "bsp:component-origin",
+          "value": "first-party"
+        },
+        {
+          "name": "bsp:component-granularity",
+          "value": "directory"
+        },
+        {
+          "name": "bsp:scope-policy-file",
+          "value": "product-scope.yaml"
+        },
+        {
+          "name": "bsp:runtime-scope",
+          "value": "true"
+        },
+        {
+          "name": "bsp:included-in-product-firmware",
+          "value": "true"
+        }
+      ]
+    },
+    {
+      "type": "library",
       "bom-ref": "m2003xc_m2003xd_m2003xe_m2003xg_series:product-component:library-device",
       "name": "M2003xC_M2003xD_M2003xE_M2003xG_Series Device",
-      "version": "3ecceb2",
+      "version": "V3.01.000-2-g612f7b8",
+      "supplier": {
+        "name": "Nuvoton Technology Corp.",
+        "url": [
+          "https://www.nuvoton.com"
+        ]
+      },
+      "purl": "pkg:generic/nuvoton/library-device@V3.01.000-2-g612f7b8",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "a843c132b0e7c723a4127fdc016671dd3886f8b66a60534933b829a2bee67c1c"
+        }
+      ],
       "licenses": [
         {
           "license": {
@@ -142,7 +347,20 @@
       "type": "library",
       "bom-ref": "m2003xc_m2003xd_m2003xe_m2003xg_series:product-component:library-stddriver",
       "name": "M2003xC_M2003xD_M2003xE_M2003xG_Series StdDriver",
-      "version": "3ecceb2",
+      "version": "V3.01.000-2-g612f7b8",
+      "supplier": {
+        "name": "Nuvoton Technology Corp.",
+        "url": [
+          "https://www.nuvoton.com"
+        ]
+      },
+      "purl": "pkg:generic/nuvoton/library-stddriver@V3.01.000-2-g612f7b8",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "d5a0e07a9a3394931f73dec8befc6b404e6962a16f990b81f128caa21b779a78"
+        }
+      ],
       "licenses": [
         {
           "license": {
@@ -260,16 +478,24 @@
           "name": "bsp:license-evidence",
           "value": "Library/CMSIS/Core/Include/cmsis_version.h; Library/CMSIS/RTOS2/Include/cmsis_os2.h; Library/CMSIS/Driver/Include/Driver_Common.h"
         }
+      ],
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "3b9195c5373a2a4dbfd968b083b3d7f5f446f9ec2e126f75928ac1ff4356b91e"
+        }
       ]
     }
   ],
   "dependencies": [
     {
-      "ref": "b3625606eb96a803",
+      "ref": "1b3822420f2930f2",
       "dependsOn": [
+        "m2003xc_m2003xd_m2003xe_m2003xg_series:product-component:library-cmsis-core-include",
+        "m2003xc_m2003xd_m2003xe_m2003xg_series:product-component:library-cmsis-driver",
+        "m2003xc_m2003xd_m2003xe_m2003xg_series:product-component:library-cmsis-rtos2",
         "m2003xc_m2003xd_m2003xe_m2003xg_series:product-component:library-device",
-        "m2003xc_m2003xd_m2003xe_m2003xg_series:product-component:library-stddriver",
-        "pkg:github/ARM-software/CMSIS_6@6.1.0?source=vendored&path=Library/CMSIS"
+        "m2003xc_m2003xd_m2003xe_m2003xg_series:product-component:library-stddriver"
       ]
     }
   ]

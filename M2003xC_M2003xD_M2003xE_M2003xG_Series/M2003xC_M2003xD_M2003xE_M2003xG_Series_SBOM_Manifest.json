@@ -1,201 +1,199 @@
 {
-    "manifestFormat":  "MCU-BSP-SBOM-Manifest",
-    "manifestVersion":  "1.0",
-    "serialNumber":  "urn:uuid:c8de61a3-e5e6-43bd-89f3-f65fb57c05cf",
-    "createdAt":  "2026-08-25T08:22:25.537942Z",
-    "bsp":  {
-                "name":  "M2003xC_M2003xD_M2003xE_M2003xG_Series",
-                "version":  "3ecceb2",
-                "releaseIdentifierSource":  "SBOM file name",
-                "gitDescribe":  "3ecceb2"
-            },
-    "sbomPackage":  {
-                        "name":  "MCU BSP SBOM Package",
-                        "format":  "CycloneDX",
-                        "formatVersion":  "1.6",
-                        "contains":  [
-                                         "Product SBOM",
-                                         "Test Sample SBOM"
-                                     ]
-                    },
-    "sboms":  [
-                  {
-                      "fileName":  "M2003xC_M2003xD_M2003xE_M2003xG_Series_Product_SBOM_cdx.json",
-                      "sbomType":  "Product SBOM",
-                      "bomFormat":  "CycloneDX",
-                      "specVersion":  "1.6",
-                      "serialNumber":  "urn:uuid:a55f5f0d-f89e-46f6-be71-d13b9382f16e",
-                      "sbomVersion":  1,
-                      "generatedTimestamp":  "2026-08-25T16:22:21+08:00",
-                      "metadataComponent":  {
-                                                "bomRef":  "b3625606eb96a803",
-                                                "type":  "library",
-                                                "name":  "MCU Driver",
-                                                "version":  "3ecceb2",
-                                                "properties":  [
-                                                                   {
-                                                                       "name":  "bsp:sbom-category",
-                                                                       "value":  "product"
-                                                                   },
-                                                                   {
-                                                                       "name":  "bsp:scope",
-                                                                       "value":  "Components included in, linked with, deployed to, or reasonably expected to be integrated into final product firmware/software."
-                                                                   },
-                                                                   {
-                                                                       "name":  "bsp:scope-policy-file",
-                                                                       "value":  "product-scope.yaml"
-                                                                   },
-                                                                   {
-                                                                       "name":  "bsp:runtime-scope",
-                                                                       "value":  "true"
-                                                                   },
-                                                                   {
-                                                                       "name":  "bsp:included-in-product-firmware",
-                                                                       "value":  "true"
-                                                                   },
-                                                                   {
-                                                                       "name":  "bsp:third-party-components",
-                                                                       "value":  "none identified in product scope based on the defined Product SBOM scope policy"
-                                                                   },
-                                                                   {
-                                                                       "name":  "bsp:product-scope-include-path",
-                                                                       "value":  "Library/CMSIS/Core/Include"
-                                                                   },
-                                                                   {
-                                                                       "name":  "bsp:product-scope-include-path",
-                                                                       "value":  "Library/CMSIS/Driver"
-                                                                   },
-                                                                   {
-                                                                       "name":  "bsp:product-scope-include-path",
-                                                                       "value":  "Library/CMSIS/RTOS2"
-                                                                   },
-                                                                   {
-                                                                       "name":  "bsp:product-scope-include-path",
-                                                                       "value":  "Library/Device"
-                                                                   },
-                                                                   {
-                                                                       "name":  "bsp:product-scope-include-path",
-                                                                       "value":  "Library/StdDriver"
-                                                                   },
-                                                                   {
-                                                                       "name":  "bsp:product-scope-exclude-path",
-                                                                       "value":  "Library/CMSIS/Core/Test"
-                                                                   },
-                                                                   {
-                                                                       "name":  "bsp:product-scope-exclude-path",
-                                                                       "value":  "Library/CMSIS/Documentation"
-                                                                   },
-                                                                   {
-                                                                       "name":  "bsp:product-scope-exclude-path",
-                                                                       "value":  "Document/"
-                                                                   },
-                                                                   {
-                                                                       "name":  "bsp:product-scope-exclude-path",
-                                                                       "value":  "SampleCode/"
-                                                                   }
-                                                               ]
-                                            },
-                      "scope":  "Components included in, linked with, deployed to, or reasonably expected to be integrated into final product firmware/software.",
-                      "isProductRuntimeScope":  true,
-                      "componentSummary":  {
-                                               "componentCount":  3,
-                                               "componentCountByType":  {
-                                                                            "library":  3
-                                                                        },
-                                               "applicationNames":  [
-
-                                                                    ],
-                                               "fileComponentCount":  0,
-                                               "fileComponentWithHashCount":  0
-                                           },
-                      "hash":  {
-                                   "algorithm":  "SHA-256",
-                                   "value":  "8d7d310832e225d44eaac9a7b3b31d01406a73df7b1d9e069d8c7674b124d7ec"
-                               }
-                  },
-                  {
-                      "fileName":  "M2003xC_M2003xD_M2003xE_M2003xG_Series_TestSample_SBOM_cdx.json",
-                      "sbomType":  "Test Sample SBOM",
-                      "bomFormat":  "CycloneDX",
-                      "specVersion":  "1.6",
-                      "serialNumber":  "urn:uuid:6e0a5893-7a44-4d13-9dc8-46920b42bb62",
-                      "sbomVersion":  1,
-                      "generatedTimestamp":  "2026-08-25T16:22:23+08:00",
-                      "metadataComponent":  {
-                                                "bomRef":  "edb94003de24584a",
-                                                "type":  "application",
-                                                "name":  "MCU Test Sample",
-                                                "version":  "3ecceb2",
-                                                "properties":  [
-                                                                   {
-                                                                       "name":  "bsp:sbom-category",
-                                                                       "value":  "test-sample"
-                                                                   },
-                                                                   {
-                                                                       "name":  "bsp:scope",
-                                                                       "value":  "Components used only for examples, demonstrations, validation, host-side utilities, or testing; not included in product runtime unless explicitly integrated by the user."
-                                                                   },
-                                                                   {
-                                                                       "name":  "bsp:scope-policy-file",
-                                                                       "value":  "test-sample-scope.yaml"
-                                                                   },
-                                                                   {
-                                                                       "name":  "bsp:runtime-scope",
-                                                                       "value":  "false"
-                                                                   },
-                                                                   {
-                                                                       "name":  "bsp:included-in-product-firmware",
-                                                                       "value":  "false"
-                                                                   },
-                                                                   {
-                                                                       "name":  "bsp:test-sample-scope-include-path",
-                                                                       "value":  "SampleCode/"
-                                                                   },
-                                                                   {
-                                                                       "name":  "bsp:test-sample-scope-exclude-path",
-                                                                       "value":  "Document/"
-                                                                   },
-                                                                   {
-                                                                       "name":  "bsp:test-sample-scope-exclude-path",
-                                                                       "value":  "Library/"
-                                                                   }
-                                                               ]
-                                            },
-                      "scope":  "Components used only for examples, demonstrations, validation, host-side utilities, or testing; not included in product runtime unless explicitly integrated by the user.",
-                      "isProductRuntimeScope":  false,
-                      "componentSummary":  {
-                                               "componentCount":  1,
-                                               "componentCountByType":  {
-                                                                            "application":  1
-                                                                        },
-                                               "applicationNames":  [
-                                                                        "M2003xC_M2003xD_M2003xE_M2003xG_Series SampleCode"
-                                                                    ],
-                                               "fileComponentCount":  0,
-                                               "fileComponentWithHashCount":  0
-                                           },
-                      "hash":  {
-                                   "algorithm":  "SHA-256",
-                                   "value":  "aab28911af03ef5f1a23a6c0794059459c82f30caceb633d16f4a41185e7f8b3"
-                               },
-                      "relationshipToProductSbom":  {
-                                                        "usesProductComponents":  true,
-                                                        "productSbomFile":  "M2003xC_M2003xD_M2003xE_M2003xG_Series_Product_SBOM_cdx.json",
-                                                        "description":  "Test sample firmware may be built using MCU Driver components described in the Product SBOM. These product components are not duplicated in the Test Sample SBOM."
-                                                    }
-                  }
-              ],
-    "scopeRule":  {
-                      "productSbom":  "Use as the primary SBOM for product vulnerability assessment and CRA product component transparency.",
-                      "testSampleSbom":  "Use only when sample, demo, validation, or test-only components are reused, executed, distributed, or integrated by the customer.",
-                      "separationRationale":  "Product and Test Sample SBOMs are kept separate to avoid treating test/sample utilities as product runtime dependencies."
-                  },
-    "customerGuidance":  [
-                             "Use the Product SBOM as the primary input for product vulnerability assessment.",
-                             "Review the Test Sample SBOM only when the corresponding sample/demo/test components are used or redistributed.",
-                             "Components in the Test Sample SBOM are not considered product firmware/runtime dependencies unless explicitly integrated by the user."
-                         ],
-    "notes":  [
-                  "This manifest is an index for the SBOM package; it is not a merged CycloneDX BOM."
-              ]
+  "manifestFormat": "MCU-BSP-SBOM-Manifest",
+  "manifestVersion": "1.0",
+  "serialNumber": "urn:uuid:e5d00f23-51c4-47f6-9d22-fe2df89c75b7",
+  "createdAt": "2026-08-28T05:39:37.673889Z",
+  "bsp": {
+    "name": "M2003xC_M2003xD_M2003xE_M2003xG_Series",
+    "version": "V3.01.000-2-g612f7b8",
+    "releaseIdentifierSource": "SBOM file name",
+    "gitDescribe": "V3.01.000-2-g612f7b8"
+  },
+  "sbomPackage": {
+    "name": "MCU BSP SBOM Package",
+    "format": "CycloneDX",
+    "formatVersion": "1.6",
+    "contains": [
+      "Product SBOM",
+      "Test Sample SBOM"
+    ]
+  },
+  "sboms": [
+    {
+      "fileName": "M2003xC_M2003xD_M2003xE_M2003xG_Series_Product_SBOM_cdx.json",
+      "sbomType": "Product SBOM",
+      "bomFormat": "CycloneDX",
+      "specVersion": "1.6",
+      "serialNumber": "urn:uuid:ce640633-2114-45b9-b3cf-89aba55907d7",
+      "sbomVersion": 1,
+      "generatedTimestamp": "2026-08-28T13:39:31+08:00",
+      "metadataComponent": {
+        "bomRef": "1b3822420f2930f2",
+        "type": "library",
+        "name": "MCU Driver",
+        "version": "V3.01.000-2-g612f7b8",
+        "properties": [
+          {
+            "name": "bsp:sbom-category",
+            "value": "product"
+          },
+          {
+            "name": "bsp:scope",
+            "value": "Components included in, linked with, deployed to, or reasonably expected to be integrated into final product firmware/software."
+          },
+          {
+            "name": "bsp:scope-policy-file",
+            "value": "product-scope.yaml"
+          },
+          {
+            "name": "bsp:runtime-scope",
+            "value": "true"
+          },
+          {
+            "name": "bsp:included-in-product-firmware",
+            "value": "true"
+          },
+          {
+            "name": "bsp:third-party-components",
+            "value": "Third-party component status is represented by component-level bsp:component-origin properties and manual SCA evidence."
+          },
+          {
+            "name": "bsp:product-scope-include-path",
+            "value": "Library/CMSIS/Core/Include"
+          },
+          {
+            "name": "bsp:product-scope-include-path",
+            "value": "Library/CMSIS/Driver"
+          },
+          {
+            "name": "bsp:product-scope-include-path",
+            "value": "Library/CMSIS/RTOS2"
+          },
+          {
+            "name": "bsp:product-scope-include-path",
+            "value": "Library/Device"
+          },
+          {
+            "name": "bsp:product-scope-include-path",
+            "value": "Library/StdDriver"
+          },
+          {
+            "name": "bsp:product-scope-exclude-path",
+            "value": "Library/CMSIS/Core/Test"
+          },
+          {
+            "name": "bsp:product-scope-exclude-path",
+            "value": "Library/CMSIS/Documentation"
+          },
+          {
+            "name": "bsp:product-scope-exclude-path",
+            "value": "Document/"
+          },
+          {
+            "name": "bsp:product-scope-exclude-path",
+            "value": "SampleCode/"
+          }
+        ]
+      },
+      "scope": "Components included in, linked with, deployed to, or reasonably expected to be integrated into final product firmware/software.",
+      "isProductRuntimeScope": true,
+      "componentSummary": {
+        "componentCount": 6,
+        "componentCountByType": {
+          "library": 6
+        },
+        "applicationNames": [],
+        "fileComponentCount": 0,
+        "fileComponentWithHashCount": 0
+      },
+      "hash": {
+        "algorithm": "SHA-256",
+        "value": "aa6834c9c41249ee3d8dfbe1a1221b383355d668c6bfb0e85f6edc0f6b8b835a"
+      }
+    },
+    {
+      "fileName": "M2003xC_M2003xD_M2003xE_M2003xG_Series_TestSample_SBOM_cdx.json",
+      "sbomType": "Test Sample SBOM",
+      "bomFormat": "CycloneDX",
+      "specVersion": "1.6",
+      "serialNumber": "urn:uuid:6199680a-c980-4c0a-bef3-ee53bfa42a57",
+      "sbomVersion": 1,
+      "generatedTimestamp": "2026-08-28T13:39:34+08:00",
+      "metadataComponent": {
+        "bomRef": "109e81909ad10cf1",
+        "type": "application",
+        "name": "MCU Test Sample",
+        "version": "V3.01.000-2-g612f7b8",
+        "properties": [
+          {
+            "name": "bsp:sbom-category",
+            "value": "test-sample"
+          },
+          {
+            "name": "bsp:scope",
+            "value": "Components used only for examples, demonstrations, validation, host-side utilities, or testing; not included in product runtime unless explicitly integrated by the user."
+          },
+          {
+            "name": "bsp:scope-policy-file",
+            "value": "test-sample-scope.yaml"
+          },
+          {
+            "name": "bsp:runtime-scope",
+            "value": "false"
+          },
+          {
+            "name": "bsp:included-in-product-firmware",
+            "value": "false"
+          },
+          {
+            "name": "bsp:test-sample-scope-include-path",
+            "value": "SampleCode/"
+          },
+          {
+            "name": "bsp:test-sample-scope-exclude-path",
+            "value": "Document/"
+          },
+          {
+            "name": "bsp:test-sample-scope-exclude-path",
+            "value": "Library/"
+          }
+        ]
+      },
+      "scope": "Components used only for examples, demonstrations, validation, host-side utilities, or testing; not included in product runtime unless explicitly integrated by the user.",
+      "isProductRuntimeScope": false,
+      "componentSummary": {
+        "componentCount": 1,
+        "componentCountByType": {
+          "application": 1
+        },
+        "applicationNames": [
+          "M2003xC_M2003xD_M2003xE_M2003xG_Series SampleCode"
+        ],
+        "fileComponentCount": 0,
+        "fileComponentWithHashCount": 0
+      },
+      "hash": {
+        "algorithm": "SHA-256",
+        "value": "2a30903221aaba95cbe0bcf02b28e95bbcf1e56ef0d6a5e1b0d3e6475b9b1dd9"
+      },
+      "relationshipToProductSbom": {
+        "usesProductComponents": true,
+        "productSbomFile": "M2003xC_M2003xD_M2003xE_M2003xG_Series_Product_SBOM_cdx.json",
+        "description": "Test sample firmware may be built using MCU Driver components described in the Product SBOM. These product components are not duplicated in the Test Sample SBOM."
+      }
+    }
+  ],
+  "scopeRule": {
+    "productSbom": "Use as the primary SBOM for product vulnerability assessment and CRA product component transparency.",
+    "testSampleSbom": "Use only when sample, demo, validation, or test-only components are reused, executed, distributed, or integrated by the customer.",
+    "separationRationale": "Product and Test Sample SBOMs are kept separate to avoid treating test/sample utilities as product runtime dependencies."
+  },
+  "customerGuidance": [
+    "Use the Product SBOM as the primary input for product vulnerability assessment.",
+    "Review the Test Sample SBOM only when the corresponding sample/demo/test components are used or redistributed.",
+    "Components in the Test Sample SBOM are not considered product firmware/runtime dependencies unless explicitly integrated by the user."
+  ],
+  "notes": [
+    "This manifest is an index for the SBOM package; it is not a merged CycloneDX BOM."
+  ]
 }
