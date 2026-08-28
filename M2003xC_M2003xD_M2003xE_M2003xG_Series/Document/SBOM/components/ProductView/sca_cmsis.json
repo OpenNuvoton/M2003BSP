@@ -77,7 +77,13 @@
                                                   "name":  "bsp:license-evidence",
                                                   "value":  "Library/CMSIS/Core/Include/cmsis_version.h; Library/CMSIS/RTOS2/Include/cmsis_os2.h; Library/CMSIS/Driver/Include/Driver_Common.h"
                                               }
-                                          ]
+                                          ],
+                           "hashes":  [
+                                          {
+                                              "alg":  "SHA-256",
+                                              "content":  "3b9195c5373a2a4dbfd968b083b3d7f5f446f9ec2e126f75928ac1ff4356b91e"
+                                          }
+                                      ]
                        }
                    ]
 }
