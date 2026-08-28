@@ -258,7 +258,13 @@
                                                   "name":  "bsp:excluded-paths",
                                                   "value":  "Library/CMSIS/Core/Test; Library/CMSIS/Documentation"
                                               }
-                                          ]
+                                          ],
+                           "hashes":  [
+                                          {
+                                              "alg":  "SHA-256",
+                                              "content":  "3b9195c5373a2a4dbfd968b083b3d7f5f446f9ec2e126f75928ac1ff4356b91e"
+                                          }
+                                      ]
                        }
                    ]
 }
