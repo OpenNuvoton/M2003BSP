@@ -16,7 +16,7 @@
         <TargetCommonOption>
           <Device>M2003VJ7AE</Device>
           <Vendor>Nuvoton</Vendor>
-          <PackID>Nuvoton.NuMicroM23_DFP.1.0.6</PackID>
+          <PackID>Nuvoton.NuMicroM23_DFP.1.0.8</PackID>
           <PackURL>https://github.com/OpenNuvoton/cmsis-packs/raw/master/Nuvoton_DFP/</PackURL>
           <Cpu>IRAM(0x20000000,0xC000) IROM(0x00000000,0x100000) IROM2(0x0F100000,0x1000) IROM3(0x0F200000,0x400) IROM4(0x0F400000,0x2000) CPUTYPE("Cortex-M23") CLOCK(12000000) ESEL ELITTLE</Cpu>
           <FlashUtilSpec></FlashUtilSpec>
@@ -49,7 +49,7 @@
             <InvalidFlash>1</InvalidFlash>
           </TargetStatus>
           <OutputDirectory>.\obj\</OutputDirectory>
-          <OutputName>RTC_Alarm_Wakeup</OutputName>
+          <OutputName>RTC_Time_Display</OutputName>
           <CreateExecutable>1</CreateExecutable>
           <CreateLib>0</CreateLib>
           <CreateHexFile>0</CreateHexFile>

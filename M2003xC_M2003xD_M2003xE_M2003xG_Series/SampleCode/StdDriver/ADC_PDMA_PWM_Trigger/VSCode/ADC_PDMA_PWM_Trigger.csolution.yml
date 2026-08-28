@@ -16,4 +16,4 @@ solution:
     compiler: GCC
     device: Nuvoton::M2003XC1AE
   projects:
-  - project: ADC_ADINT_Trigger.cproject.yml
+  - project: ADC_PDMA_PWM_Trigger.cproject.yml
