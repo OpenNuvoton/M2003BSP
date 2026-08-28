@@ -7,7 +7,7 @@
 
   <Targets>
     <Target>
-      <TargetName>RTC_Alarm_Wakeup</TargetName>
+      <TargetName>RTC_Time_Display</TargetName>
       <ToolsetNumber>0x4</ToolsetNumber>
       <ToolsetName>ARM-ADS</ToolsetName>
       <pCCUsed>6220000::V6.22::ARMCLANG</pCCUsed>
@@ -449,7 +449,7 @@
   <LayerInfo>
     <Layers>
       <Layer>
-        <LayName>RTC_Alarm_Wakeup</LayName>
+        <LayName>RTC_Time_Display</LayName>
         <LayPrjMark>1</LayPrjMark>
       </Layer>
     </Layers>

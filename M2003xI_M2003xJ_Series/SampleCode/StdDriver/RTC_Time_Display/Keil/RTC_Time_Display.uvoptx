@@ -22,7 +22,7 @@
   </DaveTm>
 
   <Target>
-    <TargetName>RTC_Alarm_Wakeup</TargetName>
+    <TargetName>RTC_Time_Display</TargetName>
     <ToolsetNumber>0x4</ToolsetNumber>
     <ToolsetName>ARM-ADS</ToolsetName>
     <TargetOption>
