@@ -2,25 +2,32 @@
   "$schema": "http://cyclonedx.org/schema/bom-1.6.schema.json",
   "bomFormat": "CycloneDX",
   "specVersion": "1.6",
-  "serialNumber": "urn:uuid:6e0a5893-7a44-4d13-9dc8-46920b42bb62",
+  "serialNumber": "urn:uuid:6199680a-c980-4c0a-bef3-ee53bfa42a57",
   "version": 1,
   "metadata": {
-    "timestamp": "2026-08-25T16:22:23+08:00",
+    "timestamp": "2026-08-28T13:39:34+08:00",
     "tools": {
       "components": [
         {
           "type": "application",
           "author": "anchore",
           "name": "syft",
-          "version": "1.50.0"
+          "version": "1.45.1"
         }
       ]
     },
     "component": {
-      "bom-ref": "edb94003de24584a",
+      "bom-ref": "109e81909ad10cf1",
       "type": "application",
       "name": "MCU Test Sample",
-      "version": "3ecceb2",
+      "version": "V3.01.000-2-g612f7b8",
+      "supplier": {
+        "name": "Nuvoton Technology Corp.",
+        "url": [
+          "https://www.nuvoton.com"
+        ]
+      },
+      "purl": "pkg:generic/nuvoton/mcu-test-sample@V3.01.000-2-g612f7b8",
       "licenses": [
         {
           "license": {
@@ -62,14 +69,38 @@
           "value": "Library/"
         }
       ]
-    }
+    },
+    "supplier": {
+      "name": "Nuvoton Technology Corp.",
+      "url": [
+        "https://www.nuvoton.com"
+      ]
+    },
+    "authors": [
+      {
+        "name": "Nuvoton Technology Corp."
+      }
+    ]
   },
   "components": [
     {
       "type": "application",
       "bom-ref": "m2003xc_m2003xd_m2003xe_m2003xg_series:test-sample-component:samplecode",
       "name": "M2003xC_M2003xD_M2003xE_M2003xG_Series SampleCode",
-      "version": "3ecceb2",
+      "version": "V3.01.000-2-g612f7b8",
+      "supplier": {
+        "name": "Nuvoton Technology Corp.",
+        "url": [
+          "https://www.nuvoton.com"
+        ]
+      },
+      "purl": "pkg:generic/nuvoton/samplecode@V3.01.000-2-g612f7b8",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "a01e763b97134621b0d1e169cd68f3ddfc06d775a2fd382ff5c338943dfd2a98"
+        }
+      ],
       "licenses": [
         {
           "license": {
@@ -113,7 +144,7 @@
   ],
   "dependencies": [
     {
-      "ref": "edb94003de24584a",
+      "ref": "109e81909ad10cf1",
       "dependsOn": [
         "m2003xc_m2003xd_m2003xe_m2003xg_series:test-sample-component:samplecode"
       ]
