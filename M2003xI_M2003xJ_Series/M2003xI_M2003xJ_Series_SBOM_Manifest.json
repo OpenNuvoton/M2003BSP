@@ -1,15 +1,43 @@
 {
   "manifestFormat": "MCU-BSP-SBOM-Manifest",
   "manifestVersion": "1.0",
-  "serialNumber": "urn:uuid:954095f1-1d3c-48a3-9eca-0b6b495a866c",
-  "createdAt": "2026-09-01T14:55:11.616672Z",
+  "serialNumber": "urn:uuid:a36c68ca-717c-4c92-a6af-9c0984c71887",
+  "createdAt": "2026-09-01T15:51:04.077782Z",
   "bsp": {
     "name": "M2003xI_M2003xJ_Series",
-    "version": "0b23a595",
-    "releaseIdentifierSource": "git describe --tags --always --long --abbrev=8 --dirty",
-    "gitDescribe": "0b23a595",
-    "gitCommit": "0b23a595e3fc866dc9fccbc04879a8267a19c569",
-    "sourceTreeState": "clean"
+    "version": "V3.01.000-9-g86a28a7c",
+    "releaseIdentifierSource": "canonical continuation of formal V3.01.000-2-g612f7b8 using merged commit graph; Gerrit tag refs absent",
+    "gitDescribe": "86a28a7c",
+    "gitCommit": "86a28a7c7a82e110c1dfed7940d83bf7bb917822",
+    "sourceTreeState": "clean",
+    "sourceCommit": "86a28a7c7a82e110c1dfed7940d83bf7bb917822",
+    "sourceCommitStatus": "merged",
+    "sourceGerritChange": 16777,
+    "sourceBranch": "master",
+    "canonicalReleaseIdentity": "V3.01.000-9-g86a28a7c",
+    "canonicalIdentityBasis": {
+      "previousFormalRelease": "V3.01.000-2-g612f7b8",
+      "previousSourceAbbreviation": "612f7b8",
+      "commitCountFromV3.01.000Baseline": 9,
+      "sourceAbbreviation": "86a28a7c",
+      "tagRefsPresent": false
+    },
+    "svnDistribution": {
+      "path": "bsp/M2003Series/M2003xI_M2003xJ_Series/V3.01.000-9-g86a28a7c",
+      "publishedRevision": 46,
+      "correctionRevision": 47,
+      "effectiveRevision": 47,
+      "publicationState": "formal-published-r46-corrected-r47"
+    },
+    "artifactDistributionCommit": "resolved-by-containing-git-commit",
+    "artifactDistributionCommitPolicy": "The artifact-only Git commit contains byte-identical formal Product and Test Sample SBOMs. The manifest maps versioned SVN payload names to Git current filenames and embeds the same release and supersession metadata. Its hash is not embedded to avoid self-reference.",
+    "supersession": {
+      "supersedesRelease": "86a28a7c",
+      "supersededSvnRevision": 45,
+      "supersededSourceCommit": "86a28a7c7a82e110c1dfed7940d83bf7bb917822",
+      "reason": "SVN r45 was published before source Gerrit Change 16777 merged.",
+      "historyRewritten": false
+    }
   },
   "generationTools": [
     {
@@ -44,18 +72,18 @@
   },
   "sboms": [
     {
-      "fileName": "M2003xI_M2003xJ_Series_Product_SBOM_0b23a595.cdx.json",
+      "fileName": "M2003xI_M2003xJ_Series_Product_SBOM_cdx.json",
       "sbomType": "Product SBOM",
       "bomFormat": "CycloneDX",
       "specVersion": "1.6",
-      "serialNumber": "urn:uuid:13248a7f-c571-40ca-a98e-fdc2022e1316",
+      "serialNumber": "urn:uuid:391d6571-1f79-48aa-95cc-1bed21c21bfd",
       "sbomVersion": 1,
-      "generatedTimestamp": "2026-09-01T22:55:02+08:00",
+      "generatedTimestamp": "2026-09-01T23:50:59+08:00",
       "metadataComponent": {
-        "bomRef": "dde79e8e7a1f2e20",
+        "bomRef": "0d93b7bc0d356a78",
         "type": "library",
         "name": "MCU Driver",
-        "version": "0b23a595",
+        "version": "V3.01.000-9-g86a28a7c",
         "properties": [
           {
             "name": "bsp:sbom-category",
@@ -118,9 +146,9 @@
       "scope": "Components included in, linked with, deployed to, or reasonably expected to be integrated into final product firmware/software.",
       "isProductRuntimeScope": true,
       "componentSummary": {
-        "componentCount": 6,
+        "componentCount": 5,
         "componentCountByType": {
-          "library": 6
+          "library": 5
         },
         "applicationNames": [],
         "fileComponentCount": 0,
@@ -128,22 +156,22 @@
       },
       "hash": {
         "algorithm": "SHA-256",
-        "value": "750e5d1e1b9b32a18e6a1586758c583249682aeb98783cae2f9900dd82d80dcc"
+        "value": "1bec0124a003f7faefda8eeb7b9d4940360a07eb5079b5fa48f14193d7652e44"
       }
     },
     {
-      "fileName": "M2003xI_M2003xJ_Series_TestSample_SBOM_0b23a595.cdx.json",
+      "fileName": "M2003xI_M2003xJ_Series_TestSample_SBOM_cdx.json",
       "sbomType": "Test Sample SBOM",
       "bomFormat": "CycloneDX",
       "specVersion": "1.6",
-      "serialNumber": "urn:uuid:57e0d89d-cfe5-4530-aa1b-4966a2c5202a",
+      "serialNumber": "urn:uuid:e2215aa6-f1f8-4abd-98e1-663f1d6eb994",
       "sbomVersion": 1,
-      "generatedTimestamp": "2026-09-01T22:55:08+08:00",
+      "generatedTimestamp": "2026-09-01T23:51:01+08:00",
       "metadataComponent": {
-        "bomRef": "ad6a52a642c6c0bf",
+        "bomRef": "368fb442fb05a5b7",
         "type": "application",
         "name": "MCU Test Sample",
-        "version": "0b23a595",
+        "version": "V3.01.000-9-g86a28a7c",
         "properties": [
           {
             "name": "bsp:sbom-category",
@@ -174,11 +202,10 @@
       "scope": "Components used only for examples, demonstrations, validation, host-side utilities, or testing; not included in product runtime unless explicitly integrated by the user.",
       "isProductRuntimeScope": false,
       "componentSummary": {
-        "componentCount": 11,
+        "componentCount": 6,
         "componentCountByType": {
           "application": 1,
-          "file": 5,
-          "firmware": 5
+          "file": 5
         },
         "applicationNames": [
           "M2003xI_M2003xJ_Series SampleCode"
@@ -188,11 +215,11 @@
       },
       "hash": {
         "algorithm": "SHA-256",
-        "value": "45a6a2813fefa87ad6f087a076f0c67f5381acb200cafd12f2daf5084dab683a"
+        "value": "1fe08870aed031c2f182100e3ac8d8d947db3de575cc55743e72ee665b04633f"
       },
       "relationshipToProductSbom": {
         "usesProductComponents": true,
-        "productSbomFile": "M2003xI_M2003xJ_Series_Product_SBOM_0b23a595.cdx.json",
+        "productSbomFile": "M2003xI_M2003xJ_Series_Product_SBOM_cdx.json",
         "description": "Test sample firmware may be built using MCU Driver components described in the Product SBOM. These product components are not duplicated in the Test Sample SBOM."
       }
     }

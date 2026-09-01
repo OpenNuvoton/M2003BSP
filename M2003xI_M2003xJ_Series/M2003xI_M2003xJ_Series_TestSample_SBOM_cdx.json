@@ -2,10 +2,10 @@
   "$schema": "http://cyclonedx.org/schema/bom-1.6.schema.json",
   "bomFormat": "CycloneDX",
   "specVersion": "1.6",
-  "serialNumber": "urn:uuid:57e0d89d-cfe5-4530-aa1b-4966a2c5202a",
+  "serialNumber": "urn:uuid:e2215aa6-f1f8-4abd-98e1-663f1d6eb994",
   "version": 1,
   "metadata": {
-    "timestamp": "2026-09-01T22:55:08+08:00",
+    "timestamp": "2026-09-01T23:51:01+08:00",
     "tools": {
       "components": [
         {
@@ -17,17 +17,17 @@
       ]
     },
     "component": {
-      "bom-ref": "ad6a52a642c6c0bf",
+      "bom-ref": "368fb442fb05a5b7",
       "type": "application",
       "name": "MCU Test Sample",
-      "version": "0b23a595",
+      "version": "V3.01.000-9-g86a28a7c",
       "supplier": {
         "name": "Nuvoton Technology Corp.",
         "url": [
           "https://www.nuvoton.com"
         ]
       },
-      "purl": "pkg:generic/nuvoton/mcu-test-sample@0b23a595",
+      "purl": "pkg:generic/nuvoton/mcu-test-sample@86a28a7c",
       "licenses": [
         {
           "license": {
@@ -79,14 +79,14 @@
       "type": "application",
       "bom-ref": "m2003xi_m2003xj_series:test-sample-component:samplecode",
       "name": "M2003xI_M2003xJ_Series SampleCode",
-      "version": "0b23a595",
+      "version": "V3.01.000-9-g86a28a7c",
       "supplier": {
         "name": "Nuvoton Technology Corp.",
         "url": [
           "https://www.nuvoton.com"
         ]
       },
-      "purl": "pkg:generic/nuvoton/samplecode@0b23a595",
+      "purl": "pkg:generic/nuvoton/samplecode@86a28a7c",
       "hashes": [
         {
           "alg": "SHA-256",
@@ -134,284 +134,17 @@
       ]
     },
     {
-      "type": "firmware",
-      "bom-ref": "pkg:generic/nuvoton/m2003-ij-dual-bank-new-firmware@1.00",
-      "name": "M2003 I/J Dual-Bank Update Firmware",
-      "version": "1.00",
-      "scope": "required",
-      "supplier": {
-        "name": "Nuvoton Technology Corp."
-      },
-      "purl": "pkg:generic/nuvoton/m2003-ij-dual-bank-new-firmware@1.00",
-      "hashes": [
-        {
-          "alg": "SHA-256",
-          "content": "28e4b052d2828b6fc3b57ef70acb8c1d3f8419c50387c305ef763d74549ece84"
-        }
-      ],
-      "licenses": [
-        {
-          "license": {
-            "id": "Apache-2.0"
-          }
-        }
-      ],
-      "properties": [
-        {
-          "name": "artifact_path",
-          "value": "SampleCode/StdDriver/FMC_DualBankFwUpdate/NewFirmwareSample.bin"
-        },
-        {
-          "name": "artifact_size_bytes",
-          "value": "6092"
-        },
-        {
-          "name": "bsp:component-origin",
-          "value": "first-party-build-artifact"
-        },
-        {
-          "name": "bsp:binary-license-status",
-          "value": "identified"
-        },
-        {
-          "name": "bsp:binary-license-evidence",
-          "value": "Document/SBOM/components/TestSampleView/sca_binary-artifacts.md"
-        },
-        {
-          "name": "bsp:evidence-file",
-          "value": "Document/SBOM/components/TestSampleView/sca_binary-artifacts.md"
-        },
-        {
-          "name": "bsp:relationship-evidence",
-          "value": "SampleCode/StdDriver/FMC_DualBankFwUpdate/App/main.c; SampleCode/StdDriver/FMC_DualBankFwUpdate/Loader/main.c; SampleCode/StdDriver/FMC_DualBankFwUpdate/App/IAR/App.ewp; SampleCode/StdDriver/FMC_DualBankFwUpdate/App/Keil/App.uvprojx; SampleCode/StdDriver/FMC_DualBankFwUpdate/App/VSCode/App.cproject.yml"
-        }
-      ]
-    },
-    {
-      "type": "firmware",
-      "bom-ref": "pkg:generic/nuvoton/m2003-ij-firmware-update-application@1.00",
-      "name": "M2003 I/J Firmware Update Application",
-      "version": "1.00",
-      "scope": "required",
-      "supplier": {
-        "name": "Nuvoton Technology Corp."
-      },
-      "purl": "pkg:generic/nuvoton/m2003-ij-firmware-update-application@1.00",
-      "hashes": [
-        {
-          "alg": "SHA-256",
-          "content": "e079b9f07af168810b603e579886c3f1b7afa10539aa0c0fec57d4e0e70d961b"
-        }
-      ],
-      "licenses": [
-        {
-          "license": {
-            "id": "Apache-2.0"
-          }
-        }
-      ],
-      "properties": [
-        {
-          "name": "artifact_path",
-          "value": "SampleCode/StdDriver/FMC_FwUpdateApplication/NewApp.bin"
-        },
-        {
-          "name": "artifact_size_bytes",
-          "value": "5600"
-        },
-        {
-          "name": "bsp:component-origin",
-          "value": "first-party-build-artifact"
-        },
-        {
-          "name": "bsp:binary-license-status",
-          "value": "identified"
-        },
-        {
-          "name": "bsp:binary-license-evidence",
-          "value": "Document/SBOM/components/TestSampleView/sca_binary-artifacts.md"
-        },
-        {
-          "name": "bsp:evidence-file",
-          "value": "Document/SBOM/components/TestSampleView/sca_binary-artifacts.md"
-        },
-        {
-          "name": "bsp:relationship-evidence",
-          "value": "SampleCode/StdDriver/FMC_FwUpdateApplication/App/main.c; SampleCode/StdDriver/FMC_FwUpdateApplication/Loader/main.c; SampleCode/StdDriver/FMC_FwUpdateApplication/App/IAR/App.ewp; SampleCode/StdDriver/FMC_FwUpdateApplication/App/Keil/App.uvprojx; SampleCode/StdDriver/FMC_FwUpdateApplication/App/VSCode/App.cproject.yml"
-        }
-      ]
-    },
-    {
-      "type": "firmware",
-      "bom-ref": "pkg:generic/nuvoton/m2003-ij-fmc-iap-ldrom@1.00?toolchain=iar",
-      "name": "M2003 I/J FMC IAP LDROM Firmware - IAR",
-      "version": "1.00",
-      "scope": "required",
-      "supplier": {
-        "name": "Nuvoton Technology Corp."
-      },
-      "purl": "pkg:generic/nuvoton/m2003-ij-fmc-iap-ldrom@1.00?toolchain=iar",
-      "hashes": [
-        {
-          "alg": "SHA-256",
-          "content": "7e58b7c8e7891d1a2d78b45a0be7bb099e3447cb8624ae8280c385eedb9059ce"
-        }
-      ],
-      "licenses": [
-        {
-          "license": {
-            "id": "Apache-2.0"
-          }
-        }
-      ],
-      "properties": [
-        {
-          "name": "artifact_path",
-          "value": "SampleCode/StdDriver/FMC_IAP/IAR/FMC_IAP_LDROM.bin"
-        },
-        {
-          "name": "artifact_size_bytes",
-          "value": "2728"
-        },
-        {
-          "name": "bsp:component-origin",
-          "value": "first-party-build-artifact"
-        },
-        {
-          "name": "bsp:binary-license-status",
-          "value": "identified"
-        },
-        {
-          "name": "bsp:binary-license-evidence",
-          "value": "Document/SBOM/components/TestSampleView/sca_binary-artifacts.md"
-        },
-        {
-          "name": "bsp:evidence-file",
-          "value": "Document/SBOM/components/TestSampleView/sca_binary-artifacts.md"
-        },
-        {
-          "name": "bsp:relationship-evidence",
-          "value": "SampleCode/StdDriver/FMC_IAP/FMC_IAP_LDROM.c; SampleCode/StdDriver/FMC_IAP/IAR/FMC_IAP_LDROM.ewp; SampleCode/StdDriver/FMC_IAP/IAR/FMC_IAP_APROM.ewp"
-        }
-      ]
-    },
-    {
-      "type": "firmware",
-      "bom-ref": "pkg:generic/nuvoton/m2003-ij-fmc-iap-ldrom@1.00?toolchain=keil",
-      "name": "M2003 I/J FMC IAP LDROM Firmware - Keil",
-      "version": "1.00",
-      "scope": "required",
-      "supplier": {
-        "name": "Nuvoton Technology Corp."
-      },
-      "purl": "pkg:generic/nuvoton/m2003-ij-fmc-iap-ldrom@1.00?toolchain=keil",
-      "hashes": [
-        {
-          "alg": "SHA-256",
-          "content": "e4962a24e1fc23b33568473c7e854d546b63ea745738fd304228f652aa3cd325"
-        }
-      ],
-      "licenses": [
-        {
-          "license": {
-            "id": "Apache-2.0"
-          }
-        }
-      ],
-      "properties": [
-        {
-          "name": "artifact_path",
-          "value": "SampleCode/StdDriver/FMC_IAP/Keil/FMC_IAP_LDROM.bin"
-        },
-        {
-          "name": "artifact_size_bytes",
-          "value": "3324"
-        },
-        {
-          "name": "bsp:component-origin",
-          "value": "first-party-build-artifact"
-        },
-        {
-          "name": "bsp:binary-license-status",
-          "value": "identified"
-        },
-        {
-          "name": "bsp:binary-license-evidence",
-          "value": "Document/SBOM/components/TestSampleView/sca_binary-artifacts.md"
-        },
-        {
-          "name": "bsp:evidence-file",
-          "value": "Document/SBOM/components/TestSampleView/sca_binary-artifacts.md"
-        },
-        {
-          "name": "bsp:relationship-evidence",
-          "value": "SampleCode/StdDriver/FMC_IAP/FMC_IAP_LDROM.c; SampleCode/StdDriver/FMC_IAP/Keil/FMC_IAP_LDROM.uvprojx; SampleCode/StdDriver/FMC_IAP/Keil/FMC_IAP_APROM.uvprojx; SampleCode/StdDriver/FMC_IAP/Keil/ap_image.s"
-        }
-      ]
-    },
-    {
-      "type": "firmware",
-      "bom-ref": "pkg:generic/nuvoton/m2003-ij-fmc-iap-ldrom@1.00?toolchain=vscode",
-      "name": "M2003 I/J FMC IAP LDROM Firmware - VSCode",
-      "version": "1.00",
-      "scope": "required",
-      "supplier": {
-        "name": "Nuvoton Technology Corp."
-      },
-      "purl": "pkg:generic/nuvoton/m2003-ij-fmc-iap-ldrom@1.00?toolchain=vscode",
-      "hashes": [
-        {
-          "alg": "SHA-256",
-          "content": "736961095c4e48aea65ef05a70380a88eefe6fefd7efb29f1abd577d1a386251"
-        }
-      ],
-      "licenses": [
-        {
-          "license": {
-            "id": "Apache-2.0"
-          }
-        }
-      ],
-      "properties": [
-        {
-          "name": "artifact_path",
-          "value": "SampleCode/StdDriver/FMC_IAP/VSCode/bin/fmc_ld_iap.bin"
-        },
-        {
-          "name": "artifact_size_bytes",
-          "value": "3376"
-        },
-        {
-          "name": "bsp:component-origin",
-          "value": "first-party-build-artifact"
-        },
-        {
-          "name": "bsp:binary-license-status",
-          "value": "identified"
-        },
-        {
-          "name": "bsp:binary-license-evidence",
-          "value": "Document/SBOM/components/TestSampleView/sca_binary-artifacts.md"
-        },
-        {
-          "name": "bsp:evidence-file",
-          "value": "Document/SBOM/components/TestSampleView/sca_binary-artifacts.md"
-        },
-        {
-          "name": "bsp:relationship-evidence",
-          "value": "SampleCode/StdDriver/FMC_IAP/FMC_IAP_LDROM.c; SampleCode/StdDriver/FMC_IAP/VSCode/FMC_IAP_LDROM/FMC_IAP_LDROM.cproject.yml; SampleCode/StdDriver/FMC_IAP/VSCode/FMC_IAP_APROM/ap_image.s; SampleCode/StdDriver/FMC_IAP/VSCode/FMC_IAP_APROM/ap_image_gcc.S"
-        }
-      ]
-    },
-    {
       "type": "file",
       "bom-ref": "binary-file:28e4b052d2828b6fc3b57ef70acb8c1d3f8419c50387c305ef763d74549ece84:f23417e45373ec0d",
       "name": "SampleCode/StdDriver/FMC_DualBankFwUpdate/NewFirmwareSample.bin",
-      "version": "0b23a595",
+      "version": "V3.01.000-9-g86a28a7c",
       "supplier": {
-        "name": "Nuvoton Technology Corp."
+        "name": "Nuvoton Technology Corp.",
+        "url": [
+          "https://www.nuvoton.com"
+        ]
       },
-      "purl": "pkg:generic/nuvoton/m2003xi_m2003xj_series-binary@0b23a595?file_path=SampleCode%2FStdDriver%2FFMC_DualBankFwUpdate%2FNewFirmwareSample.bin",
+      "purl": "pkg:generic/nuvoton/m2003xi_m2003xj_series-binary@86a28a7c?file_path=SampleCode%2FStdDriver%2FFMC_DualBankFwUpdate%2FNewFirmwareSample.bin",
       "hashes": [
         {
           "alg": "SHA-256",
@@ -420,9 +153,7 @@
       ],
       "licenses": [
         {
-          "license": {
-            "id": "Apache-2.0"
-          }
+          "expression": "LicenseRef-Nuvoton-Proprietary"
         }
       ],
       "scope": "required",
@@ -438,7 +169,7 @@
         },
         {
           "name": "bsp:component-origin",
-          "value": "first-party-build-artifact"
+          "value": "first-party"
         },
         {
           "name": "bsp:component-granularity",
@@ -446,11 +177,11 @@
         },
         {
           "name": "bsp:license-status",
-          "value": "identified"
+          "value": "proprietary"
         },
         {
           "name": "bsp:license-evidence",
-          "value": "Document/SBOM/components/TestSampleView/sca_binary-artifacts.md"
+          "value": "Nuvoton Software License Agreement.md"
         },
         {
           "name": "bsp:identity-basis",
@@ -462,11 +193,14 @@
       "type": "file",
       "bom-ref": "binary-file:e079b9f07af168810b603e579886c3f1b7afa10539aa0c0fec57d4e0e70d961b:e5f8913e2e327446",
       "name": "SampleCode/StdDriver/FMC_FwUpdateApplication/NewApp.bin",
-      "version": "0b23a595",
+      "version": "V3.01.000-9-g86a28a7c",
       "supplier": {
-        "name": "Nuvoton Technology Corp."
+        "name": "Nuvoton Technology Corp.",
+        "url": [
+          "https://www.nuvoton.com"
+        ]
       },
-      "purl": "pkg:generic/nuvoton/m2003xi_m2003xj_series-binary@0b23a595?file_path=SampleCode%2FStdDriver%2FFMC_FwUpdateApplication%2FNewApp.bin",
+      "purl": "pkg:generic/nuvoton/m2003xi_m2003xj_series-binary@86a28a7c?file_path=SampleCode%2FStdDriver%2FFMC_FwUpdateApplication%2FNewApp.bin",
       "hashes": [
         {
           "alg": "SHA-256",
@@ -475,9 +209,7 @@
       ],
       "licenses": [
         {
-          "license": {
-            "id": "Apache-2.0"
-          }
+          "expression": "LicenseRef-Nuvoton-Proprietary"
         }
       ],
       "scope": "required",
@@ -493,7 +225,7 @@
         },
         {
           "name": "bsp:component-origin",
-          "value": "first-party-build-artifact"
+          "value": "first-party"
         },
         {
           "name": "bsp:component-granularity",
@@ -501,11 +233,11 @@
         },
         {
           "name": "bsp:license-status",
-          "value": "identified"
+          "value": "proprietary"
         },
         {
           "name": "bsp:license-evidence",
-          "value": "Document/SBOM/components/TestSampleView/sca_binary-artifacts.md"
+          "value": "Nuvoton Software License Agreement.md"
         },
         {
           "name": "bsp:identity-basis",
@@ -517,11 +249,14 @@
       "type": "file",
       "bom-ref": "binary-file:7e58b7c8e7891d1a2d78b45a0be7bb099e3447cb8624ae8280c385eedb9059ce:9da3c206e2c25ee0",
       "name": "SampleCode/StdDriver/FMC_IAP/IAR/FMC_IAP_LDROM.bin",
-      "version": "0b23a595",
+      "version": "V3.01.000-9-g86a28a7c",
       "supplier": {
-        "name": "Nuvoton Technology Corp."
+        "name": "Nuvoton Technology Corp.",
+        "url": [
+          "https://www.nuvoton.com"
+        ]
       },
-      "purl": "pkg:generic/nuvoton/m2003xi_m2003xj_series-binary@0b23a595?file_path=SampleCode%2FStdDriver%2FFMC_IAP%2FIAR%2FFMC_IAP_LDROM.bin",
+      "purl": "pkg:generic/nuvoton/m2003xi_m2003xj_series-binary@86a28a7c?file_path=SampleCode%2FStdDriver%2FFMC_IAP%2FIAR%2FFMC_IAP_LDROM.bin",
       "hashes": [
         {
           "alg": "SHA-256",
@@ -530,9 +265,7 @@
       ],
       "licenses": [
         {
-          "license": {
-            "id": "Apache-2.0"
-          }
+          "expression": "LicenseRef-Nuvoton-Proprietary"
         }
       ],
       "scope": "required",
@@ -548,7 +281,7 @@
         },
         {
           "name": "bsp:component-origin",
-          "value": "first-party-build-artifact"
+          "value": "first-party"
         },
         {
           "name": "bsp:component-granularity",
@@ -556,11 +289,11 @@
         },
         {
           "name": "bsp:license-status",
-          "value": "identified"
+          "value": "proprietary"
         },
         {
           "name": "bsp:license-evidence",
-          "value": "Document/SBOM/components/TestSampleView/sca_binary-artifacts.md"
+          "value": "Nuvoton Software License Agreement.md"
         },
         {
           "name": "bsp:identity-basis",
@@ -572,11 +305,14 @@
       "type": "file",
       "bom-ref": "binary-file:e4962a24e1fc23b33568473c7e854d546b63ea745738fd304228f652aa3cd325:96a5b0b007fc6a14",
       "name": "SampleCode/StdDriver/FMC_IAP/Keil/FMC_IAP_LDROM.bin",
-      "version": "0b23a595",
+      "version": "V3.01.000-9-g86a28a7c",
       "supplier": {
-        "name": "Nuvoton Technology Corp."
+        "name": "Nuvoton Technology Corp.",
+        "url": [
+          "https://www.nuvoton.com"
+        ]
       },
-      "purl": "pkg:generic/nuvoton/m2003xi_m2003xj_series-binary@0b23a595?file_path=SampleCode%2FStdDriver%2FFMC_IAP%2FKeil%2FFMC_IAP_LDROM.bin",
+      "purl": "pkg:generic/nuvoton/m2003xi_m2003xj_series-binary@86a28a7c?file_path=SampleCode%2FStdDriver%2FFMC_IAP%2FKeil%2FFMC_IAP_LDROM.bin",
       "hashes": [
         {
           "alg": "SHA-256",
@@ -585,9 +321,7 @@
       ],
       "licenses": [
         {
-          "license": {
-            "id": "Apache-2.0"
-          }
+          "expression": "LicenseRef-Nuvoton-Proprietary"
         }
       ],
       "scope": "required",
@@ -603,7 +337,7 @@
         },
         {
           "name": "bsp:component-origin",
-          "value": "first-party-build-artifact"
+          "value": "first-party"
         },
         {
           "name": "bsp:component-granularity",
@@ -611,11 +345,11 @@
         },
         {
           "name": "bsp:license-status",
-          "value": "identified"
+          "value": "proprietary"
         },
         {
           "name": "bsp:license-evidence",
-          "value": "Document/SBOM/components/TestSampleView/sca_binary-artifacts.md"
+          "value": "Nuvoton Software License Agreement.md"
         },
         {
           "name": "bsp:identity-basis",
@@ -627,11 +361,14 @@
       "type": "file",
       "bom-ref": "binary-file:736961095c4e48aea65ef05a70380a88eefe6fefd7efb29f1abd577d1a386251:336273ad62227882",
       "name": "SampleCode/StdDriver/FMC_IAP/VSCode/bin/fmc_ld_iap.bin",
-      "version": "0b23a595",
+      "version": "V3.01.000-9-g86a28a7c",
       "supplier": {
-        "name": "Nuvoton Technology Corp."
+        "name": "Nuvoton Technology Corp.",
+        "url": [
+          "https://www.nuvoton.com"
+        ]
       },
-      "purl": "pkg:generic/nuvoton/m2003xi_m2003xj_series-binary@0b23a595?file_path=SampleCode%2FStdDriver%2FFMC_IAP%2FVSCode%2Fbin%2Ffmc_ld_iap.bin",
+      "purl": "pkg:generic/nuvoton/m2003xi_m2003xj_series-binary@86a28a7c?file_path=SampleCode%2FStdDriver%2FFMC_IAP%2FVSCode%2Fbin%2Ffmc_ld_iap.bin",
       "hashes": [
         {
           "alg": "SHA-256",
@@ -640,9 +377,7 @@
       ],
       "licenses": [
         {
-          "license": {
-            "id": "Apache-2.0"
-          }
+          "expression": "LicenseRef-Nuvoton-Proprietary"
         }
       ],
       "scope": "required",
@@ -658,7 +393,7 @@
         },
         {
           "name": "bsp:component-origin",
-          "value": "first-party-build-artifact"
+          "value": "first-party"
         },
         {
           "name": "bsp:component-granularity",
@@ -666,11 +401,11 @@
         },
         {
           "name": "bsp:license-status",
-          "value": "identified"
+          "value": "proprietary"
         },
         {
           "name": "bsp:license-evidence",
-          "value": "Document/SBOM/components/TestSampleView/sca_binary-artifacts.md"
+          "value": "Nuvoton Software License Agreement.md"
         },
         {
           "name": "bsp:identity-basis",
@@ -681,7 +416,7 @@
   ],
   "dependencies": [
     {
-      "ref": "ad6a52a642c6c0bf",
+      "ref": "368fb442fb05a5b7",
       "dependsOn": [
         "binary-file:28e4b052d2828b6fc3b57ef70acb8c1d3f8419c50387c305ef763d74549ece84:f23417e45373ec0d",
         "binary-file:736961095c4e48aea65ef05a70380a88eefe6fefd7efb29f1abd577d1a386251:336273ad62227882",

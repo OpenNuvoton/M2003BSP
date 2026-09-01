@@ -2,10 +2,10 @@
   "$schema": "http://cyclonedx.org/schema/bom-1.6.schema.json",
   "bomFormat": "CycloneDX",
   "specVersion": "1.6",
-  "serialNumber": "urn:uuid:13248a7f-c571-40ca-a98e-fdc2022e1316",
+  "serialNumber": "urn:uuid:391d6571-1f79-48aa-95cc-1bed21c21bfd",
   "version": 1,
   "metadata": {
-    "timestamp": "2026-09-01T22:55:02+08:00",
+    "timestamp": "2026-09-01T23:50:59+08:00",
     "tools": {
       "components": [
         {
@@ -17,17 +17,17 @@
       ]
     },
     "component": {
-      "bom-ref": "dde79e8e7a1f2e20",
+      "bom-ref": "0d93b7bc0d356a78",
       "type": "library",
       "name": "MCU Driver",
-      "version": "0b23a595",
+      "version": "V3.01.000-9-g86a28a7c",
       "supplier": {
         "name": "Nuvoton Technology Corp.",
         "url": [
           "https://www.nuvoton.com"
         ]
       },
-      "purl": "pkg:generic/nuvoton/mcu-driver@0b23a595",
+      "purl": "pkg:generic/nuvoton/mcu-driver@86a28a7c",
       "licenses": [
         {
           "license": {
@@ -111,14 +111,14 @@
       "type": "library",
       "bom-ref": "m2003xi_m2003xj_series:product-component:library-cmsis-core-include",
       "name": "M2003xI_M2003xJ_Series Include",
-      "version": "0b23a595",
+      "version": "V3.01.000-9-g86a28a7c",
       "supplier": {
         "name": "Nuvoton Technology Corp.",
         "url": [
           "https://www.nuvoton.com"
         ]
       },
-      "purl": "pkg:generic/nuvoton/library-cmsis-core-include@0b23a595",
+      "purl": "pkg:generic/nuvoton/library-cmsis-core-include@86a28a7c",
       "hashes": [
         {
           "alg": "SHA-256",
@@ -169,14 +169,14 @@
       "type": "library",
       "bom-ref": "m2003xi_m2003xj_series:product-component:library-cmsis-driver",
       "name": "M2003xI_M2003xJ_Series Driver",
-      "version": "0b23a595",
+      "version": "V3.01.000-9-g86a28a7c",
       "supplier": {
         "name": "Nuvoton Technology Corp.",
         "url": [
           "https://www.nuvoton.com"
         ]
       },
-      "purl": "pkg:generic/nuvoton/library-cmsis-driver@0b23a595",
+      "purl": "pkg:generic/nuvoton/library-cmsis-driver@86a28a7c",
       "hashes": [
         {
           "alg": "SHA-256",
@@ -227,14 +227,14 @@
       "type": "library",
       "bom-ref": "m2003xi_m2003xj_series:product-component:library-cmsis-rtos2",
       "name": "M2003xI_M2003xJ_Series RTOS2",
-      "version": "0b23a595",
+      "version": "V3.01.000-9-g86a28a7c",
       "supplier": {
         "name": "Nuvoton Technology Corp.",
         "url": [
           "https://www.nuvoton.com"
         ]
       },
-      "purl": "pkg:generic/nuvoton/library-cmsis-rtos2@0b23a595",
+      "purl": "pkg:generic/nuvoton/library-cmsis-rtos2@86a28a7c",
       "hashes": [
         {
           "alg": "SHA-256",
@@ -285,14 +285,14 @@
       "type": "library",
       "bom-ref": "m2003xi_m2003xj_series:product-component:library-device-nuvoton-m2003j",
       "name": "M2003xI_M2003xJ_Series M2003J",
-      "version": "0b23a595",
+      "version": "V3.01.000-9-g86a28a7c",
       "supplier": {
         "name": "Nuvoton Technology Corp.",
         "url": [
           "https://www.nuvoton.com"
         ]
       },
-      "purl": "pkg:generic/nuvoton/library-device-nuvoton-m2003j@0b23a595",
+      "purl": "pkg:generic/nuvoton/library-device-nuvoton-m2003j@86a28a7c",
       "hashes": [
         {
           "alg": "SHA-256",
@@ -343,14 +343,14 @@
       "type": "library",
       "bom-ref": "m2003xi_m2003xj_series:product-component:library-stddriver",
       "name": "M2003xI_M2003xJ_Series StdDriver",
-      "version": "0b23a595",
+      "version": "V3.01.000-9-g86a28a7c",
       "supplier": {
         "name": "Nuvoton Technology Corp.",
         "url": [
           "https://www.nuvoton.com"
         ]
       },
-      "purl": "pkg:generic/nuvoton/library-stddriver@0b23a595",
+      "purl": "pkg:generic/nuvoton/library-stddriver@86a28a7c",
       "hashes": [
         {
           "alg": "SHA-256",
@@ -396,75 +396,11 @@
           "value": "true"
         }
       ]
-    },
-    {
-      "type": "library",
-      "group": "Arm",
-      "name": "CMSIS",
-      "version": "6.1.0",
-      "supplier": {
-        "name": "Arm Limited"
-      },
-      "licenses": [
-        {
-          "expression": "Apache-2.0"
-        }
-      ],
-      "purl": "pkg:github/ARM-software/CMSIS_6@6.1.0",
-      "bom-ref": "pkg:github/ARM-software/CMSIS_6@6.1.0?source=vendored&path=Library/CMSIS",
-      "properties": [
-        {
-          "name": "bsp:component-origin",
-          "value": "third-party"
-        },
-        {
-          "name": "bsp:component-source",
-          "value": "vendored"
-        },
-        {
-          "name": "bsp:integration",
-          "value": "source"
-        },
-        {
-          "name": "bsp:cmsis-core-version",
-          "value": "6.1.0"
-        },
-        {
-          "name": "bsp:cmsis-rtos2-api-version",
-          "value": "2.3.0"
-        },
-        {
-          "name": "bsp:cmsis-driver-release",
-          "value": "2.10.0"
-        },
-        {
-          "name": "bsp:cmsis-driver-common-version",
-          "value": "2.0"
-        },
-        {
-          "name": "bsp:cmsis-driver-interface-api-versions",
-          "value": "ARM_CAN_API_VERSION=1.3; ARM_ETH_MAC_API_VERSION=2.2; ARM_ETH_PHY_API_VERSION=2.2; ARM_FLASH_API_VERSION=2.3; ARM_I2C_API_VERSION=2.4; ARM_MCI_API_VERSION=2.4; ARM_NAND_API_VERSION=2.4; ARM_SAI_API_VERSION=1.2; ARM_SPI_API_VERSION=2.3; ARM_STORAGE_API_VERSION=1.2; ARM_USART_API_VERSION=2.4; ARM_USBD_API_VERSION=2.3; ARM_USBH_API_VERSION=2.4; ARM_WIFI_API_VERSION=1.1"
-        },
-        {
-          "name": "bsp:included-paths",
-          "value": "Library/CMSIS/Core/Include; Library/CMSIS/Driver; Library/CMSIS/RTOS2"
-        },
-        {
-          "name": "bsp:excluded-paths",
-          "value": "Library/CMSIS/Core/Test; Library/CMSIS/Documentation"
-        }
-      ],
-      "hashes": [
-        {
-          "alg": "SHA-256",
-          "content": "3b9195c5373a2a4dbfd968b083b3d7f5f446f9ec2e126f75928ac1ff4356b91e"
-        }
-      ]
     }
   ],
   "dependencies": [
     {
-      "ref": "dde79e8e7a1f2e20",
+      "ref": "0d93b7bc0d356a78",
       "dependsOn": [
         "m2003xi_m2003xj_series:product-component:library-cmsis-core-include",
         "m2003xi_m2003xj_series:product-component:library-cmsis-driver",
