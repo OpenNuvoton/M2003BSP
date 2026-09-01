@@ -1,14 +1,38 @@
 {
   "manifestFormat": "MCU-BSP-SBOM-Manifest",
   "manifestVersion": "1.0",
-  "serialNumber": "urn:uuid:e5d00f23-51c4-47f6-9d22-fe2df89c75b7",
-  "createdAt": "2026-08-28T05:39:37.673889Z",
+  "serialNumber": "urn:uuid:40602d01-9947-404c-89df-0e0635554998",
+  "createdAt": "2026-09-01T14:55:11.865349Z",
   "bsp": {
     "name": "M2003xC_M2003xD_M2003xE_M2003xG_Series",
-    "version": "V3.01.000-2-g612f7b8",
-    "releaseIdentifierSource": "SBOM file name",
-    "gitDescribe": "V3.01.000-2-g612f7b8"
+    "version": "0b23a595",
+    "releaseIdentifierSource": "git describe --tags --always --long --abbrev=8 --dirty",
+    "gitDescribe": "0b23a595",
+    "gitCommit": "0b23a595e3fc866dc9fccbc04879a8267a19c569",
+    "sourceTreeState": "clean"
   },
+  "generationTools": [
+    {
+      "name": "SBOM Generator",
+      "version": "0.2.0"
+    },
+    {
+      "name": "Syft",
+      "version": "1.45.1"
+    },
+    {
+      "name": "CycloneDX CLI",
+      "version": "0.32.0+0ed788d25c13cef9e9a3029603f6b708e3279390"
+    },
+    {
+      "name": "grype",
+      "version": "grype 0.117.0"
+    },
+    {
+      "name": "sbom-checker",
+      "version": "1.0.0"
+    }
+  ],
   "sbomPackage": {
     "name": "MCU BSP SBOM Package",
     "format": "CycloneDX",
@@ -20,18 +44,18 @@
   },
   "sboms": [
     {
-      "fileName": "M2003xC_M2003xD_M2003xE_M2003xG_Series_Product_SBOM_cdx.json",
+      "fileName": "M2003xC_M2003xD_M2003xE_M2003xG_Series_Product_SBOM_0b23a595.cdx.json",
       "sbomType": "Product SBOM",
       "bomFormat": "CycloneDX",
       "specVersion": "1.6",
-      "serialNumber": "urn:uuid:ce640633-2114-45b9-b3cf-89aba55907d7",
+      "serialNumber": "urn:uuid:83dd64a4-3a05-43b0-9111-1f37657b9002",
       "sbomVersion": 1,
-      "generatedTimestamp": "2026-08-28T13:39:31+08:00",
+      "generatedTimestamp": "2026-09-01T22:55:02+08:00",
       "metadataComponent": {
-        "bomRef": "1b3822420f2930f2",
+        "bomRef": "40c6d5b07702aa18",
         "type": "library",
         "name": "MCU Driver",
-        "version": "V3.01.000-2-g612f7b8",
+        "version": "0b23a595",
         "properties": [
           {
             "name": "bsp:sbom-category",
@@ -108,22 +132,22 @@
       },
       "hash": {
         "algorithm": "SHA-256",
-        "value": "aa6834c9c41249ee3d8dfbe1a1221b383355d668c6bfb0e85f6edc0f6b8b835a"
+        "value": "b997274a03ead791a3d64cf53fe420aeac6a8e4e5f8e57f87e9e732e95352847"
       }
     },
     {
-      "fileName": "M2003xC_M2003xD_M2003xE_M2003xG_Series_TestSample_SBOM_cdx.json",
+      "fileName": "M2003xC_M2003xD_M2003xE_M2003xG_Series_TestSample_SBOM_0b23a595.cdx.json",
       "sbomType": "Test Sample SBOM",
       "bomFormat": "CycloneDX",
       "specVersion": "1.6",
-      "serialNumber": "urn:uuid:6199680a-c980-4c0a-bef3-ee53bfa42a57",
+      "serialNumber": "urn:uuid:85b2c16c-4119-4cb7-97e6-0e252afc6bb6",
       "sbomVersion": 1,
-      "generatedTimestamp": "2026-08-28T13:39:34+08:00",
+      "generatedTimestamp": "2026-09-01T22:55:08+08:00",
       "metadataComponent": {
-        "bomRef": "109e81909ad10cf1",
+        "bomRef": "8607cc5233550c97",
         "type": "application",
         "name": "MCU Test Sample",
-        "version": "V3.01.000-2-g612f7b8",
+        "version": "0b23a595",
         "properties": [
           {
             "name": "bsp:sbom-category",
@@ -162,23 +186,25 @@
       "scope": "Components used only for examples, demonstrations, validation, host-side utilities, or testing; not included in product runtime unless explicitly integrated by the user.",
       "isProductRuntimeScope": false,
       "componentSummary": {
-        "componentCount": 1,
+        "componentCount": 7,
         "componentCountByType": {
-          "application": 1
+          "application": 1,
+          "file": 3,
+          "firmware": 3
         },
         "applicationNames": [
           "M2003xC_M2003xD_M2003xE_M2003xG_Series SampleCode"
         ],
-        "fileComponentCount": 0,
-        "fileComponentWithHashCount": 0
+        "fileComponentCount": 3,
+        "fileComponentWithHashCount": 3
       },
       "hash": {
         "algorithm": "SHA-256",
-        "value": "2a30903221aaba95cbe0bcf02b28e95bbcf1e56ef0d6a5e1b0d3e6475b9b1dd9"
+        "value": "935e7635404ae586bce25fd3f062ec4bb175f26504425258bf055a6c19d086e4"
       },
       "relationshipToProductSbom": {
         "usesProductComponents": true,
-        "productSbomFile": "M2003xC_M2003xD_M2003xE_M2003xG_Series_Product_SBOM_cdx.json",
+        "productSbomFile": "M2003xC_M2003xD_M2003xE_M2003xG_Series_Product_SBOM_0b23a595.cdx.json",
         "description": "Test sample firmware may be built using MCU Driver components described in the Product SBOM. These product components are not duplicated in the Test Sample SBOM."
       }
     }

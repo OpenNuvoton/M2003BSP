@@ -2,10 +2,10 @@
   "$schema": "http://cyclonedx.org/schema/bom-1.6.schema.json",
   "bomFormat": "CycloneDX",
   "specVersion": "1.6",
-  "serialNumber": "urn:uuid:ce640633-2114-45b9-b3cf-89aba55907d7",
+  "serialNumber": "urn:uuid:83dd64a4-3a05-43b0-9111-1f37657b9002",
   "version": 1,
   "metadata": {
-    "timestamp": "2026-08-28T13:39:31+08:00",
+    "timestamp": "2026-09-01T22:55:02+08:00",
     "tools": {
       "components": [
         {
@@ -17,17 +17,17 @@
       ]
     },
     "component": {
-      "bom-ref": "1b3822420f2930f2",
+      "bom-ref": "40c6d5b07702aa18",
       "type": "library",
       "name": "MCU Driver",
-      "version": "V3.01.000-2-g612f7b8",
+      "version": "0b23a595",
       "supplier": {
         "name": "Nuvoton Technology Corp.",
         "url": [
           "https://www.nuvoton.com"
         ]
       },
-      "purl": "pkg:generic/nuvoton/mcu-driver@V3.01.000-2-g612f7b8",
+      "purl": "pkg:generic/nuvoton/mcu-driver@0b23a595",
       "licenses": [
         {
           "license": {
@@ -115,14 +115,14 @@
       "type": "library",
       "bom-ref": "m2003xc_m2003xd_m2003xe_m2003xg_series:product-component:library-cmsis-core-include",
       "name": "M2003xC_M2003xD_M2003xE_M2003xG_Series Include",
-      "version": "V3.01.000-2-g612f7b8",
+      "version": "0b23a595",
       "supplier": {
         "name": "Nuvoton Technology Corp.",
         "url": [
           "https://www.nuvoton.com"
         ]
       },
-      "purl": "pkg:generic/nuvoton/library-cmsis-core-include@V3.01.000-2-g612f7b8",
+      "purl": "pkg:generic/nuvoton/library-cmsis-core-include@0b23a595",
       "hashes": [
         {
           "alg": "SHA-256",
@@ -173,14 +173,14 @@
       "type": "library",
       "bom-ref": "m2003xc_m2003xd_m2003xe_m2003xg_series:product-component:library-cmsis-driver",
       "name": "M2003xC_M2003xD_M2003xE_M2003xG_Series Driver",
-      "version": "V3.01.000-2-g612f7b8",
+      "version": "0b23a595",
       "supplier": {
         "name": "Nuvoton Technology Corp.",
         "url": [
           "https://www.nuvoton.com"
         ]
       },
-      "purl": "pkg:generic/nuvoton/library-cmsis-driver@V3.01.000-2-g612f7b8",
+      "purl": "pkg:generic/nuvoton/library-cmsis-driver@0b23a595",
       "hashes": [
         {
           "alg": "SHA-256",
@@ -231,14 +231,14 @@
       "type": "library",
       "bom-ref": "m2003xc_m2003xd_m2003xe_m2003xg_series:product-component:library-cmsis-rtos2",
       "name": "M2003xC_M2003xD_M2003xE_M2003xG_Series RTOS2",
-      "version": "V3.01.000-2-g612f7b8",
+      "version": "0b23a595",
       "supplier": {
         "name": "Nuvoton Technology Corp.",
         "url": [
           "https://www.nuvoton.com"
         ]
       },
-      "purl": "pkg:generic/nuvoton/library-cmsis-rtos2@V3.01.000-2-g612f7b8",
+      "purl": "pkg:generic/nuvoton/library-cmsis-rtos2@0b23a595",
       "hashes": [
         {
           "alg": "SHA-256",
@@ -289,14 +289,14 @@
       "type": "library",
       "bom-ref": "m2003xc_m2003xd_m2003xe_m2003xg_series:product-component:library-device",
       "name": "M2003xC_M2003xD_M2003xE_M2003xG_Series Device",
-      "version": "V3.01.000-2-g612f7b8",
+      "version": "0b23a595",
       "supplier": {
         "name": "Nuvoton Technology Corp.",
         "url": [
           "https://www.nuvoton.com"
         ]
       },
-      "purl": "pkg:generic/nuvoton/library-device@V3.01.000-2-g612f7b8",
+      "purl": "pkg:generic/nuvoton/library-device@0b23a595",
       "hashes": [
         {
           "alg": "SHA-256",
@@ -347,14 +347,14 @@
       "type": "library",
       "bom-ref": "m2003xc_m2003xd_m2003xe_m2003xg_series:product-component:library-stddriver",
       "name": "M2003xC_M2003xD_M2003xE_M2003xG_Series StdDriver",
-      "version": "V3.01.000-2-g612f7b8",
+      "version": "0b23a595",
       "supplier": {
         "name": "Nuvoton Technology Corp.",
         "url": [
           "https://www.nuvoton.com"
         ]
       },
-      "purl": "pkg:generic/nuvoton/library-stddriver@V3.01.000-2-g612f7b8",
+      "purl": "pkg:generic/nuvoton/library-stddriver@0b23a595",
       "hashes": [
         {
           "alg": "SHA-256",
@@ -489,7 +489,7 @@
   ],
   "dependencies": [
     {
-      "ref": "1b3822420f2930f2",
+      "ref": "40c6d5b07702aa18",
       "dependsOn": [
         "m2003xc_m2003xd_m2003xe_m2003xg_series:product-component:library-cmsis-core-include",
         "m2003xc_m2003xd_m2003xe_m2003xg_series:product-component:library-cmsis-driver",
