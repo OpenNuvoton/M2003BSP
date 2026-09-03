@@ -50,84 +50,107 @@ __Vectors:
 	.long	Reset_Handler         /* Reset Handler                 */
 	.long	NMI_Handler           /* NMI Handler                   */
 	.long	HardFault_Handler     /* Hard Fault Handler            */
-	.long	0                     /* Reserved                      */
-	.long	0                     /* Reserved                      */
-	.long	0                     /* Reserved                      */
+	.long	MemManage_Handler     /* MPU Fault Handler             */
+	.long	BusFault_Handler      /* Bus Fault Handler             */
+	.long	UsageFault_Handler    /* Usage Fault Handler           */
 	.long	0                     /* Reserved                      */
 	.long	0                     /* Reserved                      */
 	.long	0                     /* Reserved                      */
 	.long	0                     /* Reserved                      */
 	.long	SVC_Handler           /* SVCall Handler                */
-	.long	0                     /* Reserved                      */
+	.long	DebugMon_Handler      /* DebugMon Handler              */
 	.long	0                     /* Reserved                      */
 	.long	PendSV_Handler        /* PendSV Handler                */
 	.long	SysTick_Handler       /* SysTick Handler               */
 
 	/* External interrupts */
-	.long	BOD_IRQHandler        /*  0: BOD                        */
-	.long	Default_Handler       /*  1: Reserved                   */
-	.long	PWRWU_IRQHandler      /*  2: PWRWU                      */
-	.long	Default_Handler       /*  3: Reserved                   */
-	.long	Default_Handler       /*  4: Reserved                   */
-	.long	ISP_IRQHandler        /*  5: FMC(ISP)                   */
-	.long	Default_Handler       /*  6: Reserved                   */
-	.long	Default_Handler       /*  7: Reserved                   */
-	.long	WDT_IRQHandler        /*  8: WDT                        */
-	.long	WWDT_IRQHandler       /*  9: WWDT                       */
-	.long	EINT0_IRQHandler      /* 10: EINT0                      */
-	.long	EINT1_IRQHandler      /* 11: EINT1                      */
-	.long	EINT2_IRQHandler      /* 12: EINT2                      */
-	.long	EINT3_IRQHandler      /* 13: EINT3                      */
-	.long	Default_Handler       /* 14: Reserved                   */
-	.long	EINT5_IRQHandler      /* 15: EINT5                      */
-	.long	Default_Handler       /* 16: Reserved                   */
-	.long	GPB_IRQHandler        /* 17: GPB                        */
-	.long	GPC_IRQHandler        /* 18: GPC                        */
-	.long	Default_Handler       /* 19: Reserved                   */
-	.long	GPE_IRQHandler        /* 20: GPE                        */
-	.long	GPF_IRQHandler        /* 21: GPF                        */
-	.long	Default_Handler       /* 22: Reserved                   */
-	.long	Default_Handler       /* 23: Reserved                   */
-	.long	Default_Handler       /* 24: Reserved                   */
-	.long	PWM0_IRQHandler       /* 25: PWM0                       */
-	.long	Default_Handler       /* 26: Reserved                   */
-	.long	Default_Handler       /* 27: Reserved                   */
-	.long	Default_Handler       /* 28: Reserved                   */
-	.long	Default_Handler       /* 29: Reserved                   */
-	.long	Default_Handler       /* 30: Reserved                   */
-	.long	Default_Handler       /* 31: Reserved                   */
-	.long	TMR0_IRQHandler       /* 32: TIMER0                     */
-	.long	TMR1_IRQHandler       /* 33: TIMER1                     */
-	.long	TMR2_IRQHandler       /* 34: TIMER2                     */
-	.long	TMR3_IRQHandler       /* 35: TIMER3                     */
+	.long	BOD_IRQHandler        /*  0: Brown Out detection         */
+	.long	IRC_IRQHandler        /*  1: Internal RC Trim           */
+	.long	PWRWU_IRQHandler      /*  2: Power down wake up         */
+	.long	SR0ECC_Handler        /*  3: SRAM0 error correcting code */
+	.long	CLKFAIL_IRQHandler    /*  4: Clock detection fail       */
+	.long	FMC_IRQHandler        /*  5: FMC(ISP)                    */
+	.long	RTC_IRQHandler        /*  6: Real Time Clock            */
+	.long	SR1ECC_Handler        /*  7: SRAM1 error correcting code */
+	.long	WDT_IRQHandler        /*  8: Watchdog timer             */
+	.long	WWDT_IRQHandler       /*  9: Window watchdog timer      */
+	.long	EINT0_IRQHandler      /* 10: External Input 0           */
+	.long	EINT1_IRQHandler      /* 11: External Input 1           */
+	.long	EINT2_IRQHandler      /* 12: External Input 2           */
+	.long	EINT3_IRQHandler      /* 13: External Input 3           */
+	.long	EINT4_IRQHandler      /* 14: External Input 4           */
+	.long	EINT5_IRQHandler      /* 15: External Input 5           */
+	.long	GPA_IRQHandler        /* 16: GPIO Port A                */
+	.long	GPB_IRQHandler        /* 17: GPIO Port B                */
+	.long	GPC_IRQHandler        /* 18: GPIO Port C                */
+	.long	GPD_IRQHandler        /* 19: GPIO Port D                */
+	.long	GPE_IRQHandler        /* 20: GPIO Port E                */
+	.long	GPF_IRQHandler        /* 21: GPIO Port F                */
+	.long	0                     /* 22: Reserved                   */
+	.long	0                     /* 23: Reserved                   */
+	.long	0                     /* 24: Reserved                   */
+	.long	0                     /* 25: Reserved                   */
+	.long	0                     /* 26: Reserved                   */
+	.long	0                     /* 27: Reserved                   */
+	.long	0                     /* 28: Reserved                   */
+	.long	0                     /* 29: Reserved                   */
+	.long	0                     /* 30: Reserved                   */
+	.long	0                     /* 31: Reserved                   */
+	.long	TMR0_IRQHandler       /* 32: Timer 0                    */
+	.long	TMR1_IRQHandler       /* 33: Timer 1                    */
+	.long	TMR2_IRQHandler       /* 34: Timer 2                    */
+	.long	TMR3_IRQHandler       /* 35: Timer 3                    */
 	.long	UART0_IRQHandler      /* 36: UART0                      */
 	.long	UART1_IRQHandler      /* 37: UART1                      */
 	.long	I2C0_IRQHandler       /* 38: I2C0                       */
-	.long	Default_Handler       /* 39: Reserved                   */
-	.long	Default_Handler       /* 40: Reserved                   */
-	.long	Default_Handler       /* 41: Reserved                   */
-	.long	ADC_IRQHandler        /* 42: ADC                        */
-	.long	Default_Handler       /* 43: Reserved                   */
-	.long	Default_Handler       /* 44: Reserved                   */
-	.long	Default_Handler       /* 45: Reserved                   */
-	.long	Default_Handler       /* 46: Reserved                   */
-	.long	Default_Handler       /* 47: Reserved                   */
-	.long	Default_Handler       /* 48: Reserved                   */
-	.long	Default_Handler       /* 49: Reserved                   */
-	.long	Default_Handler       /* 50: Reserved                   */
-	.long	Default_Handler       /* 51: Reserved                   */
-	.long	USCI0_IRQHandler      /* 52: UCSI0                      */
-	.long	Default_Handler       /* 53: Reserved                   */
-	.long	Default_Handler       /* 54: Reserved                   */
-	.long	Default_Handler       /* 55: Reserved                   */
-	.long	Default_Handler       /* 56: Reserved                   */
-	.long	Default_Handler       /* 57: Reserved                   */
-	.long	Default_Handler       /* 58: Reserved                   */
-	.long	Default_Handler       /* 59: Reserved                   */
-	.long	ECAP0_IRQHandler      /* 60: ECAP0                      */
-	.long	Default_Handler       /* 61: Reserved                   */
-	.long	Default_Handler       /* 62: Reserved                   */
-	.long	Default_Handler       /* 63: Reserved                   */
+	.long	I2C1_IRQHandler       /* 39: I2C1                       */
+	.long	PDMA_IRQHandler       /* 40: Peripheral DMA             */
+	.long	0                     /* 41: Reserved                   */
+	.long	ADC_IRQHandler        /* 42: ADC interrupt              */
+	.long	0                     /* 43: Reserved                   */
+	.long	ACMP01_IRQHandler     /* 44: ACMP0 and ACMP1            */
+	.long	0                     /* 45: Reserved                   */
+	.long	0                     /* 46: Reserved                   */
+	.long	0                     /* 47: Reserved                   */
+	.long	UART2_IRQHandler      /* 48: UART2                      */
+	.long	UART3_IRQHandler      /* 49: UART3                      */
+	.long	0                     /* 50: Reserved                   */
+	.long	0                     /* 51: Reserved                   */
+	.long	USCI0_IRQHandler      /* 52: USCI0                      */
+	.long	USCI1_IRQHandler      /* 53: USCI1                      */
+	.long	0                     /* 54: Reserved                   */
+	.long	0                     /* 55: Reserved                   */
+	.long	0                     /* 56: Reserved                   */
+	.long	CRC_IRQHandler        /* 57: CRC                        */
+	.long	0                     /* 58: Reserved                   */
+	.long	0                     /* 59: Reserved                   */
+	.long	0                     /* 60: Reserved                   */
+	.long	USCI2_IRQHandler      /* 61: USCI2                      */
+	.long	USCI3_IRQHandler      /* 62: USCI3                      */
+	.long	USCI4_IRQHandler      /* 63: USCI4                      */
+	.long	TMR4_IRQHandler       /* 64: Timer 4                    */
+	.long	TMR5_IRQHandler       /* 65: Timer 5                    */
+	.long	TMR6_IRQHandler       /* 66: Timer 6                    */
+	.long	TMR7_IRQHandler       /* 67: Timer 7                    */
+	.long	TMR8_IRQHandler       /* 68: Timer 8                    */
+	.long	0                     /* 69: Reserved                   */
+	.long	0                     /* 70: Reserved                   */
+	.long	0                     /* 71: Reserved                   */
+	.long	GPG_IRQHandler        /* 72: GPIO Port G                */
+	.long	0                     /* 73: Reserved                   */
+	.long	UART4_IRQHandler      /* 74: UART4                      */
+	.long	0                     /* 75: Reserved                   */
+	.long	0                     /* 76: Reserved                   */
+	.long	BPWM0_IRQHandler      /* 77: BPWM0                      */
+	.long	BPWM1_IRQHandler      /* 78: BPWM1                      */
+	.long	0                     /* 79: Reserved                   */
+	.long	0                     /* 80: Reserved                   */
+	.long	DFMC_IRQHandler       /* 81: DFMC                       */
+	.long	I2C2_IRQHandler       /* 82: I2C2                       */
+	.long	0                     /* 83: Reserved                   */
+	.long	0                     /* 84: Reserved                   */
+	.long	0                     /* 85: Reserved                   */
+	.long	0                     /* 86: Reserved                   */
 
 	.size	__Vectors, . - __Vectors
 
@@ -312,6 +335,20 @@ Default_Handler:
 	b	.
 	.size	Default_Handler, . - Default_Handler
 
+	.align	1
+	.thumb_func
+	.weak	HardFault_Handler
+	.type	HardFault_Handler, %function
+HardFault_Handler:
+	mov	r0, lr
+	mrs	r1, msp
+	mrs	r2, psp
+	ldr	r3, =ProcessHardFault
+	blx	r3
+	bx	r0
+	.size	HardFault_Handler, . - HardFault_Handler
+
+
 /*    Macro to define default handlers. Default handler
  *    will be weak symbol and just dead loops. They can be
  *    overwritten by other handlers */
@@ -319,37 +356,67 @@ Default_Handler:
 	.weak	\handler_name
 	.set	\handler_name, Default_Handler
 	.endm
-	
-	def_irq_handler	NMI_Handler         
-    def_irq_handler	HardFault_Handler
-    def_irq_handler	SVC_Handler
-    def_irq_handler	PendSV_Handler      
-    def_irq_handler	SysTick_Handler     
-    def_irq_handler	BOD_IRQHandler      
-    def_irq_handler	PWRWU_IRQHandler
-	def_irq_handler ISP_IRQHandler
-    def_irq_handler	WDT_IRQHandler      
-    def_irq_handler	WWDT_IRQHandler     
-    def_irq_handler	EINT0_IRQHandler    
-    def_irq_handler	EINT1_IRQHandler    
-    def_irq_handler	EINT2_IRQHandler    
-    def_irq_handler	EINT3_IRQHandler    
-    def_irq_handler	EINT5_IRQHandler    
-    def_irq_handler	GPB_IRQHandler      
-    def_irq_handler	GPC_IRQHandler      
-    def_irq_handler	GPE_IRQHandler      
-    def_irq_handler	GPF_IRQHandler      
-    def_irq_handler	PWM0_IRQHandler  
-    def_irq_handler	TMR0_IRQHandler     
-    def_irq_handler	TMR1_IRQHandler     
-    def_irq_handler	TMR2_IRQHandler     
-    def_irq_handler	TMR3_IRQHandler     
-    def_irq_handler	UART0_IRQHandler    
-    def_irq_handler	UART1_IRQHandler    
-    def_irq_handler	I2C0_IRQHandler     
-    def_irq_handler	ADC_IRQHandler
-    def_irq_handler	USCI0_IRQHandler                
-	def_irq_handler ECAP0_IRQHandler
+
+	def_irq_handler	NMI_Handler
+	def_irq_handler	MemManage_Handler
+	def_irq_handler	BusFault_Handler
+	def_irq_handler	UsageFault_Handler
+	def_irq_handler	SVC_Handler
+	def_irq_handler	DebugMon_Handler
+	def_irq_handler	PendSV_Handler
+	def_irq_handler	SysTick_Handler
+	def_irq_handler	BOD_IRQHandler
+	def_irq_handler	IRC_IRQHandler
+	def_irq_handler	PWRWU_IRQHandler
+	def_irq_handler	SR0ECC_Handler
+	def_irq_handler	CLKFAIL_IRQHandler
+	def_irq_handler	FMC_IRQHandler
+	def_irq_handler	RTC_IRQHandler
+	def_irq_handler	SR1ECC_Handler
+	def_irq_handler	WDT_IRQHandler
+	def_irq_handler	WWDT_IRQHandler
+	def_irq_handler	EINT0_IRQHandler
+	def_irq_handler	EINT1_IRQHandler
+	def_irq_handler	EINT2_IRQHandler
+	def_irq_handler	EINT3_IRQHandler
+	def_irq_handler	EINT4_IRQHandler
+	def_irq_handler	EINT5_IRQHandler
+	def_irq_handler	GPA_IRQHandler
+	def_irq_handler	GPB_IRQHandler
+	def_irq_handler	GPC_IRQHandler
+	def_irq_handler	GPD_IRQHandler
+	def_irq_handler	GPE_IRQHandler
+	def_irq_handler	GPF_IRQHandler
+	def_irq_handler	TMR0_IRQHandler
+	def_irq_handler	TMR1_IRQHandler
+	def_irq_handler	TMR2_IRQHandler
+	def_irq_handler	TMR3_IRQHandler
+	def_irq_handler	UART0_IRQHandler
+	def_irq_handler	UART1_IRQHandler
+	def_irq_handler	I2C0_IRQHandler
+	def_irq_handler	I2C1_IRQHandler
+	def_irq_handler	PDMA_IRQHandler
+	def_irq_handler	ADC_IRQHandler
+	def_irq_handler	ACMP01_IRQHandler
+	def_irq_handler	UART2_IRQHandler
+	def_irq_handler	UART3_IRQHandler
+	def_irq_handler	USCI0_IRQHandler
+	def_irq_handler	USCI1_IRQHandler
+	def_irq_handler	CRC_IRQHandler
+	def_irq_handler	USCI2_IRQHandler
+	def_irq_handler	USCI3_IRQHandler
+	def_irq_handler	USCI4_IRQHandler
+	def_irq_handler	TMR4_IRQHandler
+	def_irq_handler	TMR5_IRQHandler
+	def_irq_handler	TMR6_IRQHandler
+	def_irq_handler	TMR7_IRQHandler
+	def_irq_handler	TMR8_IRQHandler
+	def_irq_handler	GPG_IRQHandler
+	def_irq_handler	UART4_IRQHandler
+	def_irq_handler	BPWM0_IRQHandler
+	def_irq_handler	BPWM1_IRQHandler
+	def_irq_handler	DFMC_IRQHandler
+	def_irq_handler	I2C2_IRQHandler
 
 
     .end

@@ -85,7 +85,7 @@ __vector_table
         DCD     UART1_IRQHandler          ; 37: UART1
         DCD     I2C0_IRQHandler           ; 38: I2C0
         DCD     DEFAULT_IRQHandler        ; 39:
-        DCD     PDMA0_IRQHandler          ; 40: PDMA
+        DCD     PDMA0_IRQHandler          ; 40: PDMA0
         DCD     DEFAULT_IRQHandler        ; 41:
         DCD     ADC_IRQHandler            ; 42: ADC interrupt
         DCD     DEFAULT_IRQHandler        ; 43:

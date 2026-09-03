@@ -68,7 +68,7 @@ void TMR3_IRQHandler(void)          __attribute__((weak, alias("Default_Handler"
 void UART0_IRQHandler(void)         __attribute__((weak, alias("Default_Handler")));  /* 36: UART0 */
 void UART1_IRQHandler(void)         __attribute__((weak, alias("Default_Handler")));  /* 37: UART1 */
 void I2C0_IRQHandler(void)          __attribute__((weak, alias("Default_Handler")));  /* 38: I2C0 */
-void PDMA0_IRQHandler(void)         __attribute__((weak, alias("Default_Handler")));  /* 40: PDMA */
+void PDMA0_IRQHandler(void)         __attribute__((weak, alias("Default_Handler")));  /* 40: PDMA0 */
 void ADC_IRQHandler(void)           __attribute__((weak, alias("Default_Handler")));  /* 42: ADC */
 void UART2_IRQHandler(void)         __attribute__((weak, alias("Default_Handler")));  /* 48: UART2 */
 void USCI0_IRQHandler(void)         __attribute__((weak, alias("Default_Handler")));  /* 52: USCI0 */
@@ -150,7 +150,7 @@ const VECTOR_TABLE_Type __VECTOR_TABLE[] __VECTOR_TABLE_ATTRIBUTE =
 	UART1_IRQHandler,                   /* 37: UART1 */
 	I2C0_IRQHandler,                    /* 38: I2C0 */
 	Default_Handler,                    /* 39: */
-	PDMA0_IRQHandler,                   /* 40: PDMA */
+	PDMA0_IRQHandler,                   /* 40: PDMA0 */
 	Default_Handler,                    /* 41: */
 	ADC_IRQHandler,                     /* 42: ADC */
 	Default_Handler,                    /* 43: */

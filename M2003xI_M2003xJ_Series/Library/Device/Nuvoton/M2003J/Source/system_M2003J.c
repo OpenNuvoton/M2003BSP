@@ -13,12 +13,13 @@
 #include "NuMicro.h"
 
 extern void *__Vectors;                   /* see startup file */
+extern const uint32_t gau32ClkSrcTbl[8];
 
 /*----------------------------------------------------------------------------
   Clock Variable definitions
  *----------------------------------------------------------------------------*/
 uint32_t SystemCoreClock  = __HSI;              /*!< System Clock Frequency (Core Clock) */
-uint32_t CyclesPerUs      = (__HSI / 1000000);  /*!< Cycles per micro second             */
+uint32_t CyclesPerUs      = (__HSI / 1000000UL);  /*!< Cycles per micro second             */
 uint32_t PllClock         = __HSI;              /*!< PLL Output Clock Frequency          */
 const uint32_t gau32ClkSrcTbl[8] = {__HIRC, __LIRC, __LXT, __HXT, 0UL /*PLL*/, 0UL, 0UL, 0UL};
 
@@ -35,7 +36,8 @@ const uint32_t gau32ClkSrcTbl[8] = {__HIRC, __LIRC, __LXT, __HXT, 0UL /*PLL*/, 0
  */
 void SystemCoreClockUpdate(void)
 {
-    uint32_t u32Freq, u32ClkSrc;
+    uint32_t u32Freq;
+    uint32_t u32ClkSrc;
     uint32_t u32HclkDiv;
 
     u32ClkSrc = CLK->HCLKSEL & CLK_HCLKSEL_HCLKSEL_Msk;
@@ -51,12 +53,12 @@ void SystemCoreClockUpdate(void)
         u32Freq = gau32ClkSrcTbl[u32ClkSrc];
     }
 
-    u32HclkDiv = (CLK->HCLKDIV & CLK_HCLKDIV_HCLKDIV_Msk) + 1;
+    u32HclkDiv = (CLK->HCLKDIV & CLK_HCLKDIV_HCLKDIV_Msk) + 1UL;
 
     /* Update System Core Clock */
     SystemCoreClock = u32Freq / u32HclkDiv;
 
-    CyclesPerUs = (SystemCoreClock + 500000) / 1000000;
+    CyclesPerUs = (SystemCoreClock + 500000UL) / 1000000UL;
 }
 
 
@@ -73,8 +75,8 @@ void SystemInit(void)
 {
     SYS_UnlockReg();
     /* Fix the MLDO_TEST issue for A version. */
-    outp32(0x40000E08, inp32(0x40000E08) | BIT4);
-    outp32(0x40000E08, inp32(0x40000E08) & ~BIT4);
+    outp32(0x40000E08UL, inp32(0x40000E08UL) | BIT4);
+    outp32(0x40000E08UL, inp32(0x40000E08UL) & ~BIT4);
     
     /* Enable SRAM1 */
     CLK->SRAMCTL |= CLK_SRAMCTL_SRAM1CKEN_Msk;
@@ -100,7 +102,10 @@ void AssertError(uint8_t *file, uint32_t line)
     printf("[%s] line %u : wrong parameters.\r\n", file, line);
 
     /* Infinite loop */
-    while (1) ;
+    for (;;)
+    {
+        /* Wait for reset after an assertion failure. */
+    }
 }
 #endif
 

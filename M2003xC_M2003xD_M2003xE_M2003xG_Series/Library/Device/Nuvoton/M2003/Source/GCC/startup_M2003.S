@@ -9,6 +9,7 @@
 
 	.syntax	unified
 	.arch	armv8-m.base
+	.extern	ProcessHardFault
 
 	.section .stack
 	.align	3
@@ -50,9 +51,9 @@ __Vectors:
 	.long	Reset_Handler         /* Reset Handler                 */
 	.long	NMI_Handler           /* NMI Handler                   */
 	.long	HardFault_Handler     /* Hard Fault Handler            */
-	.long	0                     /* Reserved                      */
-	.long	0                     /* Reserved                      */
-	.long	0                     /* Reserved                      */
+	.long	MemManage_Handler     /* Memory Management Fault      */
+	.long	BusFault_Handler      /* Bus Fault Handler             */
+	.long	UsageFault_Handler    /* Usage Fault Handler           */
 	.long	0                     /* Reserved                      */
 	.long	0                     /* Reserved                      */
 	.long	0                     /* Reserved                      */
@@ -104,7 +105,7 @@ __Vectors:
 	.long	UART1_IRQHandler      /* 37: UART1                      */
 	.long	I2C0_IRQHandler       /* 38: I2C0                       */
 	.long	Default_Handler       /* 39: Reserved                   */
-	.long	PDMA0_IRQHandler      /* 40: PDMA                       */
+	.long	PDMA0_IRQHandler      /* 40: PDMA0                      */
 	.long	Default_Handler       /* 41: Reserved                   */
 	.long	ADC_IRQHandler        /* 42: ADC                        */
 	.long	Default_Handler       /* 43: Reserved                   */
@@ -321,6 +322,20 @@ Default_Handler:
 	b	.
 	.size	Default_Handler, . - Default_Handler
 
+	.align	1
+	.thumb_func
+	.weak	HardFault_Handler
+	.type	HardFault_Handler, %function
+HardFault_Handler:
+	mov	r0, lr
+	mrs	r1, msp
+	mrs	r2, psp
+	ldr	r3, =ProcessHardFault
+	blx	r3
+	bx	r0
+	.size	HardFault_Handler, . - HardFault_Handler
+
+
 /*    Macro to define default handlers. Default handler
  *    will be weak symbol and just dead loops. They can be
  *    overwritten by other handlers */
@@ -330,7 +345,9 @@ Default_Handler:
 	.endm
 
 	def_irq_handler	NMI_Handler
-    def_irq_handler	HardFault_Handler
+    def_irq_handler	MemManage_Handler
+    def_irq_handler	BusFault_Handler
+    def_irq_handler	UsageFault_Handler
     def_irq_handler	SVC_Handler
     def_irq_handler	PendSV_Handler
     def_irq_handler	SysTick_Handler
