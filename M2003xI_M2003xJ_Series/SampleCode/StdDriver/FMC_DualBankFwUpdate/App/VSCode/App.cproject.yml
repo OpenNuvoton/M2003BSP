@@ -10,7 +10,7 @@ project:
         - ../../../../../Library/StdDriver/inc
         - ../../../../../Library/CMSIS/Core/Include
         - ../../common/inc
-        - ../../../../../Library/NuMaker/common
+        - ../../../../../Library/NuMaker/xmodem
       misc:
         - for-compiler: AC6
           C:
@@ -62,7 +62,7 @@ project:
         - file: ../../../../../Library/StdDriver/src/sys.c
         - file: ../../../../../Library/StdDriver/src/clk.c
         - file: ../../../../../Library/StdDriver/src/fmc.c
-        - file: ../../../../../Library/NuMaker/common/xmodem.c
+        - file: ../../../../../Library/NuMaker/xmodem/xmodem.c
     - group: User
       files:
         - file: ../main.c

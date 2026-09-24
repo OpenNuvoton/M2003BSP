@@ -27,7 +27,7 @@ project:
     - ../../../../../Library/StdDriver/inc
     - ../../../../../Library/CMSIS/Core/Include
     - ../../common/inc
-    - ../../../../../Library/NuMaker/common
+    - ../../../../../Library/NuMaker/xmodem
   groups:
     - group: CMSIS
       files:
@@ -43,7 +43,7 @@ project:
         - file: ../../../../../Library/StdDriver/src/uart.c
         - file: ../../../../../Library/StdDriver/src/retarget.c
         - file: ../../../../../Library/StdDriver/src/fmc.c
-        - file: ../../../../../Library/NuMaker/common/xmodem.c
+        - file: ../../../../../Library/NuMaker/xmodem/xmodem.c
     - group: User
       files:
         - file: ../main.c
