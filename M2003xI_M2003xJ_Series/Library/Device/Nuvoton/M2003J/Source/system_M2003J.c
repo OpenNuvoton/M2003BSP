@@ -74,10 +74,6 @@ void SystemCoreClockUpdate(void)
 void SystemInit(void)
 {
     SYS_UnlockReg();
-    /* Fix the MLDO_TEST issue for A version. */
-    outp32(0x40000E08UL, inp32(0x40000E08UL) | BIT4);
-    outp32(0x40000E08UL, inp32(0x40000E08UL) & ~BIT4);
-    
     /* Enable SRAM1 */
     CLK->SRAMCTL |= CLK_SRAMCTL_SRAM1CKEN_Msk;
     SYS_LockReg();
